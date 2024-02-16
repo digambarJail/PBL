@@ -3,7 +3,7 @@ import React from 'react'
 const NavBar = () => {
   return (
     <>
-    <nav class="bg-white border-gray-200 dark:bg-gray-900">
+    <nav class="bg-white border-gray-200 dark:bg-gray-900  top-0 z-50 w-full  fixed">
     <div class="max-w-screen-xl flex items-center justify-between mx-auto p-4">
     <a href="#" class="flex items-center">
       <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">PICT CONNECT</span>

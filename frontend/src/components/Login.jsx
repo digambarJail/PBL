@@ -10,7 +10,8 @@ function Login() {
   const handleRegClick = () => setIsLoginMode(false);
 
   return (
-    <div className="bg-indigo-950 h-screen w-screen">
+
+    <div className="bg-indigo-950 flex h-screen relative">
       <div className="absolute top-0 left-0 right-0 bottom-0 z-10">
         <h1 className="absolute mt-56 text-white ml-36 text-8xl">PICT Connect</h1>
         {/* <div className="absolute z-10 mt-20 right-0 w-80 mr-36 h-4/5 bg-gray-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20 border border-gray-100">
@@ -46,7 +47,6 @@ function Login() {
 
         </div>
       </div>
-    // </div>
   );
 }
 

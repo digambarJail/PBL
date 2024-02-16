@@ -8,13 +8,14 @@ import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } 
 const router = createBrowserRouter(
   createRoutesFromElements(
       <>
-      <Route path="/" element={<Login />} />
-      <Route path="/" element={<NavBar />} />
+      <div className="relative">
+      <Route path="/" element={<><NavBar /><Login /></>} />
       {/* <Route path="instruction" element={<Instruction/>} /> */}
       {/* <Route path="question" element={<QuestionMcq/>} /> */}
       {/* <Route path="leaderboard" element={<Leaderboard/>} /> */}
       {/* <Route path="result" element={<Result/>} /> */}
       {/* <Route path="Ourteam" element={<OurTeam/>} /> */}
+      </div>
       </>     
   
   )
