@@ -19,7 +19,7 @@ function Login() {
           {isLoginMode ? (
             // Login form
             <>
-                <div className="absolute z-10 mt-36 right-0 w-80 mr-36 h-2/3 bg-gray-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20 border border-gray-100">
+                <div className="absolute mt-36 right-0 w-80 mr-36 h-2/3 bg-gray-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20 border border-gray-100">
                 <h1 className="absolute text-white text-2xl ml-32 mt-8">{isLoginMode ? "Login" : "Register"}</h1>
                 <input className="absolute mt-32 ml-12 pt-3 pb-3 rounded pl-4 placeholder-gray-800" type="email" placeholder="Username" />
                 <input className="absolute mt-52 ml-12 pt-3 pb-3 rounded pl-4 placeholder-gray-800" type="password" placeholder="Password" />
