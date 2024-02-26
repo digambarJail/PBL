@@ -8,14 +8,14 @@ function Navbar() {
   };
 
   return (
-    <div className="h-[64px]">
+    <div className="h-[64px] relative">
       <nav className="bg-white border-gray-200 dark:bg-gray-900 top-0 z-50 w-full fixed">
         <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
           <a href="#" className="flex items-center">
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">PICT CONNECT</span>
           </a>
-          <div className="flex justify-center w-full md:w-auto">
-            <div className="relative w-full md:w-1/2 lg:w-auto">
+          <div className="flex justify-center ">
+            <div className="relative lg:w-[35vw] max-w-xl">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
