@@ -1,6 +1,7 @@
 import Blog from "./components/Blog";
 import Login from "./components/Login";
 import NavBar from "./components/NavBar";
+import Home from "./components/Home";
 import "./index.css";
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
 
@@ -9,8 +10,8 @@ const router = createBrowserRouter(
   createRoutesFromElements(
       <>
       {/* <div className="relative"> */}
-      <Route path="/" element={<><NavBar /><Login /></>} />
-      {/* <Route path="instruction" element={<Instruction/>} /> */}
+      <Route path="login" element={<><Login /></>} />
+      <Route path="/" element={<Home/>} />
       {/* <Route path="question" element={<QuestionMcq/>} /> */}
       {/* <Route path="leaderboard" element={<Leaderboard/>} /> */}
       {/* <Route path="result" element={<Result/>} /> */}
@@ -25,6 +26,7 @@ function App({routes}) {
 
   return (
     <>
+      <NavBar />
       <RouterProvider router={router}/>
     </>
   );
