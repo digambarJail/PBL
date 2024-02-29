@@ -43,10 +43,10 @@ function Navbar() {
                 <a href="#" className="text-gray-900 dark:text-white hover:text-blue-700">Home</a>
               </li>
               <li>
-                <a href="#" className="text-gray-900 dark:text-white hover:text-blue-700">About</a>
+                <a to = "#" className="text-gray-900 dark:text-white hover:text-blue-700">About</a>
               </li>
               <li>
-                <a href="#" className="text-gray-900 dark:text-white hover:text-blue-700">Login</a>
+                <a href="/login" className="text-gray-900 dark:text-white hover:text-blue-700">Login</a>
               </li>
             </ul>
           </div>

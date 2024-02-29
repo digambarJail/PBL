@@ -1,53 +1,86 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
-function Login() {
-  // State to manage whether the user is in login mode or registration mode
-  // true for login, false for register
-  const [isLoginMode, setIsLoginMode] = useState(true);
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const navigate = useNavigate();
 
-  // Handlers to switch modes
-  const handleLoginClick = () => setIsLoginMode(true);
-  const handleRegClick = () => setIsLoginMode(false);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setEmailError(false);
+    setPasswordError(false);
+
+    axios.post('http://localhost:3001/login', { email, password })
+      .then(result => {
+        console.log(result);
+        if (result.data === "Success") {
+          navigate('/');
+        } else if (result.data === "User Does Not Exist!") {
+          setEmailError(true);
+        } else if (result.data === "the password is incorrect") {
+          setPasswordError(true);
+        }
+      })
+      .catch(err => console.log(err));
+  };
 
   return (
-
     <div className="bg-indigo-950 flex h-screen relative">
       <div className="absolute top-0 left-0 right-0 bottom-0 z-10">
         <h1 className="absolute mt-56 text-white ml-36 text-8xl">PICT Connect</h1>
-        {/* <div className="absolute z-10 mt-20 right-0 w-80 mr-36 h-4/5 bg-gray-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20 border border-gray-100">
-          <h1 className="absolute text-white text-2xl ml-32 mt-8">{isLoginMode ? "Login" : "Register"}</h1> */}
-
-          {isLoginMode ? (
-            // Login form
-            <>
-                <div className="absolute mt-36 right-0 w-80 mr-36 h-2/3 bg-gray-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20 border border-gray-100">
-                <h1 className="absolute text-white text-2xl ml-32 mt-8">{isLoginMode ? "Login" : "Register"}</h1>
-                <input className="absolute mt-32 ml-12 pt-3 pb-3 rounded pl-4 placeholder-gray-800" type="email" placeholder="Username" />
-                <input className="absolute mt-52 ml-12 pt-3 pb-3 rounded pl-4 placeholder-gray-800" type="password" placeholder="Password" />
-                <button onClick={handleLoginClick} className="absolute mt-80 ml-10 bg-indigo-900 text-white px-6 pb-2 pt-2.5 rounded">Login</button>
-                <button onClick={handleRegClick} className="absolute mt-80 ml-44 bg-indigo-900 text-white px-6 pb-2 pt-2.5 rounded">Register</button>
-                </div>
-               
-            </>
-          ) : (
-            // Register form
-            <>
-                <div className="absolute z-10 mt-20 right-0 w-80 mr-36 h-4/5 bg-gray-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20 border border-gray-100">
-                <h1 className="absolute text-white text-2xl ml-32 mt-8">{isLoginMode ? "Login" : "Register"}</h1>
-                <input className="absolute mt-32 ml-12 pt-1 pb-1 rounded pl-4 placeholder-gray-800" type="email" placeholder="Full Name" />
-                <input className="absolute mt-48 ml-12 pt-1 pb-1 rounded pl-4 placeholder-gray-800" type="email" placeholder="Registration ID" />
-                <input className="absolute mt-64 ml-12 pt-1 pb-1 rounded pl-4 placeholder-gray-800" type="email" placeholder="Username" />
-                <input className="absolute mt-80 ml-12 pt-1 pb-1 rounded pl-4 placeholder-gray-800" type="password" placeholder="Password" />
-                <button onClick={handleLoginClick} className="absolute mt-96 ml-10 bg-indigo-900 text-white px-6 pb-2 pt-2.5 rounded">Login</button>
-                <button onClick={handleRegClick} className="absolute mt-96 ml-44 bg-indigo-900 text-white px-6 pb-2 pt-2.5 rounded">Register</button>
-                </div>
-                
-            </>
-          )}
-
+        <div className="w-96 backdrop-blur-lg bg-opacity-80 rounded-lg shadow-lg p-5 bg-gray-900 text-white absolute mt-36 right-0 mr-36 ">
+          <h2 className="text-2xl font-bold pb-5">Sign In</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label htmlFor="email" className="block mb-2 text-sm font-medium">Your email</label>
+              <input
+                type="email"
+                id="email"
+                className={`bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4 ${submitted && emailError ? "border-red-500" : ""}`}
+                placeholder="andrew@mail.com"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {submitted && emailError && <p className="text-red-500">User does not exist!</p>}
+            </div>
+            <div className="mb-4">
+              <label htmlFor="password" className="block mb-2 text-sm font-medium">Your password</label>
+              <input
+                type="password"
+                id="password"
+                className={`bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4 ${submitted && passwordError ? "border-red-500" : ""}`}
+                placeholder="*********"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {submitted && passwordError && <p className="text-red-500">Incorrect password!</p>}
+            </div>
+            <div className="flex items-center justify-between mb-4">
+              <button
+                type="submit"
+                className="text-white bg-purple-600 hover:bg-purple-700 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 px-5 w-full sm:w-auto"
+              >
+                Submit
+              </button>
+              <div className="flex items-center text-sm">
+                <p>New here?</p>
+                <Link to="/reg" className="underline cursor-pointer ml-1">Sign up</Link>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
+    </div>
   );
-}
+};
 
 export default Login;
