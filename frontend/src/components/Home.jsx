@@ -1,4 +1,5 @@
 import React from 'react'
+import Post from './Post';
 
 const Home = () => {
   return (
@@ -21,8 +22,9 @@ const Home = () => {
           </a>
         </div>   
 
-        <div className="w-4/6"> 
-          <h1 className='text-white'>FAQ</h1>
+        <div className="w-4/6 mt-12"> 
+          <h1 className='text-white text-2xl font-semibold'>FAQ</h1>
+          <Post/>
         </div>     
 
         <div className='w-2/6 scroll-smooth'>
