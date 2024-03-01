@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Login = () => {
+  const { loginWithRedirect } = useAuth0();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -89,6 +91,7 @@ const Login = () => {
               >
                 Submit
               </button>
+              return <button onClick={() => loginWithRedirect()}>Log with Google</button>;
               <div className="flex items-center text-sm">
                 <p>New here?</p>
                 <Link to="/reg" className="underline cursor-pointer ml-1">

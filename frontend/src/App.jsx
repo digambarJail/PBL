@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import "./index.css";
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
 import Signup from "./components/Signup";
+import {Auth0Provider} from "@auth0/auth0-react";
 
 
 const router = createBrowserRouter(
@@ -28,8 +29,16 @@ function App({routes}) {
 
   return (
     <>
+      <Auth0Provider
+    domain="dev-4zxyc845vquu0dla.us.auth0.com"
+    clientId="XDoZfhZC63FBynTMU6Uutah2dWkrsL8f"
+    authorizationParams={{
+      redirect_uri: window.location.origin
+    }}
+    >
       <NavBar />
       <RouterProvider router={router}/>
+      </Auth0Provider>
     </>
   );
 }
