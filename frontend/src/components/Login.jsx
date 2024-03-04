@@ -23,7 +23,7 @@ const Login = () => {
       .post("http://localhost:3001/login", { email, password })
       .then((result) => {
         console.log(result);
-        if (result.data === "Success") {
+        if (result.data === "Login Successful!") {
           navigate("/");
         } else if (result.data === "User Does Not Exist!") {
           setEmailError(true);
@@ -91,7 +91,7 @@ const Login = () => {
               >
                 Submit
               </button>
-              return <button onClick={() => loginWithRedirect()}>Log with Google</button>;
+              <button onClick={() => loginWithRedirect()}>Log with Google</button>
               <div className="flex items-center text-sm">
                 <p>New here?</p>
                 <Link to="/reg" className="underline cursor-pointer ml-1">

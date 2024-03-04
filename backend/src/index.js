@@ -47,9 +47,9 @@ app.post('/register', async (req,res) => {
         //     return res.status(400).json({msg:"Exists"});
         // }
 
-        const hash_pass = await bcrypt.hash(password,10);
+        // const hash_pass = await bcrypt.hash(password,10);
 
-        const user = await User.create({name, email, password:hash_pass})
+        const user = await User.create({name, email, password})
 
         res.status(201).json(user);
     } catch (error) {
@@ -57,58 +57,26 @@ app.post('/register', async (req,res) => {
     }
 });
 
-/*
-app.post('/login',async (req, res) => {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email: email })
-        .then(user => {
-            if (user) {
-                bcrypt.compare(password, user.password, (err, result) => {
-                    if (err) {
-                        res.json('An error occurred while comparing passwords.');
-                    } else if (result) {
-                        res.json('Success');
-                    } else {
-                        res.json('the password is incorrect');
-                    }
-                });
-            } else {
-                res.json('User Does Not Exist!');
-            }
-        })
-        .catch(err => res.status(500).json({ error: err.message }));
-});
-*/
-
-app.post('/login', async(req,res) =>{
+app.post('/login', async (req, res) => {
     try {
-        const {email, password} = req.body;
-
-        const userExist = await User.findOne({email: email});
-
-        if(!userExist)
-        {
-            return res.status(400).json({message: "Invalid credentials"});
+        const { email, password } = req.body;
+        const normalizedEmail = email.toLowerCase(); // Normalize email to lowercase
+        const user = await User.findOne({ email: normalizedEmail });
+        
+        if (!user) {
+            return res.status(404).json('User Does Not Exist!');
         }
 
-        const user = await bcrypt.compare(password, userExist.password);
-
-        if(user){
-            res.status(200).json({
-                msg: "Login Successful!",
-                // token: await userExist.generateToken(),
-                // userId: userExist._id.toString()
-            })
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (isMatch) {
+            res.json('Login Successful!');
+        } else {
+            res.status(401).json('The password is incorrect');
         }
-        else{
-            res.status(401).json({message: "Invalid email/pass"});
-        }
-
-    } catch (error) {
-        res.status(400).json("Internal server error",error)
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
-})
-
+});
 
 app.listen(3001 , () => {
     console.log("server is running")
