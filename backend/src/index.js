@@ -7,6 +7,7 @@ import { User } from './models/user.models.js'
 import bcrypt from 'bcrypt'
 // const bcrypt = require("bcrypt");
 import connectDB from "./db/index.js";
+import { ApiError } from "./utils/ApiError.js"
 
 
 const app = express()
@@ -48,6 +49,12 @@ app.post('/register', async (req,res) => {
         // }
 
         // const hash_pass = await bcrypt.hash(password,10);
+
+        const existedUser = await User.findOne({ email })
+
+        if (existedUser) {
+            throw new ApiError(409, "User with email already exists")
+        }
 
         const user = await User.create({name, email, password})
 
