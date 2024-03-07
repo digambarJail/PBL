@@ -15,11 +15,15 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
 
-//routes
+//routes import
 import userRouter from './routes/user.routes.js'
 
 
 //routes declaration
-// app.use("/api/v1/users", userRouter)
+app.use("", userRouter)
+
+app.listen(3001 , () => {
+    console.log("server is running")
+})
 
 export { app }
