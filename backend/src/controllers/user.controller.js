@@ -48,8 +48,8 @@ const registerUser = asyncHandler(async(req, res)=>{
 const loginUser = asyncHandler( async (req, res) => {
     try {
         const { email, password } = req.body;
-        const normalizedEmail = email.toLowerCase(); 
-        const user = await User.findOne({ email: normalizedEmail });
+        //const normalizedEmail = email.toLowerCase(); 
+        const user = await User.findOne({email});
         
         if (!user) {
             return res.status(404).json('User Does Not Exist!');

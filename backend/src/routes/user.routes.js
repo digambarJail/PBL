@@ -3,6 +3,7 @@ import {
     loginUser, logoutUser, refreshAccessToken, registerUser
 } from "../controllers/user.controller.js"
 import {verifyJWT} from "../middlewares/auth.middleware.js"
+import { postBlog } from "../controllers/blog.controller.js";
 
 const router = Router();
 
@@ -21,4 +22,8 @@ router.route("/logout").post(
 )
 router.route("/refresh-token").post(refreshAccessToken)
 
+router.route("/postBlog").post(
+    verifyJWT,
+    postBlog
+)
 export default router
