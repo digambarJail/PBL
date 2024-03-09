@@ -3,17 +3,49 @@ import { Link } from 'react-router-dom';
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 const Signup = () => {
-  const [name, setname] = useState()
-  const [email, setemail] = useState()
-  const [password, setpassword] = useState()
+  const [user , setUser] = useState({
+    username:"",
+    email:"",
+    password:"",
+  });
   const navigate = useNavigate()
   
-  const handlesubmit = (e) => {
+  const handleInput = (e) =>{
+    let name = e.target.id;
+    let value = e.target.value;
+
+
+    setUser({
+      ...user,
+      [name]:value,
+    })
+  }
+  const handlesubmit = async (e) => {
       e.preventDefault()
-      axios.post('http://localhost:3001/register' , {name, email , password})
-      .then(result => console.log(result))
-      .catch(err  => console.log(err))
-      navigate('/login')
+      try{
+      const response = await fetch(`http://localhost:3001/register` , {
+        method : "POST",
+        headers:{
+          'Content-Type':"application/json"
+        },
+        body: JSON.stringify(user),
+
+      });
+      console.log(response)
+      if(response.ok){
+        setUser({name: "" , email:"",password:"",})
+        navigate('/login')
+      }
+
+    }catch(error){
+        console.log("register",error)
+    }
+    
+
+      // axios.post('http://localhost:3001/register' , {name, email , password})
+      // .then(result => console.log(result))
+      // .catch(err  => console.log(err))
+      // navigate('/login')
   }
   return (
     <div className="bg-indigo-950 flex h-screen relative">
@@ -30,8 +62,8 @@ const Signup = () => {
             className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
             placeholder="Andrew Jackson"
             required
-            value={name}
-            onChange={(e) => setname(e.target.value)}
+            value={user.name}
+            onChange={handleInput}
           />
         </div>
         <div className="mb-4">
@@ -42,8 +74,8 @@ const Signup = () => {
             className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
             placeholder="andrew@mail.com"
             required
-            value={email}
-            onChange={(e) => setemail(e.target.value)}
+            value={user.email}
+            onChange={handleInput}
           />
         </div>
         <div className="mb-4">
@@ -54,8 +86,8 @@ const Signup = () => {
             className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
             placeholder="*********"
             required
-            value={password}
-            onChange={(e) => setpassword(e.target.value)}
+            value={user.password}
+            onChange={handleInput}
           />
         </div>
         <div>

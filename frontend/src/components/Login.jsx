@@ -3,35 +3,78 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth } from "../store/auth";
 
 const Login = () => {
   const { loginWithRedirect } = useAuth0();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user , setUser] = useState({
+    email:"",
+    password:"",
+  });
   const [submitted, setSubmitted] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const navigate = useNavigate();
+  const { storeTokenInLS } = useAuth();
+  const handleInput = (e) =>{
+    let name = e.target.id;
+    let value = e.target.value;
 
-  const handleSubmit = (e) => {
+
+    setUser({
+      ...user,
+      [name]:value,
+    })
+  }
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
     setEmailError(false);
     setPasswordError(false);
-
-    axios
-      .post("http://localhost:3001/login", { email, password })
-      .then((result) => {
+    try {
+      const response = await fetch(`http://localhost:3001/login`, {
+        method: "POST",
+        headers: {
+          'Content-Type': "application/json"
+        },
+        body: JSON.stringify(user),
+      });
+      
+      console.log(response);
+    
+      if (response.ok) {
+        const result = await response.json();
         console.log(result);
-        if (result.data === "Login Successful!") {
-          navigate("/");
-        } else if (result.data === "User Does Not Exist!") {
+        
+         
+        if (result === "User Does Not Exist!") {
           setEmailError(true);
-        } else if (result.data === "the password is incorrect") {
+        } else if (result === "the password is incorrect") {
           setPasswordError(true);
         }
-      })
-      .catch((err) => console.log(err));
+        storeTokenInLS(result.data.accessToken)
+        navigate("/");
+      } else {
+        console.log("Error:", response.statusText);
+      }
+    } catch (error) {
+
+      console.log("login", error);
+    }
+    
+    // axios
+    //   .post("http://localhost:3001/login", { email, password })
+    //   .then((result) => {
+    //     console.log(result);
+    //     if (result.data === "Login Successful!") {
+    //       navigate("/");
+    //     } else if (result.data === "User Does Not Exist!") {
+    //       setEmailError(true);
+    //     } else if (result.data === "the password is incorrect") {
+    //       setPasswordError(true);
+    //     }
+    //   })
+      // .catch((err) => console.log(err));
   };
 
   return (
@@ -55,8 +98,8 @@ const Login = () => {
                 }`}
                 placeholder="andrew@mail.com"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={user.email}
+                onChange={handleInput}
               />
               {submitted && emailError && (
                 <p className="text-red-500">User does not exist!</p>
@@ -77,8 +120,8 @@ const Login = () => {
                 }`}
                 placeholder="*********"
                 required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={user.password}
+                onChange={handleInput}
               />
               {submitted && passwordError && (
                 <p className="text-red-500">Incorrect password!</p>

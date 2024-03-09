@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
-
+import React, { useState , useEffect } from 'react';
+import { useAuth } from '../store/auth';
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const {isLoggedIn} = useAuth()
+  useEffect(() => {
+    // This effect will run every time `isLoggedIn` changes
+    // Force a rerender by setting a state that isn't used elsewhere
+    setMenuOpen(prevMenuOpen => !prevMenuOpen);
+  }, [isLoggedIn]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-
+  
   return (
     <div className="h-[64px] relative">
       <nav className="bg-white border-gray-200 dark:bg-gray-900 top-0 z-50 w-full fixed">
@@ -45,9 +51,16 @@ function Navbar() {
               <li>
                 <a to = "#" className="text-gray-900 dark:text-white hover:text-blue-700">About</a>
               </li>
-              <li>
+              
+                {isLoggedIn ? (        
+                <li>
+                <a href="/logout" className="text-gray-900 dark:text-white hover:text-blue-700">Logout</a>
+              </li>) : (              
+                <li>
                 <a href="/login" className="text-gray-900 dark:text-white hover:text-blue-700">Login</a>
-              </li>
+              </li>)}
+
+
             </ul>
           </div>
         </div>

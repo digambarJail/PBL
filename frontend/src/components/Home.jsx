@@ -4,7 +4,7 @@ import Post from './Post';
 const Home = () => {
   return (
     <>  
-      <div className= "scroll-smooth bg-black flex h-screen flex-row text-center"> {/* Adjust mt-[60px] to match your navbar's height */}      
+      <div className= "scroll-smooth bg-black flex h-full flex-row text-center"> {/* Adjust mt-[60px] to match your navbar's height */}      
         <div className="w-2/6 items-center mt-12"> 
           <h1 className='text-white text-2xl font-semibold'>Events</h1>
           <a href="#" class="mt-12 ml-4 mr-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
