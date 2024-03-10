@@ -4,6 +4,7 @@ import Post from './Post';
 const Home = () => {
   return (
     <>  
+    
       <div className= "scroll-smooth bg-black flex h-full flex-row text-center"> {/* Adjust mt-[60px] to match your navbar's height */}      
         <div className="w-2/6 items-center mt-12"> 
           <h1 className='text-white text-2xl font-semibold'>Events</h1>

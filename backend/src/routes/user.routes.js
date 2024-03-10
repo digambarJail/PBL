@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-    loginUser, logoutUser, refreshAccessToken, registerUser
+    loginUser, logoutUser, refreshAccessToken, registerUser, google
 } from "../controllers/user.controller.js"
 import {verifyJWT} from "../middlewares/auth.middleware.js"
 import { postBlog } from "../controllers/blog.controller.js";
@@ -13,6 +13,10 @@ userRouter.route("/register").post(
 
 userRouter.route("/login").post(
     loginUser
+)
+
+userRouter.route("/google").post(
+    google
 )
 
 //secured routes
