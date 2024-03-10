@@ -41,7 +41,7 @@ function App() {
         <Route path="dashboard" element={<><Dashboard/></>} />
         </Route>
         <Route path="logout" element={<><Logout/></>} />
-        <Route path="blog" element={<><Blog /></>}
+        <Route path="blog" element={<><Blog /></>} />
       
     </Routes>
     <FooterCom/>
