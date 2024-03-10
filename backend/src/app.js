@@ -17,10 +17,11 @@ app.use(cookieParser())
 
 //routes import
 import userRouter from './routes/user.routes.js'
-
+import blogRouter from "./routes/blog.routes.js";
 
 //routes declaration
-app.use("", userRouter)
+app.use("/api", userRouter)
+app.use("/api",blogRouter)
 
 app.listen(3001 , () => {
     console.log("server is running")

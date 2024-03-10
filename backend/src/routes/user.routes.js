@@ -5,25 +5,22 @@ import {
 import {verifyJWT} from "../middlewares/auth.middleware.js"
 import { postBlog } from "../controllers/blog.controller.js";
 
-const router = Router();
+const userRouter = Router();
 
-router.route("/register").post(
+userRouter.route("/register").post(
     registerUser
 )
 
-router.route("/login").post(
+userRouter.route("/login").post(
     loginUser
 )
 
 //secured routes
-router.route("/logout").post(
+userRouter.route("/logout").post(
     verifyJWT,
     logoutUser
 )
-router.route("/refresh-token").post(refreshAccessToken)
+userRouter.route("/refresh-token").post(refreshAccessToken)
 
-router.route("/postBlog").post(
-    verifyJWT,
-    postBlog
-)
-export default router
+
+export default userRouter
