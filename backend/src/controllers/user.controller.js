@@ -213,10 +213,26 @@ const google = async (req, res, next) => {
     const name = req.user.name;
     
     
-    const blog = await Blog.find({nameOfOwner:{$regex:name,$options:"i"}})
+    //const blog = await Blog.find({nameOfOwner:{$regex:name,$options:"i"}})
+
+    const blog = await User.aggregate([
+        {
+            $match:{
+                name : name
+            }
+        },
+        {
+            $lookup:{
+                from : "blogs",
+                localField:"name",
+                foreignField:"nameOfOwner",
+                as:"myBlogs"
+            }
+        }
+    ])
 
     return res.status(200)
-    .json(new ApiResponse(200,blog,"blogs fetched"))
+    .json(new ApiResponse(200,blog[0].myBlogs,"blogs fetched"))
 })
 
 export {
