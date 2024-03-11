@@ -24,7 +24,7 @@ const Home = () => {
         </div>   
 
         <div className="w-4/6 mt-12"> 
-          <h1 className='text-white text-2xl font-semibold'>FAQ</h1>
+          <h1 className='text-white text-2xl font-semibold'>BLOGS</h1>
           <Post/>
         </div>     
 
