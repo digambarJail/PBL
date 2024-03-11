@@ -14,7 +14,8 @@ const postBlog = asyncHandler(async (req,res)=>
         const owner = await User.findById(req.user._id).select(
             "-password -refreshToken" 
         ) ;
-        //console.log(owner);
+        const nameOfOwner = owner.name 
+        console.log(owner);
         if(
             [title,content].some((field)=>{
                field?.trim()===""
@@ -24,7 +25,7 @@ const postBlog = asyncHandler(async (req,res)=>
                throw new ApiError(400,"The Above Field are Compulsory")
            }
         //console.log("before creatre");
-        const blog = await Blog.create({title,content,owner})
+        const blog = await Blog.create({title,content,owner,nameOfOwner})
         //console.log(blog);
            
         return res.status(200).
@@ -36,4 +37,21 @@ const postBlog = asyncHandler(async (req,res)=>
     
 })
 
-export {postBlog}
+const showBlogs = asyncHandler(async (req,res) => {
+    
+    const search = req.query.search || "";
+    const page =  parseInt(req.query.page)-1 || 0 
+    const limit = 5 
+    const sort = { length: -1 };
+    const blog = await Blog.find({title :{$regex:search,$options:"i"}})
+    .sort({ createdAt: -1 })
+    .skip(page*limit)
+    .limit(limit)
+
+    return res.status(200)
+    .json(new ApiResponse(200,
+        blog,
+        "Blogs fetched successfully"))
+
+})
+export {postBlog,showBlogs}
