@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-    loginUser, logoutUser, refreshAccessToken, registerUser, google
+    loginUser, logoutUser, refreshAccessToken, registerUser, google, myBlogs
 } from "../controllers/user.controller.js"
 import {verifyJWT} from "../middlewares/auth.middleware.js"
 import { postBlog } from "../controllers/blog.controller.js";
@@ -26,5 +26,6 @@ userRouter.route("/logout").post(
 )
 userRouter.route("/refresh-token").post(refreshAccessToken)
 
+userRouter.route("/myBlogs").get(verifyJWT,myBlogs)
 
 export default userRouter

@@ -4,6 +4,7 @@ import { User} from "../models/user.models.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
+import { Blog } from "../models/blog.models.js";
 
 
 const generateAccessAndRefreshTokens = async(userId)=>{
@@ -206,10 +207,23 @@ const google = async (req, res, next) => {
     }
   };
 
+ const myBlogs = asyncHandler(async (req,res) => {
+    
+    console.log(req.user);
+    const name = req.user.name;
+    
+    
+    const blog = await Blog.find({nameOfOwner:{$regex:name,$options:"i"}})
+
+    return res.status(200)
+    .json(new ApiResponse(200,blog,"blogs fetched"))
+})
+
 export {
     registerUser,
     loginUser,
     logoutUser,
     refreshAccessToken,
-    google
+    google,
+    myBlogs
 }
