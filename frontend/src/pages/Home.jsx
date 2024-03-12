@@ -1,7 +1,53 @@
 import React from 'react'
 import Post from './Post';
-
+import { useState , useEffect } from 'react';
 const Home = () => {
+    let blogs = [];
+    const [obj, setObj] = useState({});
+	const [sort, setSort] = useState({ sort: "rating", order: "desc" });
+	const [filterGenre, setFilterGenre] = useState([]);
+	const [page, setPage] = useState(1);
+	const [search, setSearch] = useState("");
+	useEffect(() => {
+		const getAllMovies = async () => {
+			try {
+                
+				const url = `/api/showBlogs?page=${page}&sort=${sort.sort},${
+					sort.order
+				}&genre=${filterGenre.toString()}&search=${search}`;
+				const res = await fetch(url, {
+                    method: 'GET',
+                  });
+                  const {data} = await res.json();
+                  if (!res.ok) {
+                    console.log(data.message);
+                  }
+                  console.log("Data received:", data);
+				setObj({data} || {});
+			} catch (err) {
+				console.log(err);
+			}
+		};
+
+		getAllMovies();
+	}, [sort, filterGenre, page, search]);
+    // try {
+    //         const res = await fetch('/api/showBlogs'  ,{
+    //         method:'GET',
+    //     });
+    //     const data = await res.json();
+        
+    //     if (!res.ok) {
+    //         console.log(data.message);
+    //       }
+    //       blogs = data;
+    //       console.log("hi",data)
+
+
+    // } catch (error) {
+    //     console.log(error)
+    // }
+
   return (
     <>  
     
@@ -25,8 +71,18 @@ const Home = () => {
 
         <div className="w-4/6 mt-12"> 
           <h1 className='text-white text-2xl font-semibold'>BLOGS</h1>
-          <Post/>
-        </div>     
+          <div className={`bg-white dark:bg-gray-800 font-[sans-serif] p-4 mt-12 rounded-md `}>
+            <div className="max-w-6xl max-md:max-w-lg mx-auto">
+                <div>
+                    <h2 className="text-3xl font-extrabold text-[#333] dark:text-slate-100 inline-block">
+                    LATEST BLOGS
+                    </h2>
+                </div>
+                {console.log(obj)}
+                <Post blogs = {obj.data ? obj.data : []}/>
+            </div>
+        </div>   
+        </div>  
 
         <div className='w-2/6 scroll-smooth'>
           <h1 className='text-2xl mt-12 ml-20 mr-20 font-semibold text-center text-white'>Top Voices On PICT Connect</h1>

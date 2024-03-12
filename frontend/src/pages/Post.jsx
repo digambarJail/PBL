@@ -1,43 +1,38 @@
 import React from 'react';
 
-const Post = () => {
+const Post = ({ blogs }) => {
   return (
-    <div className={`bg-white dark:bg-gray-800 font-[sans-serif] p-4 mt-12 rounded-md `}>
-      <div className="max-w-6xl max-md:max-w-lg mx-auto">
-        <div>
-          <h2 className="text-3xl font-extrabold text-[#333] dark:text-slate-100 inline-block">
-            LATEST BLOGS
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 gap-8 mt-10">
-          <div className={`flex max-lg:flex-col bg-white dark:bg-gray-700 cursor-pointer rounded overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:scale-105 transition-all duration-300`}>
-            <img
-              src="https://readymadeui.com/Imagination.webp"
-              alt="Blog Post 1"
-              className="lg:w-2/5 min-h-[250px] h-full object-cover"
-            />
-            <div className="p-6 lg:w-3/5">
-              <h3 className="text-xl font-bold text-[#333] dark:text-gray-300">
-                A Guide to Igniting Your Imagination
-              </h3>
-              <span className="text-sm block text-gray-400 dark:text-gray-400 mt-2">
-                10 FEB 2023 | BY JOHN DOE
-              </span>
-              <p className="text-sm mt-4 text-gray-700 dark:text-gray-200">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-                accumsan, nunc et tempus blandit.
-              </p>
-              <a
-                href="javascript:void(0);"
-                className="mt-4 inline-block text-blue-600 text-sm hover:underline"
-              >
-                Read More
-              </a>
-            </div>
+      
+    <div className="grid grid-cols-1 gap-8 mt-10">
+      {console.log("blogs",blogs)}
+      {blogs.map((blog) => (
+        <div className={`flex max-lg:flex-col bg-white dark:bg-gray-700 cursor-pointer rounded overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:scale-105 transition-all duration-300`}>
+          <img
+            src="https://readymadeui.com/Imagination.webp"
+            alt="Blog Post 1"
+            className="lg:w-2/5 min-h-[250px] h-full object-cover"
+          />
+          <div className="p-6 lg:w-3/5">
+            <h3 className="text-xl font-bold text-[#333] dark:text-gray-300">
+              {blog.title}
+            </h3>
+            <span className="text-sm block text-gray-400 dark:text-gray-400 mt-2 font-bold">
+              10 FEB 2023 | {blog.nameOfOwner}
+            </span>
+            <p className="text-sm mt-4 text-gray-700 dark:text-gray-200">
+              {blog.content.substring(0,20)}
+            </p>
+            <a
+              href="javascript:void(0);"
+              className="mt-4 inline-block text-blue-600 text-sm hover:underline"
+            >
+              Read More
+            </a>
           </div>
         </div>
+      ))}
       </div>
-    </div>
+     
   );
 };
 
