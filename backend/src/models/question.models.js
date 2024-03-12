@@ -2,7 +2,7 @@ import mongoose ,{Schema,mongo} from "mongoose";
 
 const questionSchema = new Schema({
 
-    content: {
+    question: {
         type: String,
         required:true
     },

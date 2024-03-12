@@ -7,8 +7,8 @@ const Blog = () => {
   const [title, setTitle] = useState('');
 
   const handleQuestionChange = (e) => {
-    setQuestion({ ...question, [e.target.id]: e.target.value.trim() });
-    console.log(question)
+    setQuestion(e.target.value);
+    console.log(e.target.value.trim());
   };
 
   const handleTitleChange = (e) => {
@@ -20,6 +20,37 @@ const Blog = () => {
     setContent(e.target.value.trim());
     console.log(e.target.value.trim()); // Log the trimmed value of the input field
   };
+
+  const handleSubmitQuestion = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await fetch('/api/postQuestion', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({question}),
+      });
+
+      console.log("Content:", question);
+
+      if (!response.ok) {
+        throw new Error('Failed to submit question');
+      }
+  
+      const data = await response.json();
+      console.log(data)
+  
+      const token = data.token;
+  
+      console.log('Token:', token);
+  
+      console.log("Question response ", response);
+    } catch (error) {
+      console.log("Error in handleQuestionBlog ", error);
+    }
+  }
   
   const handleSubmitBlog = async (e) => {
     e.preventDefault();
@@ -61,12 +92,13 @@ const Blog = () => {
           <h1 className='text-3xl py-10'>Ask a Question</h1>
           <textarea
             className='bg-transparent w-[50%] pb-12'
+            name='question'
+            id='question'
             type='text'
             placeholder='Type Your Question ...'
             onChange={handleQuestionChange}
-
           />
-          <button className='bg-green-500 rounded-xl mt-6 px-5 py-2.5 text-white text-xl'>Ask</button>
+          <button onClick={handleSubmitQuestion} className='bg-green-500 rounded-xl mt-6 px-5 py-2.5 text-white text-xl'>Ask</button>
         </div>
 
         <div className="w-full my-10">
