@@ -1,12 +1,12 @@
 import React from 'react';
-
+import moment from "moment"
 const Post = ({ blogs }) => {
   return (
       
-    <div className="grid grid-cols-1 gap-8 mt-10">
+    <div className="grid grid-cols-1 gap-8 mt-10 ">
       {console.log("blogs",blogs)}
       {blogs.map((blog) => (
-        <div className={`flex max-lg:flex-col bg-white dark:bg-gray-700 cursor-pointer rounded overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:scale-105 transition-all duration-300`}>
+        <div className={`flex max-lg:flex-col bg-white dark:bg-[#282929] cursor-pointer rounded overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:scale-105 transition-all duration-300`}>
           <img
             src="https://readymadeui.com/Imagination.webp"
             alt="Blog Post 1"
@@ -17,7 +17,7 @@ const Post = ({ blogs }) => {
               {blog.title}
             </h3>
             <span className="text-sm block text-gray-400 dark:text-gray-400 mt-2 font-bold">
-              10 FEB 2023 | {blog.nameOfOwner}
+              {moment(blog.createdAt).format("Do MMM YY")} | {blog.nameOfOwner}
             </span>
             <p className="text-sm mt-4 text-gray-700 dark:text-gray-200">
               {blog.content.substring(0,20)}

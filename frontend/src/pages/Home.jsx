@@ -51,17 +51,17 @@ const Home = () => {
   return (
     <>  
     
-      <div className= "scroll-smooth bg-black flex h-full flex-row text-center"> {/* Adjust mt-[60px] to match your navbar's height */}      
+      <div className= "scroll-smooth flex h-full flex-row text-center "> {/* Adjust mt-[60px] to match your navbar's height */}      
         <div className="w-2/6 items-center mt-12"> 
-          <h1 className='text-white text-2xl font-semibold'>Events</h1>
-          <a href="#" class="mt-12 ml-4 mr-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <h1 className=' text-2xl font-semibold'>Events</h1>
+          <a href="#" class="mt-12 ml-4 mr-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#282929] dark:border-gray-700 dark:hover:bg-gray-700">
 
           <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">PISB Credenz'24</h5>
           <p class="font-normal text-gray-700 dark:text-gray-400">🎉 Get ready for a thrilling week of tech trivia and fun with our new series of Tech-Tidbits! 🎉
 📆 Mark your calendars: Monday, Wednesday, and Friday at 8pm for the latest tech facts! </p>
           </a>
 
-          <a href="#" class="mt-12 ml-4 mr-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <a href="#" class="mt-12 ml-4 mr-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#282929] dark:border-gray-700 dark:hover:bg-gray-700">
 
           <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">PISB Credenz'24</h5>
           <p class="font-normal text-gray-700 dark:text-gray-400">🎉 Get ready for a thrilling week of tech trivia and fun with our new series of Tech-Tidbits! 🎉
@@ -70,8 +70,8 @@ const Home = () => {
         </div>   
 
         <div className="w-4/6 mt-12"> 
-          <h1 className='text-white text-2xl font-semibold'>BLOGS</h1>
-          <div className={`bg-white dark:bg-gray-800 font-[sans-serif] p-4 mt-12 rounded-md `}>
+          <h1 className=' text-2xl font-semibold'>BLOGS</h1>
+          <div className={`bg-white dark:bg-neutral-900 font-[sans-serif] p-4 mt-12 rounded-md `}>
             <div className="max-w-6xl max-md:max-w-lg mx-auto">
                 <div>
                     <h2 className="text-3xl font-extrabold text-[#333] dark:text-slate-100 inline-block">
@@ -85,12 +85,12 @@ const Home = () => {
         </div>  
 
         <div className='w-2/6 scroll-smooth'>
-          <h1 className='text-2xl mt-12 ml-20 mr-20 font-semibold text-center text-white'>Top Voices On PICT Connect</h1>
+          <h1 className='text-2xl mt-12 ml-20 mr-20 font-semibold text-center'>Top Voices On PICT Connect</h1>
 
 
-        <div class="mt-12 mr-6 ml-6 relative overflow-x-auto">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <div class="mt-12 mr-6 ml-6 relative overflow-x-auto ">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 dark:bg-[#171616]">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[#313232] dark:text-gray-400">
                     <tr>
                       
                         <th scope="col" class="px-3 py-3">
@@ -105,7 +105,7 @@ const Home = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <tr class="bg-white border-b dark:bg-[#282929] dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             John
                         </th>
@@ -116,7 +116,7 @@ const Home = () => {
                             SE
                         </td>
                     </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <tr class="bg-white border-b dark:bg-[#282929] dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             Tom
                         </th>
@@ -127,7 +127,7 @@ const Home = () => {
                             TE
                         </td>
                     </tr>
-                    <tr class="bg-white dark:bg-gray-800">
+                    <tr class="bg-white dark:bg-[#282929]">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             Henry
                         </th>
