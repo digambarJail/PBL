@@ -69,7 +69,8 @@ const loginUser = asyncHandler( async (req, res) => {
 
         const options = {
             httpOnly: true,
-            secure: true
+            secure: true,
+            expires: new Date(Date.now() + 86400 * 1000)
         }
 
         return res
@@ -108,7 +109,8 @@ const logoutUser = asyncHandler(async(req, res)=>{
 
     const options = {
         httpOnly: true,
-        secure: true
+        secure: true,
+        expires: new Date(Date.now() + 86400 * 1000)
     }
 
     return res

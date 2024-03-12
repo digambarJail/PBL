@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import {verifyJWT} from "../middlewares/auth.middleware.js"
-import { postBlog, showBlogs } from "../controllers/blog.controller.js";
+import { getBlog, postBlog, showBlogs } from "../controllers/blog.controller.js";
 
 
 const blogRouter = Router()
@@ -14,4 +14,8 @@ blogRouter.route("/postBlog").post(
 blogRouter.route("/showBlogs").get(
     showBlogs
 )
+
+blogRouter.route("/:blogId").get(getBlog)
+
+
 export default blogRouter

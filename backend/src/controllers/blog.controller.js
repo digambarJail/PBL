@@ -54,4 +54,20 @@ const showBlogs = asyncHandler(async (req,res) => {
         "Blogs fetched successfully"))
 
 })
-export {postBlog,showBlogs}
+
+const getBlog = asyncHandler(async (req,res) => {
+
+    const {blogId} = req.params
+    const blog = await Blog.findById(blogId);
+    //console.log(blog);
+    if(!blog)
+    {
+        throw new ApiError(401,"Blog not found!!!")
+    }
+    return res.status(200)
+    .json(new ApiResponse(200,
+        blog,
+        "Blog fetched successfully"))
+})
+
+export {postBlog,showBlogs,getBlog}
