@@ -39,9 +39,10 @@ function App() {
       <Route element={<><PrivateRoute /></>} >
         <Route path="/" element={<Home/>} />
         <Route path="dashboard" element={<><Dashboard/></>} />
+        <Route path="blog" element={<><Blog /></>} />
         </Route>
         <Route path="logout" element={<><Logout/></>} />
-        <Route path="blog" element={<><Blog /></>} />
+        
       
     </Routes>
     <FooterCom/>
