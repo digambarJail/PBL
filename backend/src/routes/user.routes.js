@@ -4,11 +4,17 @@ import {
 } from "../controllers/user.controller.js"
 import {verifyJWT} from "../middlewares/auth.middleware.js"
 import { postBlog } from "../controllers/blog.controller.js";
+import { upload } from "../middlewares/multer.middleware.js";
 
 const userRouter = Router();
 
-userRouter.route("/register").post(
-    registerUser
+userRouter.route("/register").post(upload.fields([
+    {
+        name :"profilePicture",
+        maxCount:1,
+    }
+])
+    ,registerUser
 )
 
 userRouter.route("/login").post(

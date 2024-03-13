@@ -5,6 +5,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
 import { Blog } from "../models/blog.models.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
+
 
 
 const generateAccessAndRefreshTokens = async(userId)=>{
@@ -36,7 +38,25 @@ const registerUser = asyncHandler(async(req, res)=>{
             
         }
 
-        const user = await User.create({name, email, password})
+        //const profilePicturePath = req.files?.avatar[0]?.path
+
+        let profilePicturePath;
+        if (req.files && Array.isArray(req.files.profilePicture) && req.files.profilePicture.length > 0) {
+            profilePicturePath = req.files.profilePicture[0].path
+        }
+
+        if(!profilePicturePath)
+        {
+            throw new ApiError(400,"Profile Picture required")
+        }
+
+        const profilePicture = await uploadOnCloudinary(profilePicturePath)
+        if(!profilePicture)
+        {
+            throw new ApiError(400,"Profile Picture required")
+        }
+
+        const user = await User.create({name, email, password,profilePicture: profilePicture.url})
 
         res.status(201).json(user);
     } catch (error) {
