@@ -20,7 +20,7 @@ const Blog = () => {
   };
   
   const handleContentChange = (e) => {
-    setContent(e.target.value.trim());
+    setContent(e.target.value);
     console.log(e.target.value.trim()); // Log the trimmed value of the input field
   };
 
