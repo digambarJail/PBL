@@ -17,6 +17,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import ThemeProvider from "./components/ThemeProvider";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
+import NoPrivateRoute from "./components/NoPrivateRoute";
 
 function App() {
   return (
@@ -34,14 +35,17 @@ function App() {
     
     <Header/>
     <Routes>
+    <Route element={<><NoPrivateRoute /></>} >
     <Route path="login" element={<><Login /></>} />
       <Route path="reg" element={<><Signup /></>} />
+      </Route>
       <Route element={<><PrivateRoute /></>} >
         <Route path="/" element={<Home/>} />
         <Route path="dashboard" element={<><Dashboard/></>} />
         <Route path="blog" element={<><Blog /></>} />
         </Route>
         <Route path="logout" element={<><Logout/></>} />
+        
         
       
     </Routes>

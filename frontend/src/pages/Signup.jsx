@@ -1,36 +1,43 @@
-import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import OAuth from '../components/OAuth';
+import { Alert, Button, Label, Spinner, TextInput ,FileInput } from "flowbite-react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../components/OAuth";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState();
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.password) {
-      return setErrorMessage('Please fill out all fields.');
+    if (!formData.name || !formData.email || !formData.password || !file) {
+      return setErrorMessage("Please fill out all fields and select a file.");
     }
     try {
       setLoading(true);
       setErrorMessage(null);
-      const res = await fetch('/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+  
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('password', formData.password);
+      formDataToSend.append('profilePicture', file);
+  
+      const res = await fetch("/api/register", {
+        method: "POST",
+        body: formDataToSend
       });
       const data = await res.json();
       if (data.status === 500) {
         return setErrorMessage(data.error);
       }
       setLoading(false);
-      if(res.ok) {
-        navigate('/login');
+      if (res.ok) {
+        navigate("/login");
       }
     } catch (error) {
       setErrorMessage(error.message);
@@ -38,77 +45,87 @@ export default function SignUp() {
     }
   };
   return (
-    <div className='min-h-screen mt-40'>
-      <div className='flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-40'>
+    <div className="min-h-screen mt-20">
+      <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-40">
         {/* left */}
-        <div className='flex-1'>
-          <Link to='/' className='font-bold dark:text-white text-4xl'>
-            <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-blue-400 to-cyan-400 rounded-lg text-white'>
+        <div className="flex-1">
+          <Link to="/" className="font-bold dark:text-white text-4xl">
+            <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-blue-400 to-cyan-400 rounded-lg text-white">
               PICT
-            </span>
-            {" " }CONNECT
+            </span>{" "}
+            CONNECT
           </Link>
-          <p className='text-sm mt-5'>
+          <p className="text-sm mt-5">
             {/* This is a demo project. You can sign up with your email and password
             or with Google. */}
           </p>
         </div>
         {/* right */}
 
-        <div className='flex-1'>
-          <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
+        <div className="flex-1">
+          <form className="flex flex-col gap-4" onSubmit={handleSubmit} enctype="multipart/form-data">
             <div>
-              <Label value='Your username' />
+              <Label value="Your username" />
               <TextInput
-                type='text'
-                placeholder='name'
-                id='name'
+                type="text"
+                placeholder="name"
+                id="name"
                 onChange={handleChange}
               />
             </div>
             <div>
-              <Label value='Your email' />
+              <Label value="Your email" />
               <TextInput
-                type='email'
-                placeholder='name@company.com'
-                id='email'
+                type="email"
+                placeholder="name@company.com"
+                id="email"
                 onChange={handleChange}
               />
             </div>
             <div>
-              <Label value='Your password' />
+              <Label value="Your password" />
               <TextInput
-                type='password'
-                placeholder='Password'
-                id='password'
+                type="password"
+                placeholder="Password"
+                id="password"
                 onChange={handleChange}
+              />
+            </div>
+            <div>
+              <div>
+                <Label htmlFor="file-upload-helper-text" value="Upload Profile Picture" />
+              </div>
+              <FileInput
+                id="file-upload"
+                helperText="SVG, PNG, JPG or GIF (MAX. 800x400px)."
+                onChange={(e) => setFile(e.target.files[0])}
               />
             </div>
             <Button
-              gradientDuoTone='redToYellow'
-              type='submit'
+              gradientDuoTone="redToYellow"
+              type="submit"
               disabled={loading}
               outline
             >
               {loading ? (
                 <>
-                  <Spinner size='sm' />
-                  <span className='pl-3'>Loading...</span>
+                  <Spinner size="sm" />
+                  <span className="pl-3">Loading...</span>
                 </>
               ) : (
-                'Sign Up'
+                "Sign Up"
               )}
             </Button>
-            <OAuth/>
+            <OAuth />
           </form>
-          <div className='flex gap-2 text-sm mt-5'>
+          <div className="flex gap-2 text-sm mt-5">
             <span>Have an account?</span>
-            <Link to='/login' className='text-blue-500'>
+            <Link to="/login" className="text-blue-500">
               Sign In
             </Link>
           </div>
           {errorMessage && (
-            <Alert className='mt-5' color='failure'>
+            <Alert className="mt-5" color="failure">
               {errorMessage}
             </Alert>
           )}
@@ -117,39 +134,6 @@ export default function SignUp() {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState } from 'react';
 // import { Link } from 'react-router-dom';
@@ -162,11 +146,10 @@ export default function SignUp() {
 //     password:"",
 //   });
 //   const navigate = useNavigate()
-  
+
 //   const handleInput = (e) =>{
 //     let name = e.target.id;
 //     let value = e.target.value;
-
 
 //     setUser({
 //       ...user,
@@ -193,7 +176,6 @@ export default function SignUp() {
 //     }catch(error){
 //         console.log("register",error)
 //     }
-    
 
 //       // axios.post('http://localhost:3001/register' , {name, email , password})
 //       // .then(result => console.log(result))
