@@ -6,6 +6,9 @@ const Blog = () => {
   const [content,setContent] = useState('');
   const [title, setTitle] = useState('');
 
+  const [quesSubmit, setQuesSubmit] = useState(false);
+  const [blogSubmit, setBlogSubmit] = useState(false);
+
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
     console.log(e.target.value.trim());
@@ -47,6 +50,13 @@ const Blog = () => {
       console.log('Token:', token);
   
       console.log("Question response ", response);
+
+      setQuestion('');
+      setQuesSubmit(true);
+
+      setTimeout(() => {
+      setQuesSubmit(false);
+    }, 5000);
     } catch (error) {
       console.log("Error in handleQuestionBlog ", error);
     }
@@ -79,6 +89,14 @@ const Blog = () => {
       console.log('Token:', token);
   
       console.log("Blog response ", response);
+
+      setTitle('');
+      setContent('')
+      setBlogSubmit(true);
+
+      setTimeout(() => {
+      setBlogSubmit(false);
+    }, 5000);
     } catch (error) {
       console.log("Error in handleSubmitBlog ", error);
     }
@@ -92,6 +110,7 @@ const Blog = () => {
           <h1 className='text-3xl py-10'>Ask a Question</h1>
           <textarea
             className='bg-transparent w-[50%] pb-12'
+            value={question}
             name='question'
             id='question'
             type='text'
@@ -99,6 +118,9 @@ const Blog = () => {
             onChange={handleQuestionChange}
           />
           <button onClick={handleSubmitQuestion} className='bg-green-500 rounded-xl mt-6 px-5 py-2.5 text-white text-xl'>Ask</button>
+          {quesSubmit && (
+            <div className="text-green-600 mt-3"><h1 className='text-3xl'>Your question has been submitted successfully!</h1></div>
+          )}
         </div>
 
         <div className="w-full my-10">
@@ -110,6 +132,7 @@ const Blog = () => {
           <textarea
             className='bg-transparent w-[50%] pb-0 mb-10'
             id='title'
+            value={title}
             type='text'
             name='title'
             placeholder='Title'
@@ -118,12 +141,16 @@ const Blog = () => {
           <textarea
             className='bg-transparent w-[50%] pb-36'
             id='content'
+            value={content}
             type='text'
             name='content'
             placeholder='Write ...'
             onChange={handleContentChange}
           />
           <button onClick={handleSubmitBlog} className='bg-green-500 rounded-xl mt-6 px-5 py-2.5 text-white text-xl relative'>Submit</button>
+          {blogSubmit && (
+            <div className="text-green-600 mt-3"><h1 className='text-3xl'>Your blog has been submitted successfully!</h1></div>
+          )}
         </div>
       </div>
     </>

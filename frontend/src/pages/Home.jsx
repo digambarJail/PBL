@@ -74,9 +74,9 @@ const Home = () => {
           <div className={`bg-white dark:bg-neutral-900 font-[sans-serif] p-4 mt-12 rounded-md `}>
             <div className="max-w-6xl max-md:max-w-lg mx-auto">
                 <div>
-                    <h2 className="text-3xl font-extrabold text-[#333] dark:text-slate-100 inline-block">
+                    {/* <h2 className="text-3xl font-extrabold text-[#333] dark:text-slate-100 inline-block">
                     LATEST BLOGS
-                    </h2>
+                    </h2> */}
                 </div>
                 {console.log(obj)}
                 <Post blogs = {obj.data ? obj.data : []}/>
