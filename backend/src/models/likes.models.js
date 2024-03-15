@@ -12,6 +12,10 @@ const likeSchema = new Schema({
         ref: "User",
         
     },
+    blogOwnerId:{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    }
     
     
     
