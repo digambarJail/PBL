@@ -4,6 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Blog } from "../models/blog.models.js";
 import { User } from "../models/user.models.js";
+import mongoose, { mongo } from "mongoose";
 
 
 const postBlog = asyncHandler(async (req,res)=>
@@ -57,8 +58,8 @@ const showBlogs = asyncHandler(async (req,res) => {
 
 const getBlog = asyncHandler(async (req,res) => {
 
-    const {blogId} = req.params
-    const blog = await Blog.findById(blogId);
+    //const {blogId} = req.params
+    const blog = await Blog.findById(req.params.blogId);
     //console.log(blog);
     if(!blog)
     {
@@ -69,5 +70,7 @@ const getBlog = asyncHandler(async (req,res) => {
         blog,
         "Blog fetched successfully"))
 })
+
+
 
 export {postBlog,showBlogs,getBlog}

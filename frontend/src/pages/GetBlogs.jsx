@@ -8,7 +8,7 @@ const GetBlogs = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await fetch(`/api/${blogId}`);
+        const res = await fetch(`/api/b/${blogId}`);
         const data = await res.json();
         console.log('Fetched blog:', data); // Log the fetched data
         setBlog(data); // Set the state directly

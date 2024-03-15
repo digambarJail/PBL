@@ -15,7 +15,7 @@ blogRouter.route("/showBlogs").get(
     showBlogs
 )
 
-blogRouter.route("/:blogId").get(getBlog)
+blogRouter.route("/b/:blogId").get(getBlog)
 
 
 export default blogRouter
