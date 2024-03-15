@@ -11,7 +11,7 @@ const postQuestion = asyncHandler(async (req,res)=>
         const {question} =  req.body;
         const owner = await User.findById(req.user._id).select(
             "-password -refreshToken" 
-        ) ;
+        ) ; 
         const nameOfOwner = owner.name 
         // if(
         //     [question].some((field)=>{

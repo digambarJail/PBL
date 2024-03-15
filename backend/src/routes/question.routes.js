@@ -5,7 +5,7 @@ import {postQuestion, showQuestions} from "../controllers/question.controller.js
 
 const questionRouter = Router()
 
-questionRouter.route("/postQuestion").post(
+questionRouter.route("/postQuestion").post( 
     verifyJWT,
     postQuestion
 )
