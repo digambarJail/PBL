@@ -9,7 +9,7 @@ const Home = () => {
 	const [page, setPage] = useState(1);
 	const [search, setSearch] = useState("");
 	useEffect(() => {
-		const getAllMovies = async () => {
+		const getAllBlogs = async () => {
 			try {
                 
 				const url = `/api/showBlogs?page=${page}&sort=${sort.sort},${
@@ -29,7 +29,7 @@ const Home = () => {
 			}
 		};
 
-		getAllMovies();
+		getAllBlogs();
 	}, [sort, filterGenre, page, search]);
     // try {
     //         const res = await fetch('/api/showBlogs'  ,{

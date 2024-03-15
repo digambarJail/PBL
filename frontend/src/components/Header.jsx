@@ -7,10 +7,12 @@ import { FaMoon , FaSun} from "react-icons/fa";
 import {  useSelector , useDispatch } from 'react-redux';
 import { toggleTheme } from '../app/theme/themeSlice';
 import { signoutSuccess } from '../app/user/userSlice';
+import { setSearchQuery } from '../app/Search/SearchSlice';
 
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [search , setSearch] = useState("");
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -36,6 +38,14 @@ function Header() {
       console.log(error.message);
     }
   };
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+};
+const handleSubmit = (event) => {
+  event.preventDefault();
+  dispatch(setSearchQuery(search)); 
+  navigate('/showBlogs');
+};
   
   return (
     <Navbar classname='border-b-2'>
@@ -43,8 +53,9 @@ function Header() {
         <span className='px-2 py-1 bg-gradient-to-r from-indigo-600 via-blue-400 to-cyan-400 rounded-lg text-white font-semibold'>PICT</span>
         <span className='text-sm sm:text-xl font-semibold dark:text-white'>{" "}Connect</span>
       </Link>
-      <form>
-        <TextInput type = 'text' placeholder='Search..' rightIcon={AiOutlineSearch} className='hidden lg:inline'/>
+      <form onSubmit={handleSubmit}>
+        <TextInput type = 'text' placeholder='Search..' rightIcon={AiOutlineSearch} className='hidden lg:inline' value={search}
+                onChange={handleSearchChange}/>
       </form>
       <Button className='w-12 h-10 lg:hidden' color = 'gray' pill>
         <AiOutlineSearch/>
