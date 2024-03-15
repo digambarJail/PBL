@@ -70,7 +70,7 @@ const Home = () => {
         </div>   
 
         <div className="w-4/6 mt-12"> 
-          <h1 className=' text-2xl font-semibold'>BLOGS</h1>
+          <h1 className=' text-2xl font-semibold'>Blogs</h1>
           <div className={`bg-white dark:bg-neutral-900 font-[sans-serif] p-4 mt-12 rounded-md `}>
             <div className="max-w-6xl max-md:max-w-lg mx-auto">
                 <div>
@@ -89,61 +89,11 @@ const Home = () => {
 
 
         <div class="mt-12 mr-6 ml-6 relative overflow-x-auto ">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 dark:bg-[#171616]">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[#313232] dark:text-gray-400">
-                    <tr>
-                      
-                        <th scope="col" class="px-3 py-3">
-                            Name
-                        </th>
-                        <th scope="col" class="px-3 py-3">
-                            Department
-                        </th>
-                        <th scope="col" class="px-3 py-3">
-                            Year
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="bg-white border-b dark:bg-[#282929] dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            John
-                        </th>
-                        <td class="px-6 py-4">
-                            IT
-                        </td>
-                        <td class="px-6 py-4">
-                            SE
-                        </td>
-                    </tr>
-                    <tr class="bg-white border-b dark:bg-[#282929] dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Tom
-                        </th>
-                        <td class="px-6 py-4">
-                            CE
-                        </td>
-                        <td class="px-6 py-4">
-                            TE
-                        </td>
-                    </tr>
-                    <tr class="bg-white dark:bg-[#282929]">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Henry
-                        </th>
-                        <td class="px-6 py-4">
-                            ENTC
-                        </td>
-                        <td class="px-6 py-4">
-                            SE
-                        </td>
-                    </tr>
-                </tbody>
-                  </table>
-              </div>
+
+        </div>
 
 
-          </div>
+        </div>
 
         </div>
     
