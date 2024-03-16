@@ -141,7 +141,6 @@ const logoutUser = asyncHandler(async(req, res)=>{
     
 })
 
-
 const refreshAccessToken = asyncHandler(async(req, res)=>{
     const incomingRefreshToken = req.cookies.refreshToken||req.body.refreshToken
 
@@ -257,11 +256,28 @@ const google = async (req, res, next) => {
     .json(new ApiResponse(200,blog[0].myBlogs,"blogs fetched"))
 })
 
+const deleteBlog = asyncHandler(async (req,res) => {
+
+    const {blogId} = req.params 
+
+    const blog = await Blog.findByIdAndDelete(blogId)
+
+    if(!blog)
+    {
+        throw new ApiError(401,"Blog not found")
+    }
+
+    return res.status(200)
+    .json(new ApiResponse(200,
+        blog,"blog deleted successfully"))
+})
+
 export {
     registerUser,
     loginUser,
     logoutUser,
     refreshAccessToken,
     google,
-    myBlogs
+    myBlogs,
+    deleteBlog
 }
