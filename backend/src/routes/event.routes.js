@@ -7,9 +7,8 @@ const eventRouter = Router()
 // private routes
 eventRouter.route("/addEvent").post(verifyJWT,addEvent)
 
-
 eventRouter.route("/showEvents").get(showEvents)
 
 eventRouter.route("/e/:eventId").get(getEvent)
 
-export default eventRouter
+export default eventRouter;

@@ -1,7 +1,5 @@
 import mongoose, {Schema} from "mongoose";
 
-
-
 const likeSchema = new Schema({
     blog: {
         type: Schema.Types.ObjectId,
@@ -9,8 +7,7 @@ const likeSchema = new Schema({
     },
     likedBy: {
         type: Schema.Types.ObjectId,
-        ref: "User",
-        
+        ref: "User",        
     },
     blogOwnerId:{
         type:Schema.Types.ObjectId,

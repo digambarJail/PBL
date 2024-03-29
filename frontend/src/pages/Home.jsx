@@ -2,13 +2,21 @@ import React from 'react'
 import Post from './Post';
 import Events from './Events';
 import { useState , useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 const Home = () => {
-    let blogs = [];
-    const [obj, setObj] = useState({});
+    // let blogs = [];
+  const navigate = useNavigate();
+  const [obj, setObj] = useState({});
 	const [sort, setSort] = useState({ sort: "rating", order: "desc" });
 	const [filterGenre, setFilterGenre] = useState([]);
 	const [page, setPage] = useState(1);
 	const [search, setSearch] = useState("");
+
+  const handleAddEvent = () =>{
+    navigate('/addEvent')
+  }
+
 	useEffect(() => {
 		const getAllBlogs = async () => {
 			try {
@@ -56,6 +64,10 @@ const Home = () => {
         <div className="w-2/6 items-center mt-12"> 
           
           <Events />
+          <button onClick={handleAddEvent} className="mt-10 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full">
+            Add Your Event
+          </button>
+
           {/* <a href="#" class="mt-12 ml-4 mr-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#282929] dark:border-gray-700 dark:hover:bg-gray-700">
 
           <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">PISB Credenz'24</h5>

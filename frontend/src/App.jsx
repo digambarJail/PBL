@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import GetBlogs from "./pages/GetBlogs"; // Correct import statement
+import AddEvent from './pages/addEvent';
 import "./index.css";
 import { Auth0Provider } from "@auth0/auth0-react";
 import Logout from "./pages/Logout";
@@ -45,6 +46,7 @@ function App() {
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="blog" element={<Blog />} />
                   <Route path="showblogs" element={<ShowBlogs />} />
+                  <Route path="addEvent" element={<AddEvent />} />
                   <Route path="getBlogs/:blogId" element={<GetBlogs />} /> {/* Use element prop */}
                 </Route>
                 <Route path="logout" element={<Logout />} />
