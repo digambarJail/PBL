@@ -33,8 +33,7 @@ const Events = () => {
           <p>Organized by : {item.organizer}</p>
           <p>Date: {item.date}</p>          
           <p>Venue: {item.location}</p>
-          <p>Click to know more {item.url}</p>
-          
+          <a className='text-blue-500' href={item.url}>Click Here to know more!</a>          
         </div>
       ))}
       </div>

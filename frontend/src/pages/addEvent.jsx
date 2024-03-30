@@ -17,7 +17,7 @@ const AddEvent = () => {
         const { name, value } = e.target;
         setEventDetails({
         ...eventDetails,
-        [name]: value.trim(), // Automatically trim the value
+        [name]: value // Automatically trim the value
         });
     };
 
