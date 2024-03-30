@@ -20,14 +20,23 @@ const likeBlog = async(req, res)=>{
         const name = likedBy.name;
         //console.log(blog.owner);
         try {
-          const likedObject = await Like.create({blog:blog,
-             likedBy:likedBy,blogOwnerId:blog.owner})
-          //likedObject.save()
+          const existingLike = await Like.findOne({ blog: blogId, likedBy: req.user._id });
+          
+        if (existingLike) {
+          await Like.findByIdAndDelete(existingLike.id)
           res.status(200).json(new ApiResponse(200,{},
-            "Liked successfully"))
+            "Unliked successfully"))
+        }
+        else{
+            const likedObject = await Like.create({blog:blog,
+              likedBy:likedBy,blogOwnerId:blog.owner})
+            //likedObject.save()
+            res.status(200).json(new ApiResponse(200,{},
+              "Liked successfully"))
+          }
         } catch (error) {
           console.log(error)
-          res.status(400).json("")
+          res.status(400).json("Failed to like blog")
         }       
         
     }
