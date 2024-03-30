@@ -6,7 +6,7 @@ import {likeBlog, getLikesCount, getTopVoices} from "../controllers/likes.contro
 
 const likesRouter = Router()
 
-likesRouter.route("/l/:blogId").post(verifyJWT, likeBlog).get(getLikesCount)
+likesRouter.route("/l/:blogId").post(verifyJWT, likeBlog).get(verifyJWT,getLikesCount)
 
 likesRouter.route("/getTopVoices").get(getTopVoices)
 
