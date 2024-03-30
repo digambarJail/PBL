@@ -1,6 +1,7 @@
 import React from 'react'
 import Post from './Post';
 import Events from './Events';
+import TopVoices from './TopVoices';
 import { useState , useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -102,8 +103,7 @@ const Home = () => {
 
         <div className='w-2/6 scroll-smooth'>
           <h1 className='text-2xl mt-12 ml-20 mr-20 font-semibold text-center'>Top Voices On PICT Connect</h1>
-
-
+          <TopVoices />
         <div class="mt-12 mr-6 ml-6 relative overflow-x-auto ">
 
         </div>
