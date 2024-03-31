@@ -37,7 +37,7 @@ const FooterCom = () => {
               <Footer.Title title='Follow us' />
               <Footer.LinkGroup col>
                 <Footer.Link
-                  href='https://www.github.com/sahandghavidel'
+                  href='#'
                   target='_blank'
                   rel='noopener noreferrer'
                 >

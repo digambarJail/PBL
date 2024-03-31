@@ -33,7 +33,7 @@ const Home = () => {
                     console.log(data.message);
                   }
                   // console.log("Data received:", data);
-				setObj({data} || {});
+				setObj(data || {});
 			} catch (err) {
 				console.log(err);
 			}
@@ -96,7 +96,7 @@ const Home = () => {
                     </h2> */}
                 </div>
                 {console.log(obj)}
-                <Post blogs = {obj.data ? obj.data : []}/>
+                <Post blogs = {obj.blog ? obj.blog : []}/>
             </div>
         </div>   
         </div>  

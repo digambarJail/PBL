@@ -48,10 +48,20 @@ const showBlogs = asyncHandler(async (req,res) => {
     .sort({ createdAt: -1 })
     .skip(page*limit)
     .limit(limit)
+    const total = await Blog.countDocuments({
+        title: { $regex: search, $options: "i" },
+    });
+    const response = {
+        error: false,
+        total,
+        page: page + 1,
+        limit,
+        blog,
+    };
 
     return res.status(200)
     .json(new ApiResponse(200,
-        blog,
+        response,
         "Blogs fetched successfully"))
 
 })
