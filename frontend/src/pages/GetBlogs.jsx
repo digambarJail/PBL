@@ -6,6 +6,7 @@ const GetBlogs = () => {
   const { blogId } = useParams();
   const [blog, setBlog] = useState(null);
   const {currentUser} = useSelector(state => state.user)
+  
   useEffect(() => {
     const fetchBlog = async () => {
       try {

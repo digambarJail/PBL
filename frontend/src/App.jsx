@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Import BrowserRouter, Routes, and Route
 import Blog from "./pages/Blog";
@@ -21,6 +19,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import NoPrivateRoute from "./components/NoPrivateRoute";
 import ShowBlogs from './pages/ShowBlogs';
+import GetQuestion from './pages/GetQuestion';
 
 function App() {
   return (
@@ -48,6 +47,8 @@ function App() {
                   <Route path="showblogs" element={<ShowBlogs />} />
                   <Route path="addEvent" element={<AddEvent />} />
                   <Route path="getBlogs/:blogId" element={<GetBlogs />} /> {/* Use element prop */}
+                  <Route path="getQuestion/:quesId" element={<GetQuestion />} /> {/* Use element prop */}
+
                 </Route>
                 <Route path="logout" element={<Logout />} />
               </Routes>
@@ -57,6 +58,7 @@ function App() {
         </ThemeProvider>
       </Provider>
     </PersistGate>
+
   )
 }
 

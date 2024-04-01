@@ -4,6 +4,8 @@ import Events from './Events';
 import TopVoices from './TopVoices';
 import { useState , useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ShowQuestions from './showQuestions';
+
 
 const Home = () => {
     // let blogs = [];
@@ -60,7 +62,7 @@ const Home = () => {
 
   return (
     <>  
-    
+      <div className=' flex flex-col'>
       <div className= "scroll-smooth flex h-full flex-row text-center "> {/* Adjust mt-[60px] to match your navbar's height */}      
         <div className="w-2/6 items-center mt-12"> 
           
@@ -112,7 +114,14 @@ const Home = () => {
         </div>
 
         </div>
-    
+
+        <div className='mt-40 mb-40'>
+          <h1 className='ml-20 text-4xl font-semibold'>Recently asked Question! </h1>
+          <ShowQuestions />
+
+        </div>
+
+        </div>
     </>
   )
 }
