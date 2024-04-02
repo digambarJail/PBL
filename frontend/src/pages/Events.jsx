@@ -27,7 +27,7 @@ const Events = () => {
       <h1 className=' text-2xl font-semibold'>Events</h1>
       <div className=''>
       {data.map((item, index) => (
-        <div className='bg-gray-800 mr-5 ml-5 border-white border-2 mt-12' key={index}>
+        <div className='bg-slate-200 dark:bg-gray-800 mr-5 ml-5 border-white border-2 mt-12 rounded-xl p-10' key={index}>
           <h1 className='font-bold '>{item.name}</h1>
           {item.description}
           <p>Organized by : {item.organizer}</p>

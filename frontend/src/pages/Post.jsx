@@ -53,7 +53,7 @@ const Post = ({ blogs }) => {
   return (
     <div className="grid grid-cols-1 gap-8 mt-10">
       {blogs.map((blog) => (
-        <div key={blog._id} className="flex max-lg:flex-col bg-white dark:bg-[#282929] cursor-pointer rounded overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:scale-105 transition-all duration-300">
+        <div key={blog._id} className="flex max-lg:flex-col bg-white dark:bg-[#282929] cursor-pointer rounded overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:scale-[105%] transition-all duration-300">
           <img
             src="https://readymadeui.com/Imagination.webp"
             alt="Blog Post"
@@ -71,7 +71,7 @@ const Post = ({ blogs }) => {
             </p>
             <Link
               to={`/getBlogs/${blog._id}`}
-              className="mt-4 inline-block text-blue-600 text-sm hover:underline"
+              className="mt-4 inline-block text-blue-600 text-lg hover:underline"
             >
               Read More
             </Link>
