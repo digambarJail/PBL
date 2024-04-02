@@ -43,8 +43,11 @@ function Header() {
 };
 const handleSubmit = (event) => {
   event.preventDefault();
-  dispatch(setSearchQuery(search)); 
-  navigate('/showBlogs');
+  if (search.trim() === "") {
+    return; // Return if search input is empty or contains only spaces
+  }
+  dispatch(setSearchQuery(search.trim())); // Dispatch search query
+  navigate('/showBlogs'); // Navigate to showBlogs page
 };
   
   return (

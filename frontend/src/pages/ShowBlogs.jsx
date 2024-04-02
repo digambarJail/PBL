@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Post from "./Post";
 import Pagination from "../components/Pagination";
 import { useNavigate } from "react-router-dom";
+import { Dropdown } from "flowbite-react";
 
 export default function ShowBlogs() {
   const [obj, setObj] = useState({});
@@ -60,6 +61,7 @@ export default function ShowBlogs() {
           </span>
         </div>
       </div>
+      <div className="flex flex-row">
       <div className="w-1/2 mx-8">
         {obj.blog && obj.blog.length > 0 ? (
           <>
@@ -72,9 +74,7 @@ export default function ShowBlogs() {
             />
           </>
         ) : (
-          <div
-            class="my-10 ml-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-          >
+          <div class="my-10 ml-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               No Result Found!
             </h5>
@@ -83,6 +83,15 @@ export default function ShowBlogs() {
             </p>
           </div>
         )}
+      </div>
+      <div className="w-1/2 mt-10 mx-10">
+      <Dropdown label="Sort By" placement="bottom" color="gray">
+        <Dropdown.Item>Recent</Dropdown.Item>
+        <Dropdown.Item>Oldest</Dropdown.Item>
+        <Dropdown.Item>All</Dropdown.Item>
+        <Dropdown.Item>Most Liked</Dropdown.Item>
+      </Dropdown>
+      </div>
       </div>
     </>
   );
