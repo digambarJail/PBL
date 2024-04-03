@@ -3,6 +3,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Question } from "../models/question.models.js";
 import { User } from "../models/user.models.js";
+import mongoose, { mongo } from "mongoose";
+
 
 
 const postQuestion = asyncHandler(async (req,res)=>
@@ -53,4 +55,46 @@ const showQuestions = asyncHandler(async (req,res) => {
         "Questions fetched successfully"))
 
 })
-export {postQuestion, showQuestions}
+
+const getQuestion = asyncHandler(async (req,res) => {
+    
+    const {questionId} = req.params
+
+    const question = await Question.aggregate([
+        {
+            $match:{
+                _id: new mongoose.Types.ObjectId(questionId)
+            }
+        },
+        {
+            $lookup:{
+                from :"users",
+                localField:"owner",
+                foreignField: "_id",
+                as : "ownerDetails"
+            }
+        },
+        {
+            $project:{
+                title:1,
+                content:1,
+                nameOfOwner:1,
+                createdAt:1,
+                profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] }
+            }
+        }
+    ])
+
+    if(!question)
+    {
+        throw new ApiError(401,"Question not found!!!")
+    }
+    return res.status(200)
+    .json(new ApiResponse(200,
+        question[0],
+        "Question fetched successfully"))
+})
+
+
+
+export {postQuestion, showQuestions, getQuestion}
