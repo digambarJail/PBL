@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-    loginUser, logoutUser, refreshAccessToken, registerUser, google, myBlogs, deleteBlog
+    loginUser, logoutUser, refreshAccessToken, registerUser, google, myBlogs, deleteBlog, changeCurrentPassword
 } from "../controllers/user.controller.js"
 import {verifyJWT} from "../middlewares/auth.middleware.js"
 import { postBlog } from "../controllers/blog.controller.js";
@@ -35,5 +35,12 @@ userRouter.route("/refresh-token").post(refreshAccessToken)
 userRouter.route("/myBlogs").get(verifyJWT,myBlogs)
 
 userRouter.route("/b/:blogId").delete(deleteBlog)
+
+userRouter.route("/changePassword").post(
+    verifyJWT,
+    changeCurrentPassword
+)
+
+
 
 export default userRouter
