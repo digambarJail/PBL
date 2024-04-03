@@ -14,8 +14,6 @@ const postAnswer = asyncHandler(async (req,res) => {
       const answerBy = req.user._id 
       const ownerName = req.user.name
    
-      
-   
       if(!answer)
       {
          throw new ApiError(401,"Cant post empty field")
