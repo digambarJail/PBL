@@ -30,32 +30,84 @@ const postAnswer = asyncHandler(async (req,res) => {
 
 })
 
-const getAnswers = asyncHandler(async (req,res) => {
+// const getAnswers = asyncHandler(async (req,res) => {
 
-   const {questionId} = req.params
-   const answer = await Question.aggregate([
-      {
-            $match:{
-               _id:new mongoose.Types.ObjectId(questionId)
-            }
-      },
-      {
-         $lookup:{
-            from:"answers",
-            localField:"_id",
-            foreignField:"questionId",
-            as:"questionAnswers"
-         }
-      }
-   ])
+//    const {questionId} = req.params
+//    const answer = await Question.aggregate([
+//       {
+//             $match:{
+//                _id:new mongoose.Types.ObjectId(questionId)
+//             }
+//       },
+//       {
+//          $lookup:{
+//             from:"answers",
+//             localField:"_id",
+//             foreignField:"questionId",
+//             as:"questionAnswers"
+//          }
+//       }
+//    ])
 
 
    
 
-   return res.status(200).
-   json(new ApiResponse(200,
-      answer,
-      "Answers fetched successfully"))
-})
+//    return res.status(200).
+//    json(new ApiResponse(200,
+//       answer,
+//       "Answers fetched successfully"))
+// })
+
+const getAnswers = asyncHandler(async (req, res) => {
+   const { questionId } = req.params;
+   const answers = await Question.aggregate([
+     {
+       $match: {
+         _id: new mongoose.Types.ObjectId(questionId),
+       },
+     },
+     {
+       $lookup: {
+         from: "answers",
+         localField: "_id",
+         foreignField: "questionId",
+         as: "questionAnswers",
+       },
+     },
+     {
+       $unwind: "$questionAnswers", // Unwind the questionAnswers array for further lookups
+     },
+     {
+       $lookup: {
+         from: "users", // Assuming the user collection is named "users"
+         localField: "questionAnswers.answerBy", // Assuming the field answerBy in answers contains the user ID
+         foreignField: "_id",
+         as: "questionAnswers.userDetails",
+       },
+     },
+     {
+       $project: {
+         _id: 0, // Exclude the question ID from the final output
+         questionAnswers: {
+           answer: 1,
+           answeredBy: 1,
+           profilePicture: { $arrayElemAt: ["$questionAnswers.userDetails.profilePicture", 0] }, // Get the profile picture from the joined userDetails
+         },
+       },
+     },
+     {
+       $group: {
+         _id: "$_id",
+         answers: { $push: "$questionAnswers" }, // Group everything back by question ID if needed
+       },
+     },
+   ]);
+ 
+   if (!answers.length) {
+     return res.status(404).json(new ApiResponse(404, {}, "No answers found for this question"));
+   }
+ 
+   return res.status(200).json(new ApiResponse(200, answers, "Answers fetched successfully"));
+ });
 
 export {postAnswer, getAnswers}
