@@ -5,6 +5,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { Blog } from "../models/blog.models.js";
 import { User } from "../models/user.models.js";
 import mongoose, { mongo } from "mongoose";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 
 const postBlog = asyncHandler(async (req,res)=>
@@ -26,8 +27,14 @@ const postBlog = asyncHandler(async (req,res)=>
                throw new ApiError(400,"The Above Field are Compulsory")
            }
         //console.log("before creatre");
-        const blog = await Blog.create({title,content,owner,nameOfOwner})
-        //console.log(blog);
+        console.log("before upload");
+        let blogPicturePath;
+        if (req.files && Array.isArray(req.files.blogPicture) && req.files.blogPicture.length > 0) {
+            blogPicturePath = req.files.blogPicture[0].path
+        }
+        const blogPicture = await uploadOnCloudinary(blogPicturePath)
+        console.log("after upload");
+        const blog = await Blog.create({title,content,owner,nameOfOwner,blogPicture: blogPicture?.url || ""})
            
         return res.status(200).
         json(new ApiResponse(200,{blog},"Blog Posted Successfully"))
@@ -68,16 +75,49 @@ const showBlogs = asyncHandler(async (req,res) => {
 
 const getBlog = asyncHandler(async (req,res) => {
 
-    //const {blogId} = req.params
-    const blog = await Blog.findById(req.params.blogId);
-    //console.log(blog);
+    // const {blogId} = req.params
+    // const blog = await Blog.findById(req.params.blogId);
+    // //console.log(blog);
+    
+    // const ownerDetails = User.findOne(blog.owner) ;
+    // const profilePicture = ownerDetails.profilePicture ;
+    // blog.profilePicture = profilePicture ;
+    // console.log(blog);
+    
+    const {blogId} = req.params
+
+    const blog = await Blog.aggregate([
+        {
+            $match:{
+                _id: new mongoose.Types.ObjectId(blogId)
+            }
+        },
+        {
+            $lookup:{
+                from :"users",
+                localField:"owner",
+                foreignField: "_id",
+                as : "ownerDetails"
+            }
+        },
+        {
+            $project:{
+                title:1,
+                content:1,
+                nameOfOwner:1,
+                createdAt:1,
+                profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] }
+            }
+        }
+    ])
+
     if(!blog)
     {
         throw new ApiError(401,"Blog not found!!!")
     }
     return res.status(200)
     .json(new ApiResponse(200,
-        blog,
+        blog[0],
         "Blog fetched successfully"))
 })
 

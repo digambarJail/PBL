@@ -88,7 +88,7 @@ const GetBlogs = () => {
                 <address className="flex items-center mb-6 not-italic">
                   <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                     <img
-                      src={currentUser.data.user.profilePicture}
+                      src={blog.data.profilePicture}
                       alt=""
                       className="mr-4 w-16 h-16 rounded-full"
                     />
