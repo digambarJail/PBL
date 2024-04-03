@@ -1,80 +1,192 @@
+// import React, { useState, useEffect } from 'react';
+// import { useParams } from 'react-router-dom';
+// import moment from "moment";
+
+// const GetQuestion = () => {
+//   const { quesId } = useParams();
+//   const [question, setQuestion] = useState(null);
+  
+//   useEffect(() => {
+//     const fetchQuestion = async () => {
+//       try {
+//         const res = await fetch(`/api/q/${quesId}`);
+//         const data = await res.json();
+//         console.log('Fetched Question :', data); // Log the fetched data
+//         if (data && data.data) { // Ensure data and data.data are not null/undefined
+//           setQuestion(data.data); // Set the state directly
+//         } else {
+//           console.error('Invalid data structure:', data);
+//         }
+//       } catch (error) {
+//         console.error('Error fetching question:', error);
+//       }
+//     };
+
+//     fetchQuestion();
+//   }, [quesId]); // Add quesId as a dependency
+
+//   console.log('Ques state:', question); // Log the question state
+
+//   const [answer, setAnswer] = useState('');
+
+//   const handleAnswerChange = (e) =>{
+//     setAnswer(e.target.value)
+//   }
+
+//   console.log(answer)
+
+
+//   }
+
+//   const submitAnswer = async (e) =>{
+//     e.preventDefault();
+
+//     try {
+//       console.log("Inside try block of submit answer")
+//       const response = await fetch(`api/answer/${quesId}`, {
+//       method: "POST",
+//       headers: {
+//           "Content-Type": "application/json",
+//           // "Authorization": `Bearer ${token}`
+//       },
+//       body: JSON.stringify(answer),
+//     });
+
+//     console.log("Content:", answer);
+
+//     if (!response.ok) {
+//       throw new Error('Failed to submit answer');
+//     }      
+
+//     console.log("Answer response ", response);
+
+
+//     const data = await response.json();
+//     console.log(data)
+
+//     const token = data.token;
+
+//     console.log('Token:', token);
+
+//     console.log("Submit answer response ", response);
+
+//   //   setQuestion('');
+//     // setEventSubmit(true);
+
+//   //   setTimeout(() => {
+//   //   setEventSubmit(false);
+//   // }, 5000);
+//     } catch (error) {
+//       console.log("Error in submitAnswer ", error);
+//     }
+//   }
+
+//   return (
+//     <div className="container mx-auto px-4 flex justify-center mt-10 mb-56">
+//       {question !== null ? (
+//         <div className="bg-gray-950 rounded-lg shadow-lg p-6 max-w-md">
+//           <div className="flex items-center mb-4">
+//             <img src={question.profilePicture} alt="Profile" className="w-10 h-10 rounded-full mr-2" />
+//             <div>
+//               <h1 className="text-2xl font-bold mb-1">{question.question}</h1>
+//               <p className="text-gray-700">Asked by: {question.nameOfOwner}</p>
+//               <p className="text-gray-700">Asked on: {moment(question.createdAt).format("ll")}</p>
+//             </div>
+//           </div>
+//           <div className="mt-4">
+//             <textarea onChange={handleAnswerChange} className="w-full h-32 px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-green-500" placeholder="Type your answer here..."></textarea>
+//             <button onClick={submitAnswer} className="bg-green-500 text-white px-4 py-2 mt-2 rounded-lg hover:bg-green-600 focus:outline-none focus:bg-green-600">Answer</button>
+//           </div>
+//         </div>
+//       ) : (
+//         <p>Loading...</p>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default GetQuestion;
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import moment from "moment";
-import {  useSelector , useDispatch } from 'react-redux';
+import moment from 'moment';
+
 const GetQuestion = () => {
   const { quesId } = useParams();
   const [question, setQuestion] = useState(null);
-  
+  const [answer, setAnswer] = useState('');
+  const [answers, setAnswers] = useState([]);
+
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
-        const res = await fetch(`/api/answer/${quesId}`);
+        const res = await fetch(`/api/q/${quesId}`);
         const data = await res.json();
-        console.log('Fetched Question :', data); // Log the fetched data
-        setQuestion(data); // Set the state directly
+        if (data && data.data) {
+          setQuestion(data.data);
+        } else {
+          console.error('Invalid data structure:', data);
+        }
       } catch (error) {
         console.error('Error fetching question:', error);
       }
     };
 
     fetchQuestion();
-  }, [quesId]); // Add blogId as a dependency
+  }, [quesId]);
 
-  console.log('Ques state:', question); // Log the blog state
+  useEffect(() => {
+    const fetchAnswers = async () => {
+      try {
+        const res = await fetch(`/api/answer/${quesId}`);
+        const data = await res.json();
+        if (data && data.data) {
+          setAnswers(data.data);
+          console.log("Answers ",answers)
+        } else {
+          console.error('Invalid data structure:', data);
+        }
+      } catch (error) {
+        console.error('Error fetching answers:', error);
+      }
+    };
+
+    fetchAnswers();
+  }, [quesId]);
+
+  const handleAnswerChange = (e) => {
+    setAnswer(e.target.value);
+  };
 
   return (
-    <h1>Hello</h1>
-//     <div>
-//       {blog ? (
-//         <>
-// <main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
-//   <div class="flex justify-between px-4 mx-auto max-w-screen-xl ">
-//       <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
-//           <header class="mb-4 lg:mb-6 not-format">
-//               <address class="flex items-center mb-6 not-italic">
-//                   <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-//                   <img src={currentUser.data.user.profilePicture} alt="" className="mr-4 w-16 h-16 rounded-full" />
-//                       <div>
-//                           <a href="#" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{blog.data.nameOfOwner}</a>
-//                           <p class="text-base text-gray-500 dark:text-gray-400">SE IT</p>
-//                           <p class="text-base text-gray-500 dark:text-gray-400">{moment(blog.createdAt).format("ll")}</p>
-//                       </div>
-//                   </div>
-//               </address>
-//               <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">{blog.data.title}</h1>
-//           </header>
-//           <p class="lead">{blog.data.content}</p>
-      
+    <div>
+    <div className="container mx-auto px-4 flex justify-center mt-10 mb-36">
+      {question !== null ? (
+        <div className="bg-gray-950 rounded-lg shadow-lg p-6 max-w-md">
+          {/* Question and User Info */}
+          <div className="flex items-center mb-4">
+            <img src={question.profilePicture} alt="Profile" className="w-10 h-10 rounded-full mr-2" />
+            <div>
+              <h1 className="text-2xl font-bold mb-1">{question.question}</h1>
+              <p className="text-gray-700">Asked by: {question.nameOfOwner}</p>
+              <p className="text-gray-700">Asked on: {moment(question.createdAt).format('ll')}</p>
+            </div>
+          </div>
+          {/* Answer Submission Form */}
+          <div className="mt-4">
+            <textarea value={answer} onChange={handleAnswerChange} className="w-full h-32 px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-green-500" placeholder="Type your answer here..."></textarea>
+            <button className="bg-green-500 text-white px-4 py-2 mt-2 rounded-lg hover:bg-green-600 focus:outline-none focus:bg-green-600">Answer</button>
+          </div>
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
 
-//       </article>
-//   </div>
-// </main>
+    </div>
 
-// <aside aria-label="Related articles" class="py-8 lg:py-24 bg-gray-50 dark:bg-gray-800">
-//   <div class="px-4 mx-auto max-w-screen-xl">
-//       <h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white">Related articles</h2>
-//       <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
-//           <article class="max-w-xs">
-//               <a href="#">
-//                   <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-1.png" class="mb-5 rounded-lg" alt="Image 1"></img>
-//               </a>
-//               <h2 class="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-//                   <a href="#">Our first office</a>
-//               </h2>
-//               <p class="mb-4 text-gray-500 dark:text-gray-400">Over the past year, Volosoft has undergone many changes! After months of preparation.</p>
-//               <a href="#" class="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline">
-//                   Read in 2 minutes
-//               </a>
-//           </article>
-//       </div>
-//   </div>
-// </aside>
-// </>
-//       ) : (
-//         <p>Loading...</p>
-//       )}
-//     </div>
+    <h1>Answers to this question</h1>
+
+    </div>
   );
 };
 

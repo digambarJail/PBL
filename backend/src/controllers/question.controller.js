@@ -76,8 +76,8 @@ const getQuestion = asyncHandler(async (req,res) => {
         },
         {
             $project:{
-                title:1,
-                content:1,
+                // title:1,
+                question:1,
                 nameOfOwner:1,
                 createdAt:1,
                 profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] }
