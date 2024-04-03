@@ -190,7 +190,7 @@ const GetBlogs = () => {
               </div>
             </div>
             {showComments && (
-            <div className="w-fullbg-white rounded-lg border p-1 md:p-3 m-10">
+            <div className="w-fullbg-white rounded-lg border p-1 md:p-3 m-10 w-full">
               <h3 className="font-semibold p-1">Discussion</h3>
               {comments.length > 0 ? (
                 <Comments comments={comments} />

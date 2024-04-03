@@ -24,13 +24,37 @@ const TopVoices = () => {
 
   return (
     <div>
-      <div className=''>
+      {data.length !== 0 ? (
+      <div className='m-10 border  border-[#404040] rounded-xl dark:bg-[#282929] '>
       {data.slice(0, 3).map((item, index) => (
-        <div className='bg-slate-200 dark:bg-gray-800 mr-5 ml-5 border-white border-2 mt-12 rounded-full p-4 group-hover:o' key={index}>
-          <h1 className='font-bold '>{item.name}</h1>
+        <div className=' mr-5 ml-5 border  border-[#404040] mt-12 rounded-xl p-4 group-hover:o mb-10 flex flex-row items-center space-x-2 ' key={index}>
+          <div className='font-bold w-[20%]'>{index+1}</div>
+{          console.log('pf',)
+}          <div className='font-bold w-[20%]'><img src={data[index].profilePicture} alt=""  className='rounded-avatar shrink-0 h-[2.5rem] w-[2.5rem] object-cover object-center rounded-md'/></div>
+          <div className='font-bold '>{item.name}</div>
         </div>
       ))}
       </div>
+      ) :
+      (
+        <>
+        <div class="flex flex-col items-center max-w-xl gap-4 mt-20 my-10">
+    <div class="animate-pulse rounded-full h-20 w-20 bg-gray-800 mb-4"></div>
+    <div class="h-5 bg-gray-400 rounded w-1/2"></div>
+    <div class="h-5 bg-gray-400 rounded w-1/2"></div>
+    <div class="h-5 bg-gray-400 rounded w-1/2"></div>
+    <div class="h-5 bg-gray-400 rounded w-1/2"></div>
+    <div class="h-5 bg-gray-400 rounded w-1/2"></div>
+</div><div class="flex flex-col items-center max-w-xl gap-4 mt-20 my-10">
+    <div class="animate-pulse rounded-full h-20 w-20 bg-gray-800 mb-4"></div>
+    <div class="h-5 bg-gray-400 rounded w-1/2"></div>
+    <div class="h-5 bg-gray-400 rounded w-1/2"></div>
+    <div class="h-5 bg-gray-400 rounded w-1/2"></div>
+    <div class="h-5 bg-gray-400 rounded w-1/2"></div>
+    <div class="h-5 bg-gray-400 rounded w-1/2"></div>
+</div>
+</>
+      )}
     </div>
   )
 }

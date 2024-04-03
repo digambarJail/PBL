@@ -3,7 +3,7 @@
 // import {Link} from "react-router-dom";
 // const Post = ({ blogs }) => {
 //   return (
-      
+
 //     <div className="grid grid-cols-1 gap-8 mt-10 ">
 //       {console.log("blogs",blogs)}
 //       {blogs.map((blog) => (
@@ -33,48 +33,69 @@
 //         </div>
 //       ))}
 //       </div>
-     
+
 //   );
 // };
 
 // export default Post;
 
-
-
-
-
 // post.jsx
 
-import React from 'react';
+import React from "react";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Post = ({ blogs }) => {
+  const navigate = useNavigate();
   return (
-    <div className="grid grid-cols-1 gap-8 mt-10">
+    <div className="grid grid-cols-1 gap-8">
       {blogs.map((blog) => (
-        <div key={blog._id} className="flex max-lg:flex-col bg-white dark:bg-[#282929] cursor-pointer rounded overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:scale-[105%] transition-all duration-300">
-          <img
-            src="https://readymadeui.com/Imagination.webp"
-            alt="Blog Post"
-            className="lg:w-2/5 min-h-[250px] h-full object-cover"
-          />
-          <div className="p-6 lg:w-3/5">
-            <h3 className="text-xl font-bold text-[#333] dark:text-gray-300">
-              {blog.title}
-            </h3>
-            <span className="text-sm block text-gray-400 dark:text-gray-400 mt-2 font-bold">
-              {moment(blog.createdAt).format("Do MMM YY")} | {blog.nameOfOwner}
-            </span>
-            <p className="text-sm mt-4 text-gray-700 dark:text-gray-200">
-              {blog.content.length > 150 ? blog.content.substring(0, 150) + ' ...' : blog.content}
-            </p>
-            <Link
-              to={`/getBlogs/${blog._id}`}
-              className="mt-4 inline-block text-blue-600 text-lg hover:underline"
-            >
-              Read More
-            </Link>
+        <div
+          key={blog._id}
+          className="flex flex-col overflow-hidden rounded-lg shadow-lg min-h-[60vh] max-h-fit border border-[#404040]"
+        >
+          <div className="flex-shrink-0">
+            <img
+              className="h-80 w-full object-cover"
+              src={blog.blogPicture || 'https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80'}
+              alt='pic'
+            />
+          </div>
+          <div className="flex flex-1 flex-col justify-between p-6 dark:bg-[#282929]" onClick={() => navigate(`/getBlogs/${blog._id}`)}>
+            <div className="flex-1">
+              <a href="#" className="mt-2 block">
+                <p className="text-xl font-semibold">
+                {blog.title}
+                </p>
+                <p className="mt-3 text-base">
+                {blog.content.length > 150 ? blog.content.substring(0, 150) + ' ...' : blog.content}
+                </p>
+              </a>
+            </div>
+            <div className="mt-6 flex items-center">
+              <div className="flex-shrink-0">
+                <a href="#">
+                  <span className="sr-only">Roel Aufderehar</span>
+                  <img
+                    className="h-10 w-10 rounded-full"
+                    src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+                    alt=""
+                  />
+                </a>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm font-medium text-slate-100">
+                  <a href="#" className="hover:underline">
+                  {blog.nameOfOwner}
+                  </a>
+                </p>
+                <div className="flex space-x-1 text-sm text-gray-400">
+                  <time dateTime="2020-03-16">{moment(blog.createdAt).format("Do MMM YY")} </time>
+                  <span aria-hidden="true">·</span>
+                  {/* <span>6 min read</span> */}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       ))}
