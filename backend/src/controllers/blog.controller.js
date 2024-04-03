@@ -106,7 +106,8 @@ const getBlog = asyncHandler(async (req,res) => {
                 content:1,
                 nameOfOwner:1,
                 createdAt:1,
-                profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] }
+                profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] },
+                blogPicture:1
             }
         }
     ])
