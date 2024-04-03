@@ -85,7 +85,7 @@ const getQuestion = asyncHandler(async (req,res) => {
         }
     ])
 
-    if(!question)
+    if(!question?.length)
     {
         throw new ApiError(401,"Question not found!!!")
     }

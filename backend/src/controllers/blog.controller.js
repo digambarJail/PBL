@@ -111,8 +111,8 @@ const getBlog = asyncHandler(async (req,res) => {
             }
         }
     ])
-    // console.log(blog)
-    if(!blog||blog.length==0)
+
+    if(!blog?.length)
     {
         throw new ApiError(401,"Blog not found!!!")
     }

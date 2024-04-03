@@ -53,6 +53,10 @@ const getComments = asyncHandler(async (req,res) => {
       }
    ])
 
+   if(!comment?.length)
+   {
+      throw new ApiError(401,"NO COMMENTS")
+   }
 
    //console.log(comment[0].blogComments);
 
