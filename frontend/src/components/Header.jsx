@@ -21,6 +21,17 @@ function Header() {
   const { theme } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const isNavigatingAway = location.pathname !== '/showBlogs';
+    if (isNavigatingAway) {
+      setSearch(''); // Clear search input
+      dispatch(setSearchQuery('')); // Clear search query in Redux state
+    }
+  }, [location.pathname, dispatch]);
+
+  
   const handleSignout = async () => {
     try {
       const res = await fetch('/api/logout', {

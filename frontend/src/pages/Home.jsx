@@ -45,22 +45,8 @@ const Home = () => {
 
     getAllBlogs();
   }, [sort, filterGenre, page, search]);
-  // try {
-  //         const res = await fetch('/api/showBlogs'  ,{
-  //         method:'GET',
-  //     });
-  //     const data = await res.json();
 
-  //     if (!res.ok) {
-  //         console.log(data.message);
-  //       }
-  //       blogs = data;
-  //       console.log("hi",data)
-
-  // } catch (error) {
-  //     console.log(error)
-  // }
-
+  
   return (
     <>
       <div className=" flex flex-col">
@@ -75,20 +61,6 @@ const Home = () => {
             >
               Add Your Event
             </button>
-
-            {/* <a href="#" class="mt-12 ml-4 mr-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#282929] dark:border-gray-700 dark:hover:bg-gray-700">
-
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">PISB Credenz'24</h5>
-          <p class="font-normal text-gray-700 dark:text-gray-400">🎉 Get ready for a thrilling week of tech trivia and fun with our new series of Tech-Tidbits! 🎉
-📆 Mark your calendars: Monday, Wednesday, and Friday at 8pm for the latest tech facts! </p>
-          </a>
-
-          <a href="#" class="mt-12 ml-4 mr-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#282929] dark:border-gray-700 dark:hover:bg-gray-700">
-
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">PISB Credenz'24</h5>
-          <p class="font-normal text-gray-700 dark:text-gray-400">🎉 Get ready for a thrilling week of tech trivia and fun with our new series of Tech-Tidbits! 🎉
-📆 Mark your calendars: Monday, Wednesday, and Friday at 8pm for the latest tech facts! </p>
-          </a> */}
           </div>
           <div className="w-4/6 mt-12">
             <h1 className=" text-2xl font-semibold">Blogs</h1>

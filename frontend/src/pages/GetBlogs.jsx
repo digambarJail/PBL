@@ -19,7 +19,7 @@ const GetBlogs = () => {
   const { currentUser } = useSelector((state) => state.user);
 
   const handleChange = (e) => {
-    setComment(e.target.value.trim());
+    setComment(e.target.value);
   };
 
   useEffect(() => {
@@ -215,7 +215,7 @@ const GetBlogs = () => {
                 <form onSubmit={postComment}>
                   <div className="w-full px-3 mb-2 mt-6">
                     <textarea
-                      className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-400 focus:outline-none focus:bg-white"
+                      className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium text-slate-600 focus:outline-none focus:bg-white"
                       name="body"
                       placeholder="Comment"
                       value={comment}

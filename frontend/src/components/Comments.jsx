@@ -10,12 +10,12 @@ export default function Comments({ comments }) {
              <div className="p-3">
                <div className="flex gap-3 items-center">
                  <img
-                   src="https://tribe-s3-production.imgix.net/S5DaGQ3vdNUFPu8XrjNbR?fit=max&w=500&auto=compress,format"
+                   src={comment.userDetails[0].profilePicture || "https://tribe-s3-production.imgix.net/S5DaGQ3vdNUFPu8XrjNbR?fit=max&w=500&auto=compress,format"}
                    className="object-cover w-10 h-10 rounded-md  shadow-emerald-400"
                    alt="User avatar"
                  />
                  <h3 className="font-bold">
-                   {comment.ownerName}
+                   {comment.userDetails[0].name}
                    <br />
                  </h3>
                </div>

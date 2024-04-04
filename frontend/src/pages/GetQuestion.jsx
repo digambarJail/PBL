@@ -32,9 +32,9 @@ const GetQuestion = () => {
       try {
         const res = await fetch(`/api/answer/${quesId}`);
         const data = await res.json();
-        console.log(data)
+        console.log('data',data)
         // console.log(data.data[0].answers)
-        setAnswers(data.data[0].answers)
+        setAnswers(data.data[0].Qanswers)
         // console.log(answers)
         // if (data && data.data && data.data[0].questionAnswers) {
         //   setAnswers(data.data[0].questionAnswers); // Store just the questionAnswers array
@@ -49,7 +49,6 @@ const GetQuestion = () => {
 
     fetchAnswers();
   }, [quesId]);
-
   const handleAnswerChange = (e) => {
     setAnswer(e.target.value);
   };
@@ -91,7 +90,7 @@ const GetQuestion = () => {
       console.error("Error in submitAnswer:", error.message);
     }
   };
-
+ 
   return (
     <div>
       <div className="container mx-auto px-4 flex justify-center mt-10 mb-4 w-full">
@@ -123,9 +122,9 @@ const GetQuestion = () => {
       <div key={index} className="answer bg-white dark:bg-[#282828] rounded-lg shadow-slate-lg p-4 border  border-[#373737]">
         {/* If you have user information, display it here. For example: */}
         <div className="flex items-center mb-4">
-          <img src={answer.profilePicture} alt="User avatar" className="w-10 h-10 rounded-full mr-3"/>
+          <img src={answer.userDetails[0].profilePicture} alt="User avatar" className="w-10 h-10 rounded-full mr-3"/>
           <div>
-            <p className="font-semibold e">{answer.userName}</p>
+            <p className="font-semibold e">{answer.userDetails[0].name}</p>
             <p className="text-xs text-gray-400">Answered on {moment(answer.createdAt).format('ll')}</p>
           </div>
         </div>
