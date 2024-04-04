@@ -83,6 +83,22 @@ const likeAnswer = async(req, res)=>{
   }
 }
 
+const getLikesCountAnswer = async(req, res)=>{
+
+  try {
+    const { answerId } = req.params;
+    const userId = req.user._id ; 
+    const answerName=await Answer.findById(answerId);
+    const likesCount = await Like.countDocuments({ answer:answerId });
+    const existingLike = await Like.findOne({ answer:answerId, likedBy:userId });
+    const isLiked = (existingLike) ? true : false ;
+   // console.log(isLiked);
+    res.status(200).json(new ApiResponse(200,{likesCount,answerName,isLiked},"likes fetched succesfully"));
+  } catch (error) {
+      res.status(500).json(error)
+  }
+}
+
 const getLikesCount = async(req, res)=>{
 
   try {
@@ -145,4 +161,4 @@ const getTopVoices = asyncHandler(async (req,res) => {
 })
 
 
-export { likeBlog, getLikesCount,getTopVoices, likeAnswer}
+export { likeBlog, getLikesCount,getTopVoices, likeAnswer, getLikesCountAnswer}
