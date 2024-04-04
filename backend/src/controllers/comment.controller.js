@@ -35,8 +35,6 @@ const postComment = asyncHandler(async (req,res) => {
 const getComments = asyncHandler(async (req,res) => {
 
    const {blogId} = req.params
-   console.log(blogId);
-   console.log('here');
    const comment = await Blog.aggregate([
       {
             $match:{

@@ -50,7 +50,19 @@ const showBlogs = asyncHandler(async (req,res) => {
     const search = req.query.search || "";
     const page =  parseInt(req.query.page)-1 || 0 
     const limit = 5 
-    const sort = { length: -1 };
+    let sort ;
+    
+    switch (req.query.sort) {
+        case 'oldest':
+            sort = { createdAt: 1 }; 
+            break;
+        case 'most_liked':
+            sort = { likesCount: -1 }; 
+            break;
+        default:
+            sort = { createdAt: -1 }; 
+            break;
+    }
 
     const blog = await Blog.aggregate([
         {
@@ -70,6 +82,21 @@ const showBlogs = asyncHandler(async (req,res) => {
             }
         },
         {
+            $lookup:{
+                from : "likes" , 
+                localField: "_id" ,
+                foreignField : "blog" ,
+                as : "likesOnBlog"
+            }
+        },
+        {
+            $addFields : {
+                likesCount : {
+                    $size:"$likesOnBlog"
+                }
+            }
+        },
+        {
             $project:{
                 content:1,
                 title:1,
@@ -77,19 +104,14 @@ const showBlogs = asyncHandler(async (req,res) => {
                 blogPicture:1,
                 ownerName:  { $arrayElemAt: ["$ownerDetails.name", 0] },
                 profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] },
+                likesCount:1 
             }
         }
     ])
-    .sort({ createdAt: -1 })
+    .sort(sort)
     .skip(page*limit)
     .limit(limit)
 
-
-
-    // // const blog = await Blog.find({title :{$regex:search,$options:"i"}})
-    // // .sort({ createdAt: -1 })
-    // // .skip(page*limit)
-    // // .limit(limit)
     const total = await Blog.countDocuments({
         title: { $regex: search, $options: "i" },
     });
