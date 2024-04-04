@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-    loginUser, logoutUser, refreshAccessToken, registerUser, google, myBlogs, deleteBlog, changeCurrentPassword
+    loginUser, logoutUser, refreshAccessToken, registerUser, google, myBlogs, deleteBlog, changeCurrentPassword, forgetPassword, resetPassword
 } from "../controllers/user.controller.js"
 import {verifyJWT} from "../middlewares/auth.middleware.js"
 import { postBlog } from "../controllers/blog.controller.js";
@@ -39,6 +39,14 @@ userRouter.route("/b/:blogId").delete(deleteBlog)
 userRouter.route("/changePassword").post(
     verifyJWT,
     changeCurrentPassword
+)
+
+userRouter.route("/forgetPassword").post(
+    forgetPassword
+)
+
+userRouter.route("/resetPassword/:tokenId").post(
+    resetPassword
 )
 
 
