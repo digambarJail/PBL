@@ -5,11 +5,19 @@ const likeSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Blog",
     },
+    answer:{
+        type: Schema.Types.ObjectId,
+        ref: "Answer",
+    },
     likedBy: {
         type: Schema.Types.ObjectId,
         ref: "User",        
     },
     blogOwnerId:{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    },
+    answerOwnerId:{
         type:Schema.Types.ObjectId,
         ref:"User"
     }

@@ -4,6 +4,7 @@ import { User} from "../models/user.models.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Blog } from "../models/blog.models.js";
 import { Like } from "../models/likes.models.js";
+import {Answer} from "../models/answer.model.js"
 
 const likeBlog = async(req, res)=>{
     try{
@@ -43,6 +44,43 @@ const likeBlog = async(req, res)=>{
    catch (error) {
     res.status(401).json( "Failed to like blog")
     }
+}
+
+const likeAnswer = async(req, res)=>{
+  try{
+      const { answerId } = req.params; 
+      if(!answerId){
+        throw new ApiError(404, "No such answer")
+      }
+      const answer = await Answer.findById(answerId)
+      
+      const likedBy = await User.findById(req.user._id).select(
+          "-password -refreshToken -profilePicture" 
+      ) ;
+      const name = likedBy.name;
+      try {
+        const existingLike = await Like.findOne({ answer: answerId, likedBy: req.user._id });
+        
+      if (existingLike) {
+        await Like.findByIdAndDelete(existingLike.id)
+        res.status(200).json(new ApiResponse(200,{},
+          "Unliked successfully"))
+      }
+      else{
+          const likedObject = await Like.create({answer:answerId,
+            likedBy:likedBy,answerOwnerId:answer.answerBy})
+          res.status(200).json(new ApiResponse(200,{},
+            "Liked successfully"))
+        }
+      } catch (error) {
+        console.log(error)
+        res.status(400).json("Failed to like answer")
+      }       
+      
+  }
+ catch (error) {
+  res.status(401).json( "Failed to like blog")
+  }
 }
 
 const getLikesCount = async(req, res)=>{
@@ -107,4 +145,4 @@ const getTopVoices = asyncHandler(async (req,res) => {
 })
 
 
-export { likeBlog, getLikesCount,getTopVoices}
+export { likeBlog, getLikesCount,getTopVoices, likeAnswer}

@@ -1,6 +1,6 @@
 import mongoose , { Schema, mongo } from "mongoose"
 
-const commentSchema = new Schema({
+const answerSchema = new Schema({
     answer:{
         type:String,
         required:true
@@ -20,4 +20,4 @@ const commentSchema = new Schema({
 },{timestamps:true})
 
 
-export const Answer = new mongoose.model("Answer",commentSchema)
+export const Answer = new mongoose.model("Answer",answerSchema)
