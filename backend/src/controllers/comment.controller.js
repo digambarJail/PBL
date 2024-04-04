@@ -48,7 +48,26 @@ const getComments = asyncHandler(async (req,res) => {
             from:"comments",
             localField:"_id",
             foreignField:"blogId",
-            as:"blogComments"
+            as:"blogComments" ,
+            pipeline :[
+               {
+                  $lookup:{
+                     from: "users" ,
+                     localField:"commentBy" ,
+                     foreignField:"_id" ,
+                     as:"userDetails" ,
+                     pipeline:[
+                        {
+                           $project:{
+                              name:1,
+                              profilePicture:1
+                           }
+                        }
+                     ]
+
+                  }
+               }
+            ]
          }
       }
    ])

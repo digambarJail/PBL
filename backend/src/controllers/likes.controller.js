@@ -54,7 +54,7 @@ const getLikesCount = async(req, res)=>{
     const likesCount = await Like.countDocuments({ blog:blogId });
     const existingLike = await Like.findOne({ blog: blogId, likedBy:userId });
     const isLiked = (existingLike) ? true : false ;
-    console.log(isLiked);
+   // console.log(isLiked);
     res.status(200).json(new ApiResponse(200,{likesCount,blogName,isLiked},"likes fetched succesfully"));
   } catch (error) {
       res.status(500).json(error)
