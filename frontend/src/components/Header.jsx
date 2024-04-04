@@ -49,7 +49,7 @@ const handleSubmit = (event) => {
   dispatch(setSearchQuery(search.trim())); // Dispatch search query
   navigate('/showBlogs'); // Navigate to showBlogs page
 };
-  
+
   return (
     <Navbar classname='border-b-2'>
       <Link to="/reg" classname = "self-center whitespace-nowrap text-sm sm:text-xl font-bold dark:text-white">

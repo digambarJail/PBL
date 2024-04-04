@@ -56,7 +56,7 @@ const GetBlogs = () => {
   }, [blogId, likes]);
 
   const handlelike = async () => {
-    const newLikes = liked ? nolikes - 1 : nolikes + 1; 
+    const newLikes = liked ? nolikes - 1 : nolikes + 1;
     setnoLikes(newLikes);
     isLiked(!liked);
 
@@ -82,13 +82,13 @@ const GetBlogs = () => {
         body: JSON.stringify({ content: comment }),
       });
       const data = await res.json();
-      console.log('posts',data);
+      console.log("posts", data);
       const res1 = await fetch(`/api/c/${blogId}`);
       const cdata = await res1.json();
       console.log("Fetched Comments up:", cdata);
       setComments(cdata.data[0].blogComments);
       // Update comments state with the new comment
-  
+
       // Clear the comment input field
       setComment("");
     } catch (error) {
@@ -103,7 +103,7 @@ const GetBlogs = () => {
 
   return (
     <div>
-      <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased rounded-xl">
+      <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 antialiased rounded-xl">
         <div className="flex justify-between px-4 mx-auto max-w-screen-xl flex-col">
           <article className="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
             <header className="mb-4 lg:mb-6 not-format">
@@ -133,11 +133,11 @@ const GetBlogs = () => {
             </header>
             <p className="lead">{blog.data.content}</p>
             <div
-              className="flex mb-36 mt-16 justify-between items-center w-full mx-auto"
+              className="flex mb-36 mt-16 justify-between items-center w-full mx-auto border  border-[#404040] p-4 rounded-xl"
               id="hide"
             >
               <div className="flex space-x-8 items-center">
-                <div className="flex space-x-2">
+                <div className="flex space-x-2 rounded-lg ">
                   <div
                     style={{ display: "inline" }}
                     data-tooltipped=""
@@ -146,32 +146,47 @@ const GetBlogs = () => {
                   >
                     <button
                       onClick={() => handlelike()}
-                      className={`flex space-x-2 cursor-pointer rounded-sm focus:outline-none hover:bg-gray-800 ${
+                      className={`flex space-x-2 cursor-pointer rounded-lg focus:outline-none hover:bg-gray-800 border p-2 ${
                         liked
-                          ? "transition ease-in-out  scale-110  duration-300 "
+                          ? "transition ease-in-out  scale-110  duration-300 animate-heart "
                           : ""
                       }`}
                     >
                       <div className="flex  space-x-2 cursor-pointer">
-                        <AiFillLike />
+                        <AiFillLike
+                          className={`${
+                            liked
+                              ? "transition ease-in-out  scale-110  duration-300 animate-heartOut "
+                              : ""
+                          }`}
+                        />
 
-                        <span className="text-sm text-gray-500">
+                        <span
+                          className={`text-sm text-gray-400 ${
+                            liked ? "text-green-400 " : ""
+                          }`}
+                          liked
+                        >
                           {nolikes}
                         </span>
                       </div>
                     </button>
                   </div>
                 </div>
-                <div className="flex space-x-2">
+                <div className="flex space-x-2 hover:bg-gray-800 rounded-lg" onClick={() => setShowComments(!showComments)}>
                   <div
                     style={{ display: "inline" }}
                     data-tooltipped=""
                     aria-describedby="tippy-tooltip-46"
                     data-original-title="Respond"
                   >
-                    <div className="flex space-x-2 cursor-pointer">
-                    <FaComment onClick={() => setShowComments(!showComments)} />
-                      <span className="text-sm text-gray-500">{comments.length}</span>
+                    <div className="flex space-x-2 cursor-pointer border p-2 rounded-lg">
+                      <FaComment
+                        
+                      />
+                      <span className="text-sm text-gray-500">
+                        {comments.length}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -190,35 +205,35 @@ const GetBlogs = () => {
               </div>
             </div>
             {showComments && (
-            <div className="w-fullbg-white rounded-lg border p-1 md:p-3 m-10 w-full">
-              <h3 className="font-semibold p-1">Discussion</h3>
-              {comments.length > 0 ? (
-                <Comments comments={comments} />
-              ) : (
-                <p>No comments yet.</p>
-              )}
-              <form onSubmit={postComment}>
-                <div className="w-full px-3 mb-2 mt-6">
-                  <textarea
-                    className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-400 focus:outline-none focus:bg-white"
-                    name="body"
-                    placeholder="Comment"
-                    value={comment}
-                    onChange={handleChange}
-                  ></textarea>
-                </div>
+              <div className=" rounded-lg border  border-[#404040] p-1 md:p-3 w-full bg-[#282828]">
+                <h3 className="font-semibold p-1 text-2xl">Comments</h3>
+                {comments.length > 0 ? (
+                  <Comments comments={comments} />
+                ) : (
+                  <p>No comments yet.</p>
+                )}
+                <form onSubmit={postComment}>
+                  <div className="w-full px-3 mb-2 mt-6">
+                    <textarea
+                      className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-400 focus:outline-none focus:bg-white"
+                      name="body"
+                      placeholder="Comment"
+                      value={comment}
+                      onChange={handleChange}
+                    ></textarea>
+                  </div>
 
-                <div className="w-full flex justify-end px-3 my-3">
-                  <input
-                    type="submit"
-                    className="px-2.5 py-1.5 rounded-md text-white  bg-indigo-500 text-lg"
-                    value="Post Comment"
-                  />
-                </div>
-              </form>
-            </div>
+                  <div className="w-full flex justify-end px-3 my-3">
+                    <input
+                      type="submit"
+                      className="px-2.5 py-1.5 rounded-md text-white  bg-indigo-500 text-lg"
+                      value="Post Comment"
+                    />
+                  </div>
+                </form>
+              </div>
             )}
-          </article>  
+          </article>
         </div>
       </main>
     </div>

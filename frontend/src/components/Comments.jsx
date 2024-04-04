@@ -6,20 +6,20 @@ export default function Comments({ comments }) {
     <div className="flex flex-col gap-5 m-3">
       {comments.map((comment) => (
            <div>
-           <div className="flex w-full justify-between border rounded-md">
+           <div className="flex w-full justify-between border  border-[#404040] rounded-md hover:bg-gray-800">
              <div className="p-3">
                <div className="flex gap-3 items-center">
                  <img
-                   src=""
-                   className="object-cover w-10 h-10 rounded-full border-2 border-emerald-400  shadow-emerald-400"
+                   src="https://tribe-s3-production.imgix.net/S5DaGQ3vdNUFPu8XrjNbR?fit=max&w=500&auto=compress,format"
+                   className="object-cover w-10 h-10 rounded-md  shadow-emerald-400"
                    alt="User avatar"
                  />
                  <h3 className="font-bold">
-                   User 1
+                   {comment.ownerName}
                    <br />
                  </h3>
                </div>
-               <p className="text-gray-600 mt-2">{comment.content}</p>
+               <p className="ml-14 mt-2 my-2">{comment.content}</p>
                <button className="text-right text-blue-500">Reply</button>
              </div>
    
