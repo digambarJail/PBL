@@ -51,24 +51,59 @@ const showBlogs = asyncHandler(async (req,res) => {
     const page =  parseInt(req.query.page)-1 || 0 
     const limit = 5 
     const sort = { length: -1 };
-    const blog = await Blog.find({title :{$regex:search,$options:"i"}})
+
+    const blogs = await Blog.aggregate([
+        {
+            $match :{
+                title :{
+                    $regex : search ,
+                    $options : "i" ,
+                }
+            }
+        },
+        {
+            $lookup:{
+                from : "users" ,
+                localField : "owner" ,
+                foreignField : "_id" ,
+                as: "ownerDetails"
+            }
+        },
+        {
+            $project:{
+                content:1,
+                title:1,
+                createdAt:1,
+                blogPicture:1,
+                ownerName:  { $arrayElemAt: ["$ownerDetails.name", 0] },
+                profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] },
+            }
+        }
+    ])
     .sort({ createdAt: -1 })
     .skip(page*limit)
     .limit(limit)
-    const total = await Blog.countDocuments({
-        title: { $regex: search, $options: "i" },
-    });
-    const response = {
-        error: false,
-        total,
-        page: page + 1,
-        limit,
-        blog,
-    };
+
+
+
+    // // const blog = await Blog.find({title :{$regex:search,$options:"i"}})
+    // // .sort({ createdAt: -1 })
+    // // .skip(page*limit)
+    // // .limit(limit)
+    // const total = await Blog.countDocuments({
+    //     title: { $regex: search, $options: "i" },
+    // });
+    // const response = {
+    //     error: false,
+    //     total,
+    //     page: page + 1,
+    //     limit,
+    //     blog,
+    // };
 
     return res.status(200)
     .json(new ApiResponse(200,
-        response,
+        blogs,
         "Blogs fetched successfully"))
 
 })
