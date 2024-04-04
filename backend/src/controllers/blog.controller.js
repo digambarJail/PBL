@@ -52,7 +52,7 @@ const showBlogs = asyncHandler(async (req,res) => {
     const limit = 5 
     const sort = { length: -1 };
 
-    const blogs = await Blog.aggregate([
+    const blog = await Blog.aggregate([
         {
             $match :{
                 title :{
@@ -90,20 +90,20 @@ const showBlogs = asyncHandler(async (req,res) => {
     // // .sort({ createdAt: -1 })
     // // .skip(page*limit)
     // // .limit(limit)
-    // const total = await Blog.countDocuments({
-    //     title: { $regex: search, $options: "i" },
-    // });
-    // const response = {
-    //     error: false,
-    //     total,
-    //     page: page + 1,
-    //     limit,
-    //     blog,
-    // };
+    const total = await Blog.countDocuments({
+        title: { $regex: search, $options: "i" },
+    });
+    const response = {
+        error: false,
+        total,
+        page: page + 1,
+        limit,
+        blog,
+    };
 
     return res.status(200)
     .json(new ApiResponse(200,
-        blogs,
+        response,
         "Blogs fetched successfully"))
 
 })
