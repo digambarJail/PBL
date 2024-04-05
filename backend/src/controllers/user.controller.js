@@ -387,11 +387,84 @@ const changeProfilePicture = asyncHandler(async (req , res) => {
         user.save({validateBeforeSave: false})
 
         return res.status(200).json(
-          200 , user , "profile picture updated successfully"
+         new ApiResponse( 200 , user , "profile picture updated successfully")
         )
       
     
 })
+
+const likedBlogs = asyncHandler(async (req,res) => {
+    
+    const Blogs = await User.aggregate([
+        {
+            $match:{
+                _id : new mongoose.Types.ObjectId(req.user._id)
+            }
+        },
+        {
+            $lookup:{
+                from : "likes" ,
+                localField : "_id" ,
+                foreignField : "likedBy" ,
+                as : "likedBlogs"  ,
+                pipeline : [
+                    {
+                        $lookup:{
+                            from : "blogs" ,
+                            localField : "blog" ,
+                            foreignField : "_id" ,
+                            as : "blogs" 
+                        }
+                    },
+                    {
+                        $unwind: "$blogs"
+                    },
+                    {
+                        $lookup:{
+                            from : "users" ,
+                            localField:"blogs.owner" ,
+                            foreignField : "_id" ,
+                            as : "ownerDetails" 
+                        }
+                    },
+                    {
+                        $project:{
+                            "_id": "$blogs._id",
+                            "owner" : "$blogs.owner" ,
+                            "title": "$blogs.title",
+                            "content": "$blogs.content",
+                            "createdAt": "$blogs.createdAt",
+                            "blogPicture": { $ifNull: ["$blogs.blogPicture", ""] } ,
+                            "ownerDetails": {
+                                $arrayElemAt: [
+                                    {
+                                        $map: {
+                                            input: "$ownerDetails",
+                                            as: "ownerDetails",
+                                            in: {
+                                                _id: "$$ownerDetails._id",
+                                                name: "$$ownerDetails.name",
+                                                profilePicture: "$$ownerDetails.profilePicture"
+                                            }
+                                        }
+                                    },
+                                    0
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        $sort : {createdAt : -1}
+                    }
+                ]
+            }
+        }
+    ])
+
+    return res.status(200)
+    .json(new ApiResponse(200 , Blogs[0].likedBlogs , "likes blogs fetched successfully"))
+ })
+
 
 export {
     registerUser,
@@ -404,5 +477,6 @@ export {
     changeCurrentPassword,
     forgetPassword,
     resetPassword,
-    changeProfilePicture
+    changeProfilePicture,
+    likedBlogs
 }
