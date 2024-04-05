@@ -144,15 +144,46 @@ const postAnswer = asyncHandler(async (req,res) => {
                     ]
 
                  }
+              },
+              {
+                  $lookup:{
+                     from :"likes" ,
+                     localField : "_id" ,
+                     foreignField : "answer",
+                     as : "likesOnAnswer"
+                  }
+              },
+              {
+                  $addFields:{
+                     answerLikes:{
+                        $size:"$likesOnAnswer"
+                     } 
+                  }
+              },
+              {
+                  $project:{
+                     _id : 1,
+                     answer:1,
+                     questionId:1,
+                     createdAt:1,
+                     userDetails:1,
+                     answerLikes:1
+                  }
+              },
+              {
+                  $sort:{
+                     answerLikes : -1
+                  }
               }
            ]
         }
      }
   ])
+  
 
   if(!answers?.length)
   {
-     throw new ApiError(401,"NO COMMENTS")
+     throw new ApiError(401,"ANSWERS")
   }
 
   //console.log(comment[0].blogComments);

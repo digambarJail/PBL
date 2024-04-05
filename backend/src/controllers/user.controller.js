@@ -465,6 +465,12 @@ const likedBlogs = asyncHandler(async (req,res) => {
     .json(new ApiResponse(200 , Blogs[0].likedBlogs , "likes blogs fetched successfully"))
  })
 
+//  const userProfile = asyncHandler(async (req , req) => {
+
+//     const {userId} = req.params 
+
+//  })
+
 
 export {
     registerUser,
