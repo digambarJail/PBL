@@ -5,7 +5,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
 import { Blog } from "../models/blog.models.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { uploadOnCloudinary , deleteFromCloudinary} from "../utils/cloudinary.js";
 import nodemailer from "nodemailer"
 import bycrypt from "bcrypt";
 
@@ -58,7 +58,7 @@ const registerUser = asyncHandler(async(req, res)=>{
             throw new ApiError(400,"Profile Picture required")
         }
 
-        const user = await User.create({name, email, password,profilePicture: profilePicture.url})
+        const user = await User.create({name, email, password,profilePicture: profilePicture.url , profilePictureId:profilePicture.public_id})
 
         res.status(201).json(user);
     } catch (error) {
@@ -359,6 +359,40 @@ const resetPassword = asyncHandler(async (req, res) => {
     }
 })
 
+const changeProfilePicture = asyncHandler(async (req , res) => {
+    const publicId = req.user.profilePictureId ;
+    console.log(publicId);
+    const response = await deleteFromCloudinary(publicId) ;
+    const user = await User.findById(req.user?._id)
+
+    let profilePicturePath;
+        if (req.files && Array.isArray(req.files.profilePicture) && req.files.profilePicture.length > 0) {
+            profilePicturePath = req.files.profilePicture[0].path
+        }
+
+        if(!profilePicturePath)
+        {
+            throw new ApiError(400,"Profile Picture required")
+        }
+
+        const profilePicture = await uploadOnCloudinary(profilePicturePath)
+        if(!profilePicture)
+        {
+            throw new ApiError(400,"Profile Picture required")
+        }
+    
+        user.profilePicture = profilePicture.url
+        user.profilePictureId = profilePicture.public_id
+
+        user.save({validateBeforeSave: false})
+
+        return res.status(200).json(
+          200 , user , "profile picture updated successfully"
+        )
+      
+    
+})
+
 export {
     registerUser,
     loginUser,
@@ -369,5 +403,6 @@ export {
     deleteBlog,
     changeCurrentPassword,
     forgetPassword,
-    resetPassword
+    resetPassword,
+    changeProfilePicture
 }

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
-    loginUser, logoutUser, refreshAccessToken, registerUser, google, myBlogs, deleteBlog, changeCurrentPassword, forgetPassword, resetPassword
+    loginUser, logoutUser, refreshAccessToken, registerUser, google, myBlogs, deleteBlog, changeCurrentPassword, forgetPassword, resetPassword,
+    changeProfilePicture
 } from "../controllers/user.controller.js"
 import {verifyJWT} from "../middlewares/auth.middleware.js"
 import { postBlog } from "../controllers/blog.controller.js";
@@ -49,6 +50,16 @@ userRouter.route("/resetPassword/:tokenId").post(
     resetPassword
 )
 
+userRouter.route("/changeProfilePicture").post(
+    verifyJWT,
+    upload.fields([
+    {
+        name :"profilePicture",
+        maxCount:1,
+    }
+])
+    ,changeProfilePicture
+)
 
 
 export default userRouter

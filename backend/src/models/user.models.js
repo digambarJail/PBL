@@ -31,8 +31,9 @@ const userSchema = new Schema({
     refreshToken:{
         type: String
     },
-    
-        
+    profilePictureId:{
+        type:String ,
+    }
     
 },
     {
