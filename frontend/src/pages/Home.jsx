@@ -33,7 +33,7 @@ const Home = () => {
         });
         const { data } = await res.json();
         if (!res.ok) {
-          console.log(data.message);
+          // console.log(data.message);
         }
         // console.log("Data received:", data);
         setObj(data || {});
@@ -71,7 +71,7 @@ const Home = () => {
                     LATEST BLOGS
                     </h2> */}
                 </div>
-                {console.log("w", obj)}
+                {/* {console.log("w", obj)} */}
                 {obj.blog && obj.blog.length !== 0 ? (
                   <>
                   <Post blogs={obj.blog ? obj.blog : []} />

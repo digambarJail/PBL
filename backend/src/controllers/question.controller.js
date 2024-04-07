@@ -38,23 +38,63 @@ const postQuestion = asyncHandler(async (req,res)=>
     
 })
 
-const showQuestions = asyncHandler(async (req,res) => {
+// const showQuestions = asyncHandler(async (req,res) => {
     
+//     const search = req.query.search || "";
+//     const page =  parseInt(req.query.page)-1 || 0 
+//     const limit = 5 
+//     const sort = { length: -1 };
+//     const response = await Question.find({question :{$regex:search,$options:"i"}})
+//     .sort({ createdAt: -1 })
+//     .skip(page*limit)
+//     .limit(limit)
+
+//     return res.status(200)
+//     .json(new ApiResponse(200,
+//         response,
+//         "Questions fetched successfully"))
+
+// })
+
+const showQuestions = asyncHandler(async (req, res) => {
     const search = req.query.search || "";
-    const page =  parseInt(req.query.page)-1 || 0 
-    const limit = 5 
+    const page = parseInt(req.query.page) - 1 || 0;
+    const limit = 5;
     const sort = { length: -1 };
-    const response = await Question.find({question :{$regex:search,$options:"i"}})
-    .sort({ createdAt: -1 })
-    .skip(page*limit)
-    .limit(limit)
 
-    return res.status(200)
-    .json(new ApiResponse(200,
-        response,
-        "Questions fetched successfully"))
+    const response = await Question.aggregate([
+        {
+            $match: { question: { $regex: search, $options: "i" } }
+        },
+        {
+            $sort: { createdAt: -1 }
+        },
+        {
+            $skip: page * limit
+        },
+        {
+            $limit: limit
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "owner",
+                foreignField: "_id",
+                as: "ownerDetails"
+            }
+        },
+        {
+            $project: {
+                question: 1,
+                nameOfOwner: 1,
+                createdAt: 1,
+                profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] }
+            }
+        }
+    ]);
 
-})
+    return res.status(200).json(new ApiResponse(200, response, "Questions fetched successfully"));
+});
 
 const getQuestion = asyncHandler(async (req,res) => {
     

@@ -11,11 +11,11 @@ const TopVoices = () => {
       const res = await fetch ('/api/getTopVoices')
       const data = await res.json();
 
-      console.log("Fetched top voices successfully")
-      console.log(data)
+      // console.log("Fetched top voices successfully")
+      // console.log(data)
 
-      console.log("Data of top voices")
-      console.log(data.data)
+      // console.log("Data of top voices")
+      // console.log(data.data)
       setData(data.data);
     } 
 
@@ -29,8 +29,7 @@ const TopVoices = () => {
       {data.slice(0, 3).map((item, index) => (
         <div className=' mr-5 ml-5 border  border-[#404040] mt-12 rounded-xl p-4 group-hover:o mb-10 flex flex-row items-center space-x-2 ' key={index}>
           <div className='font-bold w-[20%]'>{index+1}</div>
-{          console.log('pf',)
-}          <div className='font-bold w-[20%]'><img src={data[index].profilePicture} alt=""  className='rounded-avatar shrink-0 h-[2.5rem] w-[2.5rem] object-cover object-center rounded-md'/></div>
+          <div className='font-bold w-[20%]'><img src={data[index].profilePicture} alt=""  className='rounded-avatar shrink-0 h-[2.5rem] w-[2.5rem] object-cover object-center rounded-md'/></div>
           <div className='font-bold '>{item.name}</div>
         </div>
       ))}
