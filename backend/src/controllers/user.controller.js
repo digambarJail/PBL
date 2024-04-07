@@ -364,7 +364,7 @@ const changeProfilePicture = asyncHandler(async (req , res) => {
     console.log(publicId);
     const response = await deleteFromCloudinary(publicId) ;
     const user = await User.findById(req.user?._id)
-
+    //console.log(user);
     let profilePicturePath;
         if (req.files && Array.isArray(req.files.profilePicture) && req.files.profilePicture.length > 0) {
             profilePicturePath = req.files.profilePicture[0].path
@@ -385,11 +385,12 @@ const changeProfilePicture = asyncHandler(async (req , res) => {
         user.profilePictureId = profilePicture.public_id
 
         user.save({validateBeforeSave: false})
-
+        const updatedUser = await User.findById(req.user?._id)
         return res.status(200).json(
-         new ApiResponse( 200 , user , "profile picture updated successfully")
+         new ApiResponse( 200 , updatedUser , "profile picture updated successfully")
         )
       
+
     
 })
 
