@@ -37,6 +37,7 @@ const GetBlogs = () => {
           setnoLikes(ldata.data.likesCount);
           isLiked(ldata.data.isLiked);
         }
+        console.log(blog.data.ownerId)
       } catch (error) {
         console.error("Error fetching likes:", error);
       }
@@ -115,9 +116,12 @@ const GetBlogs = () => {
                     className="mr-4 w-16 h-16 rounded-full"
                   />
                   <div>
-                    <span className="text-xl font-bold text-gray-900 dark:text-white">
+                  <Link 
+                      to={`/getUserDetails/${blog.data.ownerId}`} 
+                      className="text-xl font-bold text-gray-900 dark:text-white"
+                    >
                       {blog.data.nameOfOwner}
-                    </span>
+                    </Link>
                     <p className="text-base text-gray-500 dark:text-gray-400">
                       SE IT
                     </p>
