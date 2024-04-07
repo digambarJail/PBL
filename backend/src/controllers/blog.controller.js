@@ -104,6 +104,7 @@ const showBlogs = asyncHandler(async (req,res) => {
                 blogPicture:1,
                 ownerName:  { $arrayElemAt: ["$ownerDetails.name", 0] },
                 profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] },
+                ownerId: { $arrayElemAt: ["$ownerDetails._id", 0] },
                 likesCount:1 
             }
         }
@@ -161,9 +162,10 @@ const getBlog = asyncHandler(async (req,res) => {
             $project:{
                 title:1,
                 content:1,
-                nameOfOwner:1,
                 createdAt:1,
                 profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] },
+                nameOfOwner: { $arrayElemAt: ["$ownerDetails.name", 0] },
+                ownerId: { $arrayElemAt: ["$ownerDetails._id", 0] },
                 blogPicture:1
             }
         }

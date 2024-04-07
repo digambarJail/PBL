@@ -86,9 +86,10 @@ const showQuestions = asyncHandler(async (req, res) => {
         {
             $project: {
                 question: 1,
-                nameOfOwner: 1,
+                nameOfOwner: { $arrayElemAt: ["$ownerDetails.name", 0] },
                 createdAt: 1,
-                profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] }
+                profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] },
+                ownerId:{ $arrayElemAt: ["$ownerDetails._id", 0] }
             }
         }
     ]);
@@ -118,9 +119,10 @@ const getQuestion = asyncHandler(async (req,res) => {
             $project:{
                 // title:1,
                 question:1,
-                nameOfOwner:1,
+                nameOfOwner: { $arrayElemAt: ["$ownerDetails.name", 0] },
                 createdAt:1,
-                profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] }
+                profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] },
+                ownerId: { $arrayElemAt: ["$ownerDetails._id", 0] }
             }
         }
     ])

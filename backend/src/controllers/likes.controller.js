@@ -152,7 +152,7 @@ const getTopVoices = asyncHandler(async (req,res) => {
 
       }
     }
-  ]).sort({likesCount:-1})
+  ]).sort({likesCount:-1}).limit(3)
 
 
   return res.status(200).json(new ApiResponse(200,likesTable,"Top Voice Table fetched successfully"))

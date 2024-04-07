@@ -58,7 +58,8 @@ const getComments = asyncHandler(async (req,res) => {
                         {
                            $project:{
                               name:1,
-                              profilePicture:1
+                              profilePicture:1,
+                              _id:1
                            }
                         }
                      ]
