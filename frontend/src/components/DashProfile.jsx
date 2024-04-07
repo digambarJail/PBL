@@ -1,11 +1,8 @@
-import React from "react";
+import React, { useState, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Alert, Button, TextInput, Spinner } from "flowbite-react";
-import { useSelector } from "react-redux";
-import { useEffect, useRef, useState } from "react";
-import { signoutSuccess } from "../app/user/userSlice";
-import { useDispatch } from "react-redux";
+import { signoutSuccess, updateSuccess } from "../app/user/userSlice";
 import { CircularProgressbar } from "react-circular-progressbar";
-import { updateSuccess, updateFailure } from "../app/user/userSlice";
 import "react-circular-progressbar/dist/styles.css";
 
 export default function DashProfile() {
@@ -16,7 +13,11 @@ export default function DashProfile() {
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [oldPassword, setoldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [passwordChangeError, setPasswordChangeError] = useState(null);
   const filePickerRef = useRef();
+
   const handleImageChange = (e) => {
     const selectedfile = e.target.files[0];
     if (selectedfile) {
@@ -29,7 +30,7 @@ export default function DashProfile() {
     e.preventDefault();
     const formData = new FormData();
     formData.append("profilePicture", imageFile);
-    console.log("pf link bf", currentUser.data.user.profilePicture);
+
     try {
       setLoading(true);
       const res = await fetch("/api/changeProfilePicture", {
@@ -37,24 +38,60 @@ export default function DashProfile() {
         body: formData,
       });
       const data = await res.json();
-      console.log("userdata", data);
-      // if (!data.ok) {
-      //   dispatch(updateFailure(data.message));
-      //   setImageFileUploadError(data.message);
-      // } 
       dispatch(updateSuccess(data.data));
     } catch (error) {
       console.log(error.message);
-      setImageFileUploadError(error);
+      setImageFileUploadError("Failed to upload image. Please try again.");
     }
     setLoading(false);
     setImageFile(null);
-    console.log("pf link", currentUser.data.user.profilePicture);
   };
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
   
-  useEffect(() => {
-  console.log("pf link updated", currentUser.data.user.profilePicture);
-}, [currentUser.data.user.profilePicture]);
+    setLoading(true);
+  
+    try {
+      const requestBody = {
+        oldPassword: oldPassword,
+        newPassword: newPassword
+      };
+      
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestBody)
+      };
+      
+      try {
+        const response = await fetch("/api/changePassword", requestOptions);
+        if (!response.ok) {
+          // Handle error response
+          const errorMessage = await response.text();
+          throw new Error(errorMessage);
+        }
+      
+        // Handle success response
+        const responseData = await response.json();
+        console.log("Password change successful:", responseData);
+      } catch (error) {
+        console.error("Password change failed:", error.message);
+      }
+  
+      setoldPassword("");
+      setNewPassword("");
+      setPasswordChangeError(null);
+      console.log(data); // Log success message or handle accordingly
+    } catch (error) {
+      console.error("Password change failed:", error.message);
+      setPasswordChangeError("Failed to change password. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSignout = async () => {
     try {
@@ -67,12 +104,13 @@ export default function DashProfile() {
       } else {
         dispatch(signoutSuccess());
         console.log(data);
-        navigate("/login");
+        // Redirect or navigate to login page after sign out
       }
     } catch (error) {
       console.log(error.message);
     }
   };
+
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -122,7 +160,6 @@ export default function DashProfile() {
               "opacity-60"
             }`}
           />
-          {console.log("imgurl", imageFileUrl)}
         </div>
         {imageFileUploadError && (
           <Alert color="failure">{imageFileUploadError}</Alert>
@@ -130,21 +167,52 @@ export default function DashProfile() {
         <TextInput
           type="text"
           id="username"
-          placeholder="username"
+          placeholder="Username"
           defaultValue={currentUser.data.user.name}
         />
         <TextInput
           type="email"
           id="email"
-          placeholder="email"
+          placeholder="Email"
           defaultValue={currentUser.data.user.email}
         />
-        <TextInput type="password" id="password" placeholder="password" />
+        <TextInput
+          type="password"
+          id="password"
+          placeholder="Password"
+          value={oldPassword}
+          onChange={(e) => setoldPassword(e.target.value)}
+        />
+        <TextInput
+          type="password"
+          id="newPassword"
+          placeholder="New Password"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+        />
+        {passwordChangeError && (
+          <Alert color="failure">{passwordChangeError}</Alert>
+        )}
+        <Button
+          onClick={handleChangePassword}
+          gradientDuoTone="purpleToBlue"
+          outlined={!loading}
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <Spinner size="sm" />
+              <span className="pl-3">Changing Password...</span>
+            </>
+          ) : (
+            "Change Password"
+          )}
+        </Button>
         <Button
           type="submit"
           gradientDuoTone="purpleToBlue"
-          outlinedisabled={loading}
-          outline
+          outlined={loading}
+          disabled={loading}
         >
           {loading ? (
             <>
@@ -165,4 +233,3 @@ export default function DashProfile() {
     </div>
   );
 }
-
