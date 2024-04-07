@@ -26,6 +26,8 @@ export default function SignUp() {
       formDataToSend.append('email', formData.email);
       formDataToSend.append('password', formData.password);
       formDataToSend.append('profilePicture', file);
+      formDataToSend.append('department', formData.department);
+      formDataToSend.append('year', formData.year);
   
       const res = await fetch("/api/register", {
         method: "POST",
@@ -99,6 +101,24 @@ export default function SignUp() {
                 id="file-upload"
                 helperText="SVG, PNG, JPG or GIF (MAX. 800x400px)."
                 onChange={(e) => setFile(e.target.files[0])}
+              />
+            </div>
+            <div>
+              <Label value="Your Department" />
+              <TextInput
+                type="text"
+                placeholder="IT"
+                id="department"
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <Label value="Your Year" />
+              <TextInput
+                type="text"
+                placeholder="SE"
+                id="year"
+                onChange={handleChange}
               />
             </div>
             <Button
