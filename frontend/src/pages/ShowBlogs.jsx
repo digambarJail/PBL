@@ -8,13 +8,14 @@ import { Dropdown } from "flowbite-react";
 export default function ShowBlogs() {
   const [obj, setObj] = useState({});
   const [page, setPage] = useState(1);
+  const [sort , setSort] = useState("");
   const navigate = useNavigate();
   const search = useSelector((state) => state.search.searchQuery);
 
   useEffect(() => {
     const getAllBlogs = async () => {
       try {
-        let url = `/api/showBlogs?page=${page}`;
+        let url = `/api/showBlogs?page=${page}&sort=${sort}`;
         if (search) {
           url += `&search=${search}`;
         }
@@ -30,7 +31,7 @@ export default function ShowBlogs() {
     };
 
     getAllBlogs();
-  }, [page, search]);
+  }, [page, search, sort]);
 
   return (
     <>
@@ -96,10 +97,9 @@ export default function ShowBlogs() {
         </div>
         <div className="w-1/2 mt-10 mx-10">
           <Dropdown label="Sort By" placement="bottom" color="gray">
-            <Dropdown.Item>Recent</Dropdown.Item>
-            <Dropdown.Item>Oldest</Dropdown.Item>
-            <Dropdown.Item>All</Dropdown.Item>
-            <Dropdown.Item>Most Liked</Dropdown.Item>
+            <Dropdown.Item onClick={() => setSort('')}>Recent</Dropdown.Item>
+            <Dropdown.Item onClick={() => setSort('oldest')}>Oldest</Dropdown.Item>
+            <Dropdown.Item onClick={() => setSort('most_liked')}>Most Liked</Dropdown.Item>
           </Dropdown>
         </div>
       </div>

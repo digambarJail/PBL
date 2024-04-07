@@ -37,7 +37,7 @@ export default function DashProfile() {
         body: formData,
       });
       const data = await res.json();
-      console.log("userdata", data.data);
+      console.log("userdata", data);
       // if (!data.ok) {
       //   dispatch(updateFailure(data.message));
       //   setImageFileUploadError(data.message);
@@ -48,6 +48,7 @@ export default function DashProfile() {
       setImageFileUploadError(error);
     }
     setLoading(false);
+    setImageFile(null);
     console.log("pf link", currentUser.data.user.profilePicture);
   };
   

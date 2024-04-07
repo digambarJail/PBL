@@ -30,7 +30,11 @@ function Header() {
       dispatch(setSearchQuery('')); // Clear search query in Redux state
     }
   }, [location.pathname, dispatch]);
-
+  
+  useEffect(() => {
+    console.log('currentUser updated:', currentUser);
+    // Additional logic to handle profile picture updates in the Header
+  }, [currentUser]);
   
   const handleSignout = async () => {
     try {
