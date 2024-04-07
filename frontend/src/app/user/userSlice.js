@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { FaSadCry } from "react-icons/fa";
 
 const initialState = {
     currentUser:null,
@@ -31,11 +30,18 @@ const UserSlice = createSlice({
             state.error = null;
             state.loading = false;
           },
-    },
+          updateSuccess: (state, action) => {
+            state.currentUser.data.user = action.payload;
+            state.loading = false;
+            state.error = null;
+          },
+          updateFailure: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+          },
+        }
+      });
 
-
-});
-
-export const {signInStart , signInSuccess , signInFail , signoutSuccess} = UserSlice.actions
+export const {signInStart , signInSuccess , signInFail , signoutSuccess ,updateSuccess ,updateFailure } = UserSlice.actions
 
 export default UserSlice.reducer;
