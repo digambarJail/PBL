@@ -181,6 +181,22 @@ const getBlog = asyncHandler(async (req,res) => {
         "Blog fetched successfully"))
 })
 
+const deleteBlog = asyncHandler(async (req,res) => {
+
+    const {blogId} = req.params 
+    await Comment.deleteMany({blogId:blogId})
+    const blog = await Blog.findByIdAndDelete(blogId)
+
+    if(!blog)
+    {
+        throw new ApiError(401,"Blog not found")
+    }
+
+    return res.status(200)
+    .json(new ApiResponse(200,
+        blog,"blog deleted successfully"))
+})
 
 
-export {postBlog,showBlogs,getBlog}
+
+export {postBlog,showBlogs,getBlog, deleteBlog}

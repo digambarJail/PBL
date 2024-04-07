@@ -8,6 +8,10 @@ import { Blog } from "../models/blog.models.js";
 import { uploadOnCloudinary , deleteFromCloudinary} from "../utils/cloudinary.js";
 import nodemailer from "nodemailer"
 import bycrypt from "bcrypt";
+import {Like} from "../models/likes.models.js"
+import {Comment} from "../models/comment.model.js"
+import { Answer } from "../models/answer.model.js";
+import { Question } from "../models/question.models.js";
 
 
 
@@ -260,21 +264,6 @@ const google = async (req, res, next) => {
     .json(new ApiResponse(200,blog[0].myBlogs,"blogs fetched"))
 })
 
-const deleteBlog = asyncHandler(async (req,res) => {
-
-    const {blogId} = req.params 
-
-    const blog = await Blog.findByIdAndDelete(blogId)
-
-    if(!blog)
-    {
-        throw new ApiError(401,"Blog not found")
-    }
-
-    return res.status(200)
-    .json(new ApiResponse(200,
-        blog,"blog deleted successfully"))
-})
 
 const changeCurrentPassword = asyncHandler(async(req, res) => {
     const {oldPassword, newPassword} = req.body    
@@ -518,6 +507,34 @@ const getUser = asyncHandler(async (req,res)=> {
 
 })
 
+const deleteAccount = asyncHandler(async(req, res)=>{
+    try {
+        const userId = await User.findById(req.params.userId);
+        await Like.deleteMany({likedBy:userId})
+        await Comment.deleteMany({commentBy:userId})
+        await Answer.deleteMany({answerBy:userId})
+        await Question.deleteMany({owner:userId})
+        await Blog.deleteMany({owner:userId})
+        
+
+        const options = {
+            httpOnly: true,
+            secure: true,
+            expires: new Date(0) 
+        };
+
+        res.clearCookie("accessToken", options)
+        res.clearCookie("refreshToken", options);
+
+        await User.findByIdAndDelete(userId);
+
+        return res
+        .json(new ApiResponse(200, userId, "Account deleted successfully"))
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 
 export {
     registerUser,
@@ -526,11 +543,11 @@ export {
     refreshAccessToken,
     google,
     myBlogs,
-    deleteBlog,
     changeCurrentPassword,
     forgetPassword,
     resetPassword,
     changeProfilePicture,
     likedBlogs,
-    getUser
+    getUser,
+    deleteAccount
 }

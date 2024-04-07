@@ -1,9 +1,10 @@
 import { Router } from "express";
 import {
-    loginUser, logoutUser, refreshAccessToken, registerUser, google, myBlogs, deleteBlog, changeCurrentPassword, forgetPassword, resetPassword,
+    loginUser, logoutUser, refreshAccessToken, registerUser, google, myBlogs, changeCurrentPassword, forgetPassword, resetPassword,
     changeProfilePicture,
     likedBlogs,
-    getUser
+    getUser,
+    deleteAccount
 } from "../controllers/user.controller.js"
 import {verifyJWT} from "../middlewares/auth.middleware.js"
 import { postBlog } from "../controllers/blog.controller.js";
@@ -37,7 +38,6 @@ userRouter.route("/refresh-token").post(refreshAccessToken)
 
 userRouter.route("/myBlogs").get(verifyJWT,myBlogs)
 
-userRouter.route("/b/:blogId").delete(deleteBlog)
 
 userRouter.route("/changePassword").post(
     verifyJWT,
@@ -66,5 +66,7 @@ userRouter.route("/changeProfilePicture").post(
 userRouter.route("/likedBlogs").get(verifyJWT , likedBlogs)
 
 userRouter.route("/user/:userId").get(getUser)
+
+userRouter.route("/deleteAccount/:userId").post(deleteAccount)
 
 export default userRouter
