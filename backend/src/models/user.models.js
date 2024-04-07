@@ -7,7 +7,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
         // unique: true,
-        lowercase: true,
+        //lowercase: true,
         trim: true,
         //index: true
     },
@@ -33,6 +33,14 @@ const userSchema = new Schema({
     },
     profilePictureId:{
         type:String ,
+    },
+    department:{
+        type:String,
+        required:true 
+    },
+    year:{
+        type:String,
+        required:true
     }
     
 },

@@ -2,7 +2,8 @@ import { Router } from "express";
 import {
     loginUser, logoutUser, refreshAccessToken, registerUser, google, myBlogs, deleteBlog, changeCurrentPassword, forgetPassword, resetPassword,
     changeProfilePicture,
-    likedBlogs
+    likedBlogs,
+    getUser
 } from "../controllers/user.controller.js"
 import {verifyJWT} from "../middlewares/auth.middleware.js"
 import { postBlog } from "../controllers/blog.controller.js";
@@ -63,5 +64,7 @@ userRouter.route("/changeProfilePicture").post(
 )
 
 userRouter.route("/likedBlogs").get(verifyJWT , likedBlogs)
+
+userRouter.route("/user/:userId").get(getUser)
 
 export default userRouter

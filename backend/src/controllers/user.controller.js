@@ -31,7 +31,7 @@ const generateAccessAndRefreshTokens = async(userId)=>{
 const registerUser = asyncHandler(async(req, res)=>{
 
     try {
-        const {name, email, password} = req.body;
+        const {name, email, password, department,year} = req.body;
         const existedUser = await User.findOne({ email })
 
         if (existedUser) {
@@ -58,9 +58,11 @@ const registerUser = asyncHandler(async(req, res)=>{
             throw new ApiError(400,"Profile Picture required")
         }
 
-        const user = await User.create({name, email, password,profilePicture: profilePicture.url , profilePictureId:profilePicture.public_id})
-
-        res.status(201).json(user);
+        const user = await User.create({name, email, password,year,department,profilePicture: profilePicture.url , profilePictureId:profilePicture.public_id})
+        const createdUser = await User.findById(user._id).select(
+            "-password -refreshToken"
+           )
+        res.status(201).json(createdUser);
     } catch (error) {
         console.log("Outside try block",error)
     }
@@ -383,11 +385,12 @@ const changeProfilePicture = asyncHandler(async (req , res) => {
     
         user.profilePicture = profilePicture.url
         user.profilePictureId = profilePicture.public_id
-
+        //console.log(profilePicture.url);
         user.save({validateBeforeSave: false})
         const updatedUser = await User.findById(req.user?._id).select(
             "-password -refreshToken"
         )
+        //console.log(updatedUser.profilePicture);
         return res.status(200).json(
          new ApiResponse( 200 , updatedUser , "profile picture updated successfully")
         )
@@ -468,11 +471,52 @@ const likedBlogs = asyncHandler(async (req,res) => {
     .json(new ApiResponse(200 , Blogs[0].likedBlogs , "likes blogs fetched successfully"))
  })
 
-//  const userProfile = asyncHandler(async (req , req) => {
 
-//     const {userId} = req.params 
 
-//  })
+const getUser = asyncHandler(async (req,res)=> {
+
+    const {userId} = req.params ;
+    
+    const user = await User.aggregate([
+        {
+            $match:{
+                _id:new mongoose.Types.ObjectId(userId)
+            }
+        },
+        {
+            $lookup:{
+                from:"blogs",
+                localField:"_id",
+                foreignField:"owner",
+                as:"userBlogs" ,
+                pipeline:[{
+                    $sort:{createdAt : -1}
+                }]
+            }
+        },
+        {
+            $project:{
+                name:1,
+                profilePicture:1,
+                email:1,
+                "department":{ $ifNull: ["$department", ""] },
+                "year":{ $ifNull: ["$year", ""] },
+                userBlogs:1
+
+            }
+        }
+    ])
+
+    if(!user)
+    {
+        throw new ApiError(404, "user not found")   }
+
+    return res.status(200)
+    .json(new ApiResponse(200,user,"user fetched successfully"))
+
+
+
+})
 
 
 export {
@@ -487,5 +531,6 @@ export {
     forgetPassword,
     resetPassword,
     changeProfilePicture,
-    likedBlogs
+    likedBlogs,
+    getUser
 }
