@@ -32,9 +32,8 @@ const ShowQuestions = () => {
                         <p className="text-gray-400 mb-2">Asked by: {item.nameOfOwner}</p>
                         <Link
                             to={`/getQuestion/${item._id}`}
-                            className="text-blue-500 hover:underline text-sm"
-                        >
-                            Read More
+                            className="text-blue-500 hover:underline text-sm inline-block border border-blue-500 rounded-full px-4 py-2 transition duration-300 ease-in-out"                        >
+                            Answer
                         </Link>
                     </div>
                 </div>

@@ -113,7 +113,7 @@ const handleSubmit = (event) => {
           </Navbar.Link>
           
           <Navbar.Link active = {path === "/blog"} as={'div'}>
-            <Link to = "/blog">Write</Link>
+            <Link to = "/blog">Write / Ask Community</Link>
           </Navbar.Link>
 
         </Navbar.Collapse>
