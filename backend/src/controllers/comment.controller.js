@@ -4,6 +4,7 @@ import { Comment } from "../models/comment.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import checkForProfanity from "../utils/profanityChecker.js";
 
 
 const postComment = asyncHandler(async (req,res) => {
@@ -13,6 +14,12 @@ const postComment = asyncHandler(async (req,res) => {
       const {content} = req.body
       const commentBy = req.user._id 
       const ownerName = req.user.name
+
+      const isContentProfane = await checkForProfanity(content)
+
+      if ( isContentProfane) {
+         throw new ApiError(400,"Contains explicit content and cannot be submitted")
+     }
    
       //console.log(ownerName);
       //console.log({commentBy});
@@ -27,7 +34,9 @@ const postComment = asyncHandler(async (req,res) => {
       json(new ApiResponse(200,{},
          "Comment posted successfully"))
    } catch (error) {
-      throw new ApiError(501,"internal server error")
+      const statusCode = error.statusCode || 500; 
+        const message = error.message || "Something went wrong";
+        return res.status(statusCode).json({ success: false, message })
    }
 
 })

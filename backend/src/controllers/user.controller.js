@@ -483,6 +483,29 @@ const getUser = asyncHandler(async (req,res)=> {
                 }]
             }
         },
+        
+        {
+            $lookup:{
+                from:"questions",
+                localField:"_id",
+                foreignField:"owner",
+                as:"userQuestions" ,
+                pipeline:[{
+                    $sort:{createdAt : -1}
+                }]
+            }
+        },
+        {
+            $lookup:{
+                from:"answers",
+                localField:"_id",
+                foreignField:"answerBy",
+                as:"userAnswers" ,
+                pipeline:[{
+                    $sort:{createdAt : -1}
+                }]
+            }
+        },
         {
             $project:{
                 name:1,
@@ -490,7 +513,9 @@ const getUser = asyncHandler(async (req,res)=> {
                 email:1,
                 "department":{ $ifNull: ["$department", ""] },
                 "year":{ $ifNull: ["$year", ""] },
-                userBlogs:1
+                userBlogs:1,
+                userQuestions:1,
+                userAnswers:1
 
             }
         }

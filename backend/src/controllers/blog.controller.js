@@ -6,18 +6,31 @@ import { Blog } from "../models/blog.models.js";
 import { User } from "../models/user.models.js";
 import mongoose, { mongo } from "mongoose";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import checkForProfanity from "../utils/profanityChecker.js";
+
 
 
 const postBlog = asyncHandler(async (req,res)=>
 {
     try {
         const {title,content} =  req.body;
-        //console.log(title,content);
+
+        const isTitleProfane = await checkForProfanity(title);
+        const isContentProfane = await checkForProfanity(content);
+
+        if (isTitleProfane || isContentProfane) {
+            throw new ApiError(400, "Contains explicit content and cannot be submitted");
+        }
+
+        // Check if title and content are empty
+        if ([title, content].some(field => field?.trim() === "")) {
+            throw new ApiError(400, "Title and content are compulsory fields");
+        }
+
         const owner = await User.findById(req.user._id).select(
             "-password -refreshToken" 
         ) ;
         const nameOfOwner = owner.name 
-        console.log(owner);
         if(
             [title,content].some((field)=>{
                field?.trim()===""
@@ -26,20 +39,20 @@ const postBlog = asyncHandler(async (req,res)=>
            {
                throw new ApiError(400,"The Above Field are Compulsory")
            }
-        //console.log("before creatre");
-        console.log("before upload");
         let blogPicturePath;
         if (req.files && Array.isArray(req.files.blogPicture) && req.files.blogPicture.length > 0) {
             blogPicturePath = req.files.blogPicture[0].path
         }
         const blogPicture = await uploadOnCloudinary(blogPicturePath)
-        console.log("after upload");
         const blog = await Blog.create({title,content,owner,nameOfOwner,blogPicture: blogPicture?.url || ""})
            
         return res.status(200).
         json(new ApiResponse(200,{blog},"Blog Posted Successfully"))
     } catch (error) {
-        throw new ApiError(401,error.messsage)
+        console.error('Error in postBlog:', error);
+        const statusCode = error.statusCode || 500; 
+        const message = error.message || "Something went wrong";
+        return res.status(statusCode).json({ success: false, message })
     }
 
     

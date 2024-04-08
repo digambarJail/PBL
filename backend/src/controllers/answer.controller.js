@@ -4,7 +4,7 @@ import { Answer } from "../models/answer.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-
+import checkForProfanity from "../utils/profanityChecker.js";
 
 const postAnswer = asyncHandler(async (req,res) => {
 
@@ -14,6 +14,12 @@ const postAnswer = asyncHandler(async (req,res) => {
       const answerBy = req.user._id 
       const ownerName = req.user.name
    
+      const isContentProfane = await checkForProfanity(answer)
+
+      if ( isContentProfane) {
+         throw new ApiError(400,"Contains explicit content and cannot be submitted")
+     }
+
       if(!answer)
       {
          throw new ApiError(401,"Cant post empty field")
@@ -24,9 +30,11 @@ const postAnswer = asyncHandler(async (req,res) => {
       json(new ApiResponse(200,{},
          "Answer posted successfully"))}
       
-          catch (error) {
-      throw new ApiError(501,"internal server error")
-   }
+      catch (error) {         
+        const statusCode = error.statusCode || 500; 
+        const message = error.message || "Something went wrong";
+        return res.status(statusCode).json({ success: false, message })
+      }
 
 })
 

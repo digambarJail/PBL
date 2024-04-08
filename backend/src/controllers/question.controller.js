@@ -4,13 +4,20 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { Question } from "../models/question.models.js";
 import { User } from "../models/user.models.js";
 import mongoose, { mongo } from "mongoose";
-
+import checkForProfanity from "../utils/profanityChecker.js";
 
 
 const postQuestion = asyncHandler(async (req,res)=>
 {
     try {
         const {question} =  req.body;
+
+        const isContentProfane = await checkForProfanity(question   )
+
+      if ( isContentProfane) {
+         throw new ApiError(400,"Contains explicit content and cannot be submitted")
+     }
+
         const owner = await User.findById(req.user._id).select(
             "-password -refreshToken" 
         ) ; 
@@ -33,7 +40,9 @@ const postQuestion = asyncHandler(async (req,res)=>
         return res.status(200).
         json(new ApiResponse(200,{response},"Question Posted Successfully"))
     } catch (error) {
-        throw new ApiError(401,error.message)
+        const statusCode = error.statusCode || 500; 
+        const message = error.message || "Something went wrong";
+        return res.status(statusCode).json({ success: false, message })
     }
     
 })
