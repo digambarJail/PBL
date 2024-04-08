@@ -5,7 +5,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { Blog } from "../models/blog.models.js";
 import { User } from "../models/user.models.js";
 import mongoose, { mongo } from "mongoose";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { deleteFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js";
 import checkForProfanity from "../utils/profanityChecker.js";
 
 
@@ -15,10 +15,17 @@ const postBlog = asyncHandler(async (req,res)=>
     try {
         const {title,content} =  req.body;
 
+        let blogPicturePath;
+        if (req.files && Array.isArray(req.files.blogPicture) && req.files.blogPicture.length > 0) {
+            blogPicturePath = req.files.blogPicture[0].path
+        }
+        const blogPicture = await uploadOnCloudinary(blogPicturePath)
+
         const isTitleProfane = await checkForProfanity(title);
         const isContentProfane = await checkForProfanity(content);
 
         if (isTitleProfane || isContentProfane) {
+            await deleteFromCloudinary(blogPicture.public_id)
             throw new ApiError(400, "Contains explicit content and cannot be submitted");
         }
 
@@ -39,11 +46,7 @@ const postBlog = asyncHandler(async (req,res)=>
            {
                throw new ApiError(400,"The Above Field are Compulsory")
            }
-        let blogPicturePath;
-        if (req.files && Array.isArray(req.files.blogPicture) && req.files.blogPicture.length > 0) {
-            blogPicturePath = req.files.blogPicture[0].path
-        }
-        const blogPicture = await uploadOnCloudinary(blogPicturePath)
+        
         const blog = await Blog.create({title,content,owner,nameOfOwner,blogPicture: blogPicture?.url || ""})
            
         return res.status(200).
