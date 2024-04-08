@@ -6,7 +6,6 @@ import { User } from "../models/user.models.js";
 import mongoose, { mongo } from "mongoose";
 import checkForProfanity from "../utils/profanityChecker.js";
 
-
 const postQuestion = asyncHandler(async (req,res)=>
 {
     try {
