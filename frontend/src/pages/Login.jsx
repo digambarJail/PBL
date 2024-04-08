@@ -5,7 +5,6 @@ import { useDispatch , useSelector } from 'react-redux';
 import { signInStart , signInSuccess , signInFail  } from '../app/user/userSlice';
 import OAuth from '../components/OAuth';
 
-
 export default function Login() {
   const [formData, setFormData] = useState({});
   const {loading, error: errorMessage} = useSelector(state => state.user);
