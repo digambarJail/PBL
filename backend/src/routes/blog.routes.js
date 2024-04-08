@@ -3,6 +3,7 @@ import { Router } from "express";
 import {verifyJWT} from "../middlewares/auth.middleware.js"
 import { getBlog, postBlog, showBlogs } from "../controllers/blog.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
+import { showQuestions } from "../controllers/question.controller.js";
 
 
 const blogRouter = Router()
@@ -19,7 +20,7 @@ blogRouter.route("/postBlog").post(
 )
 
 blogRouter.route("/showBlogs").get(
-    showBlogs
+    showQuestions ,showBlogs
 )
 
 blogRouter.route("/b/:blogId").get(getBlog)

@@ -65,18 +65,27 @@ const postQuestion = asyncHandler(async (req,res)=>
 
 // })
 
-const showQuestions = asyncHandler(async (req, res) => {
+const showQuestions = asyncHandler(async (req, res,next) => {
     const search = req.query.search || "";
     const page = parseInt(req.query.page) - 1 || 0;
     const limit = 5;
-    const sort = { length: -1 };
+    let sort ;
+    
+    switch (req.query.sort) {
+        case 'oldest':
+            sort = { createdAt: 1 }; 
+            break;
+        default:
+            sort = { createdAt: -1 }; 
+            break;
+    }
 
     const response = await Question.aggregate([
         {
             $match: { question: { $regex: search, $options: "i" } }
         },
         {
-            $sort: { createdAt: -1 }
+            $sort:  sort
         },
         {
             $skip: page * limit
@@ -102,7 +111,6 @@ const showQuestions = asyncHandler(async (req, res) => {
             }
         }
     ]);
-
     return res.status(200).json(new ApiResponse(200, response, "Questions fetched successfully"));
 });
 
