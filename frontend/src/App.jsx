@@ -21,6 +21,7 @@ import NoPrivateRoute from "./components/NoPrivateRoute";
 import ShowBlogs from './pages/ShowBlogs';
 import GetQuestion from './pages/GetQuestion';
 import GetUserDetails from './pages/GetUserDetails';
+import ContactUs from './pages/Contacts';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
                   <Route path="getBlogs/:blogId" element={<GetBlogs />} /> {/* Use element prop */}
                   <Route path="getQuestion/:quesId" element={<GetQuestion />} /> {/* Use element prop */}
                   <Route path="getUserDetails/:userId" element={<GetUserDetails />} />
+                  <Route path="contact" element={<ContactUs />} />
                 </Route>
                 <Route path="logout" element={<Logout />} />
               </Routes>
