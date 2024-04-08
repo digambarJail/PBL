@@ -2,7 +2,7 @@ import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch , useSelector } from 'react-redux';
-import { signInStart , signInSuccess , signInFail } from '../app/user/userSlice';
+import { signInStart , signInSuccess , signInFail  } from '../app/user/userSlice';
 import OAuth from '../components/OAuth';
 
 
@@ -11,6 +11,7 @@ export default function Login() {
   const {loading, error: errorMessage} = useSelector(state => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // dispatch(reset());
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };

@@ -71,6 +71,7 @@ export default function DashProfile() {
         if (!response.ok) {
           // Handle error response
           const errorMessage = await response.text();
+          console.log(passwordChangeError)
           throw new Error(errorMessage);
         }
       
@@ -78,16 +79,21 @@ export default function DashProfile() {
         const responseData = await response.json();
         console.log("Password change successful:", responseData);
       } catch (error) {
+        console.log("Inside inner catch block")
         console.error("Password change failed:", error.message);
+        setPasswordChangeError("Failed to change password. Please try again");
+        console.log(passwordChangeError)
       }
   
-      setoldPassword("");
-      setNewPassword("");
-      setPasswordChangeError(null);
-      console.log(data); // Log success message or handle accordingly
+      // setoldPassword("");
+      // setNewPassword("");
+      // setPasswordChangeError(null);
+      // console.log(data); // Log success message or handle accordingly
     } catch (error) {
+      console.log('Inside outer catch block')
       console.error("Password change failed:", error.message);
-      setPasswordChangeError("Failed to change password. Please try again.");
+      setPasswordChangeError("Failed to change password. Please try again");
+      console.log(passwordChangeError)
     } finally {
       setLoading(false);
     }
