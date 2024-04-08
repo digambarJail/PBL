@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Post = ({ blogs }) => {
   const navigate = useNavigate();
   return (
-    <div className="grid grid-cols-1 gap-8">
+    <div className="grid grid-cols-1 gap-8 " >
       {blogs.map((blog) => (
         <div
           key={blog._id}
@@ -13,6 +13,7 @@ const Post = ({ blogs }) => {
         >
           <div className="flex-shrink-0">
             <img
+              onClick={() => navigate(`/getBlogs/${blog._id}`)}
               className="h-80 w-full object-cover"
               src={blog.blogPicture || 'https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80'}
               alt='pic'
