@@ -20,7 +20,7 @@ blogRouter.route("/postBlog").post(
 )
 
 blogRouter.route("/showBlogs").get(
-    showQuestions ,showBlogs
+   showBlogs
 )
 
 blogRouter.route("/b/:blogId").get(getBlog)
