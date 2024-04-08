@@ -68,7 +68,8 @@ const registerUser = asyncHandler(async(req, res)=>{
            )
         res.status(201).json(createdUser);
     } catch (error) {
-        console.log("Outside try block",error)
+        console.log("Outside try block",error.message)
+        res.status(500).json({ error: error.message });
     }
 
     

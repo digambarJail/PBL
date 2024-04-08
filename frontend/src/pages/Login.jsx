@@ -29,16 +29,20 @@ export default function Login() {
       const data = await res.json();
       if (data.status != 200 ) {
         console.log(data);
+        console.log("out catch");
         dispatch(signInFail(data.error));
+        
       }
       if(res.ok) {
         dispatch(signInSuccess(data));
         navigate('/');
       }
     } catch (error) {
+      console.log("in catch");
       dispatch(signInFail(error));
     }
   };
+  const shouldDisplayAlert = errorMessage !== null && Object.keys(errorMessage).length > 0;
   return (
     <div className='min-h-screen mt-40'>
       <div className='flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-40'>
@@ -100,8 +104,8 @@ export default function Login() {
               Sign Up
             </Link>
           </div>
-          {errorMessage && (
-            <Alert className='mt-5' color='failure'>
+          {shouldDisplayAlert && (
+            <Alert className="mt-5" color="failure">
               {errorMessage}
             </Alert>
           )}
