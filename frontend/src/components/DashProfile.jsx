@@ -3,18 +3,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { Alert, Button, TextInput, Spinner } from "flowbite-react";
 import { signoutSuccess, updateSuccess } from "../app/user/userSlice";
 
-
 export default function DashProfile() {
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
+  const [imageFileUploadSuccess, setImageFileUploadSuccess] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [oldPassword, setoldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [passwordChangeError, setPasswordChangeError] = useState(null);
+  const [passwordChangeSuccess, setPasswordChangeSuccess] = useState(null);
   const filePickerRef = useRef();
 
   const handleImageChange = (e) => {
@@ -37,6 +38,9 @@ export default function DashProfile() {
         body: formData,
       });
       const data = await res.json();
+      if(res.ok){
+        setImageFileUploadSuccess("Image Changed SuccessFully!");
+      }
       dispatch(updateSuccess(data.data));
     } catch (error) {
       console.log(error.message);
@@ -48,51 +52,54 @@ export default function DashProfile() {
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
-  
+
     setLoading(true);
-  
+
     try {
       const requestBody = {
         oldPassword: oldPassword,
-        newPassword: newPassword
+        newPassword: newPassword,
       };
-      
+
       const requestOptions = {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(requestBody)
+        body: JSON.stringify(requestBody),
       };
-      
+
       try {
         const response = await fetch("/api/changePassword", requestOptions);
         if (!response.ok) {
           // Handle error response
           const errorMessage = await response.text();
-          console.log(passwordChangeError)
+          console.log(passwordChangeError);
           throw new Error(errorMessage);
         }
-      
+
         // Handle success response
         const responseData = await response.json();
-        console.log("Password change successful:", responseData);
+        if(response.ok){
+          console.log("Password change successful:", responseData);
+          setPasswordChangeSuccess("Password Changed Successfully!");
+        }
+        setoldPassword("");
+       setNewPassword("");
+        
       } catch (error) {
-        console.log("Inside inner catch block")
+        console.log("Inside inner catch block");
         console.error("Password change failed:", error.message);
         setPasswordChangeError("Failed to change password. Please try again");
-        console.log(passwordChangeError)
+        console.log(passwordChangeError);
       }
-  
-      // setoldPassword("");
-      // setNewPassword("");
-      // setPasswordChangeError(null);
-      // console.log(data); // Log success message or handle accordingly
+
+
     } catch (error) {
-      console.log('Inside outer catch block')
+      console.log("Inside outer catch block");
       console.error("Password change failed:", error.message);
       setPasswordChangeError("Failed to change password. Please try again");
-      console.log(passwordChangeError)
+      console.log(passwordChangeError);
     } finally {
       setLoading(false);
     }
@@ -117,10 +124,10 @@ export default function DashProfile() {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-3 w-full">
+    <div className="max-w-lg mx-auto p-3 w-full mb-10">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
       <form
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-4 my-10"
         encType="multipart/form-data"
         onSubmit={handleImageSubmit}
       >
@@ -138,15 +145,17 @@ export default function DashProfile() {
           <img
             src={imageFileUrl || currentUser.data.user.profilePicture}
             alt="user"
-            className={`rounded-full w-full h-full object-cover border-8 border-[lightgray] ${
-              imageFileUploadProgress &&
-              imageFileUploadProgress < 100 &&
-              "opacity-60"
-            }`}
+            className="rounded-full w-full h-full object-cover"
           />
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 transition-opacity duration-300 opacity-0 hover:opacity-100 hover:bg-opacity-50">
+            <span className="text-white text-sm font-semibold">Change</span>
+          </div>
         </div>
         {imageFileUploadError && (
           <Alert color="failure">{imageFileUploadError}</Alert>
+        )}
+        {imageFileUploadSuccess && (
+          <Alert color="success">{imageFileUploadSuccess}</Alert>
         )}
         <TextInput
           type="text"
@@ -160,6 +169,23 @@ export default function DashProfile() {
           placeholder="Email"
           defaultValue={currentUser.data.user.email}
         />
+        <Button
+          type="submit"
+          gradientDuoTone="purpleToBlue"
+          outlined={loading}
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <Spinner size="sm" />
+              <span className="pl-3">Updating Profile...</span>
+            </>
+          ) : (
+            "Update"
+          )}
+        </Button>
+      </form>
+      <div className="flex flex-col gap-4">
         <TextInput
           type="password"
           id="password"
@@ -177,6 +203,9 @@ export default function DashProfile() {
         {passwordChangeError && (
           <Alert color="failure">{passwordChangeError}</Alert>
         )}
+        {passwordChangeSuccess && (
+          <Alert color="success">{passwordChangeSuccess}</Alert>
+        )}
         <Button
           onClick={handleChangePassword}
           gradientDuoTone="purpleToBlue"
@@ -192,22 +221,7 @@ export default function DashProfile() {
             "Change Password"
           )}
         </Button>
-        <Button
-          type="submit"
-          gradientDuoTone="purpleToBlue"
-          outlined={loading}
-          disabled={loading}
-        >
-          {loading ? (
-            <>
-              <Spinner size="sm" />
-              <span className="pl-3">Loading...</span>
-            </>
-          ) : (
-            "Update"
-          )}
-        </Button>
-      </form>
+      </div>
       <div className="text-red-500 flex justify-between mt-5">
         <span className="cursor-pointer">Delete Account</span>
         <span className="cursor-pointer" onClick={handleSignout}>

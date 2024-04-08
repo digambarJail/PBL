@@ -308,7 +308,7 @@ const forgetPassword = asyncHandler(async (req, res) => {
         subject: "Reset Password",
         html: `<h1>Reset Your Password</h1>
       <p>Click on the following link to reset your password:</p>
-      <a href="http://localhost:8000/api/resetPassword/${token}">http://localhost:8000/resetPassword/${token}</a>
+      <a href="http://localhost:5173/resetPassword/${token}">http://localhost:5173/resetPassword/${token}</a>
       <p>The link will expire in 10 minutes.</p>
       <p>If you didn't request a password reset, please ignore this email.</p>`,
       };
@@ -337,6 +337,7 @@ const resetPassword = asyncHandler(async (req, res) => {
       }
   
       const user = await User.findOne({ _id: decodedToken.userId });
+      console.log("user",user);
       if (!user) {
         return res.status(401).send({ message: "no user found" });
       }

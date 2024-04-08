@@ -81,6 +81,11 @@ export default function Login() {
                 onChange={handleChange}
               />
             </div>
+            <div className='flex text-sm justify-end'>
+            <Link to='/forgot-password' className='text-blue-500'>
+            Forgot Password ?
+            </Link>
+          </div>
             <Button
               gradientDuoTone='redToYellow'
               type='submit'
@@ -96,7 +101,6 @@ export default function Login() {
                 'Sign In'
               )}
             </Button>
-            <OAuth/>
           </form>
           <div className='flex gap-2 text-sm mt-5'>
             <span>Dont have an account?</span>

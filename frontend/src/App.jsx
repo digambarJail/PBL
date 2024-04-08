@@ -21,6 +21,8 @@ import NoPrivateRoute from "./components/NoPrivateRoute";
 import ShowBlogs from './pages/ShowBlogs';
 import GetQuestion from './pages/GetQuestion';
 import GetUserDetails from './pages/GetUserDetails';
+import { ForgotPassword } from './pages/ForgotPassword';
+import { ResetPassword } from './pages/ResetPassword';
 import ContactUs from './pages/Contacts';
 
 function App() {
@@ -41,6 +43,9 @@ function App() {
                 <Route element={<NoPrivateRoute />} >
                   <Route path="login" element={<Login />} />
                   <Route path="reg" element={<Signup />} />
+                  <Route path="forgot-password" element={<ForgotPassword/>}/>
+                  <Route path="resetPassword/:tokenId" element={<ResetPassword/>} />
+                  <Route path="contact" element={<ContactUs/>} />
                 </Route>
                 <Route element={<PrivateRoute />} >
                   <Route path="/" element={<Home />} />
@@ -51,7 +56,7 @@ function App() {
                   <Route path="getBlogs/:blogId" element={<GetBlogs />} /> {/* Use element prop */}
                   <Route path="getQuestion/:quesId" element={<GetQuestion />} /> {/* Use element prop */}
                   <Route path="getUserDetails/:userId" element={<GetUserDetails />} />
-                  <Route path="contact" element={<ContactUs />} />
+                  
                 </Route>
                 <Route path="logout" element={<Logout />} />
               </Routes>
@@ -66,3 +71,6 @@ function App() {
 }
 
 export default App;
+
+
+
