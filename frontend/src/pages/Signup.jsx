@@ -14,13 +14,15 @@ export default function SignUp() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!formData.name || !formData.email || !formData.password || !file) {
-      return setErrorMessage("Please fill out all fields and select a file.");
+      return setErrorMessage('Please fill out all fields and select a file.');
     }
+
     try {
       setLoading(true);
       setErrorMessage(null);
-  
+
       const formDataToSend = new FormData();
       formDataToSend.append('name', formData.name);
       formDataToSend.append('email', formData.email);
@@ -28,19 +30,26 @@ export default function SignUp() {
       formDataToSend.append('profilePicture', file);
       formDataToSend.append('department', formData.department);
       formDataToSend.append('year', formData.year);
-  
-      const res = await fetch("/api/register", {
-        method: "POST",
+
+      const res = await fetch('/api/register', {
+        method: 'POST',
         body: formDataToSend
       });
+
       const data = await res.json();
-      if (data.status === 500) {
-        return setErrorMessage(data.error);
+
+      if (data.status != 200 ) {
+        console.log(data);
+        setErrorMessage(data.error);
+        setLoading(false);
       }
-      setLoading(false);
-      if (res.ok) {
-        navigate("/login");
+      if(res.ok) {
+        setErrorMessage(null);
+        setLoading(false);
+        navigate('/login');
       }
+
+
     } catch (error) {
       setErrorMessage(error.message);
       setLoading(false);

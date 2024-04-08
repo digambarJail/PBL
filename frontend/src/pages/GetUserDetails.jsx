@@ -10,7 +10,7 @@ const GetUserDetails = () =>{
     useEffect(() => {
         const getDetails = async () => {
           try {
-            console.log("Inside get user details")
+            // console.log("Inside get user details")
             let url = `/api/user/${userId}`;
             const res = await fetch(url);
             const data = await res.json();
@@ -43,7 +43,6 @@ const GetUserDetails = () =>{
                         <img src={user.profilePicture} alt={`${user.name}'s profile`} className="rounded-full border-2 border-purple-500 h-32 w-32 object-cover" />
                     </div>
                     <h2 className="text-center text-3xl font-semibold text-white mt-4">{user.name}</h2>
-                    {/* User Blogs */}
                     <div className="mt-6">
                         <h3 className="text-xl font-semibold text-purple-400 mb-2">User Blogs:</h3>
                         {userBlogs.length > 0 ? (
