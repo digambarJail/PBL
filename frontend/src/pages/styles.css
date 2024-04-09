@@ -1,0 +1,69 @@
+/* styles.css */
+.top-voices-container {
+    margin: 10px;
+  }
+  
+  .top-voices-card {
+    border: 1px solid #404040;
+    border-radius: 15px;
+    background-color: #282929;
+  }
+  
+  .top-voices-card-item {
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+
+    border: 1px solid #404040;
+    margin: 12px;
+    padding: 12px;
+    border-radius: 15px;
+  }
+  
+  .top-voices-card-item:hover {
+    opacity: 0.8;
+  }
+  
+  .top-voices-avatar-container {
+    flex-shrink: 0; /* Do not allow shrinking */
+    /* margin-right: 12px; */
+  }
+  
+  .top-voices-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    /* object-fit: cover; */
+    /* object-position: center; */
+    border-radius: 10px;
+  }
+  
+  .top-voices-name {
+    flex-grow: 1; /* Allow to grow and occupy remaining space */
+    margin-left: 10px; /* Add margin to the left of the name */
+  }
+  
+  .loading-animation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 300px;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .loading-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #404040;
+    margin-bottom: 4px;
+  }
+  
+  .loading-line {
+    width: 50%;
+    height: 5px;
+    background-color: #404040;
+    border-radius: 10px;
+  }
+  

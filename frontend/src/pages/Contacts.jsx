@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './contacts.css'
 import linkedinLogo from './images/icons8-linkedin.svg';
+import gmaillogo from './images/icons8-gmail.svg';
 
 const ContactUs = () => {
     const [user1, setUser1] = useState({});
@@ -83,31 +84,43 @@ const ContactUs = () => {
     return (
         <div className="user-container mb-36 pt-20"> {/* Apply a container class */}
             <div className="user-info">
-                {user1.profilePicture && <img src={user1.profilePicture} alt="User 1" className="user-img" />} {/* Apply class to img */}
+                {user1.profilePicture && <img src={user1.profilePicture} alt="User 1" className="user-img ml-6" />} {/* Apply class to img */}
                 <p className="user-name">Prathamesh Khanna</p> {/* Apply class to name */}
                 <a href="https://www.linkedin.com/in/prathamesh-khanna-1ba320258/" target="_blank" rel="noopener noreferrer">
-                    <img src={linkedinLogo} alt="LinkedIn" className="linkedin-icon ml-7" style={{ width: '50px', height: '50px' }} />
+                    <img src={linkedinLogo} alt="LinkedIn" className="linkedin-icon absolute mt-5 ml-6" style={{ width: '35px', height: '35px' }} />
+                </a>
+                <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=prathameshkhanna@gmail.com" target="_blank" rel="noopener noreferrer">
+                    <img src={gmaillogo} alt="LinkedIn" className="linkedin-icon ml-24 mt-5" style={{ width: '35px', height: '35px' }} />
                 </a>
             </div>
             <div className="user-info">
                 {user2.profilePicture && <img src={user2.profilePicture} alt="User 2" className="user-img" />}
                 <p className="user-name">Digambar Jail</p>
                 <a href="https://www.linkedin.com/in/digambar-jail-114b20254/" target="_blank" rel="noopener noreferrer">
-                    <img src={linkedinLogo} alt="LinkedIn" className="linkedin-icon ml-7" style={{ width: '50px', height: '50px' }} />
+                    <img src={linkedinLogo} alt="LinkedIn" className="linkedin-icon absolute mt-5" style={{ width: '35px', height: '35px' }} />
+                </a>
+                <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=ddjail2004@gmail.com" target="_blank" rel="noopener noreferrer">
+                    <img src={gmaillogo} alt="LinkedIn" className="linkedin-icon ml-16 mt-5" style={{ width: '35px', height: '35px' }} />
                 </a>
             </div>
             <div className="user-info">
                 {user3.profilePicture && <img src={user3.profilePicture} alt="User 3" className="user-img" />}
                 <p className="user-name">Nikunj Kadu</p>
                 <a href="https://www.linkedin.com/in/nikunj-kadu-45a3b7292/" target="_blank" rel="noopener noreferrer">
-                    <img src={linkedinLogo} alt="LinkedIn" className="linkedin-icon ml-7" style={{ width: '50px', height: '50px' }} />
+                    <img src={linkedinLogo} alt="LinkedIn" className="linkedin-icon absolute mt-5" style={{ width: '35px', height: '35px' }} />
+                </a>
+                <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=nikunjkadu19@gmail.com" target="_blank" rel="noopener noreferrer">
+                    <img src={gmaillogo} alt="LinkedIn" className="linkedin-icon ml-16 mt-5" style={{ width: '35px', height: '35px' }} />
                 </a>
             </div>
             <div className="user-info">
                 {user4.profilePicture && <img src={user4.profilePicture} alt="User 4" className="user-img" />}
                 <p className="user-name">Aarya Joshi</p>
                 <a href="https://www.linkedin.com/in/aarya-joshi-4912b2293/" target="_blank" rel="noopener noreferrer">
-                    <img src={linkedinLogo} alt="LinkedIn" className="linkedin-icon ml-7" style={{ width: '50px', height: '50px' }} />
+                    <img src={linkedinLogo} alt="LinkedIn" className="linkedin-icon absolute mt-5" style={{ width: '35px', height: '35px' }} />
+                </a>
+                <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=dethridrr@gmail.com" target="_blank" rel="noopener noreferrer">
+                    <img src={gmaillogo} alt="LinkedIn" className="linkedin-icon ml-16 mt-5" style={{ width: '35px', height: '35px' }} />
                 </a>
             </div>
         </div>

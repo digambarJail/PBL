@@ -45,7 +45,7 @@ function App() {
                   <Route path="reg" element={<Signup />} />
                   <Route path="forgot-password" element={<ForgotPassword/>}/>
                   <Route path="resetPassword/:tokenId" element={<ResetPassword/>} />
-                  <Route path="contact" element={<ContactUs/>} />
+                  
                 </Route>
                 <Route element={<PrivateRoute />} >
                   <Route path="/" element={<Home />} />
@@ -56,7 +56,7 @@ function App() {
                   <Route path="getBlogs/:blogId" element={<GetBlogs />} /> {/* Use element prop */}
                   <Route path="getQuestion/:quesId" element={<GetQuestion />} /> {/* Use element prop */}
                   <Route path="getUserDetails/:userId" element={<GetUserDetails />} />
-                  
+                  <Route path="contact" element={<ContactUs/>} />
                 </Route>
                 <Route path="logout" element={<Logout />} />
               </Routes>
