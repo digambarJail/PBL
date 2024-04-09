@@ -18,7 +18,7 @@ import ThemeProvider from "./components/ThemeProvider";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import NoPrivateRoute from "./components/NoPrivateRoute";
-import ShowBlogs from './pages/ShowBlogs';
+import ShowResults from './pages/ShowResults';
 import GetQuestion from './pages/GetQuestion';
 import GetUserDetails from './pages/GetUserDetails';
 import { ForgotPassword } from './pages/ForgotPassword';
@@ -48,16 +48,19 @@ function App() {
                   
                 </Route>
                 <Route element={<PrivateRoute />} >
-                  <Route path="/" element={<Home />} />
+                  
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="blog" element={<Blog />} />
-                  <Route path="showblogs" element={<ShowBlogs />} />
+                  
                   <Route path="addEvent" element={<AddEvent />} />
-                  <Route path="getBlogs/:blogId" element={<GetBlogs />} /> {/* Use element prop */}
-                  <Route path="getQuestion/:quesId" element={<GetQuestion />} /> {/* Use element prop */}
+                  <Route path="getBlogs/:blogId" element={<GetBlogs />} />
+                  <Route path="getQuestion/:quesId" element={<GetQuestion />} />
                   <Route path="getUserDetails/:userId" element={<GetUserDetails />} />
-                  <Route path="contact" element={<ContactUs/>} />
                 </Route>
+                <Route path="showblogs" element={<ShowResults />} />
+                
+                <Route path="/" element={<Home />} />
+                <Route path="contact" element={<ContactUs/>} />
                 <Route path="logout" element={<Logout />} />
               </Routes>
               <FooterCom />
