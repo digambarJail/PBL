@@ -78,8 +78,10 @@ export default function ShowBlogs() {
       <div className="flex w-full md:max-w-xl mx-4 rounded shadow my-10 gap-4">
         <button
           onClick={() => handleTabChange("Blogs")}
-          className={`w-full flex justify-center font-medium px-5 py-2 rounded-full border bg-white text-gray-800 border-gray-200 ${
-            activeTab === "Blogs" ? "bg-slate-800 text-white" : ""
+          className={`w-full flex justify-center font-medium px-5 py-2 rounded-full border ${
+            activeTab === "Blogs"
+              ? "bg-slate-600 text-white"
+              : "bg-white text-gray-800 border-gray-200 hover:bg-gray-200"
           }`}
         >
           Blogs
@@ -87,8 +89,10 @@ export default function ShowBlogs() {
 
         <button
           onClick={() => handleTabChange("Questions")}
-          className={`w-full flex justify-center rounded-full font-medium px-5 py-2 border bg-white text-gray-800 border-gray-200 ${
-            activeTab === "Questions" ? "bg-slate-800 text-white" : ""
+          className={`w-full flex justify-center rounded-full font-medium px-5 py-2 border ${
+            activeTab === "Questions"
+              ? "bg-slate-600 text-white"
+              : "bg-white text-gray-800 border-gray-200 hover:bg-gray-200"
           }`}
         >
           Questions
@@ -98,9 +102,9 @@ export default function ShowBlogs() {
       <div className="flex flex-row">
         <div className="w-[150%] mx-8">
           {activeTab === "Questions" ? (
-            obj.length > 0 ? (
+            obj.questions && obj.questions.length > 0 ? (
               <>
-                <Question data={obj} />
+                <Question data={obj.questions} />
                 <Pagination
                   page={page}
                   limit={obj.limit || 0}

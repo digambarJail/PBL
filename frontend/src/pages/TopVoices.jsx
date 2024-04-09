@@ -23,9 +23,9 @@ const TopVoices = () => {
   },[])
 
   return (
-    <div>
+    <div className='p-4'>
       {data.length !== 0 ? (
-      <div className='mt-5 border  border-[#404040] rounded-xl dark:bg-[#282929] '>
+      <div className='mt-5 border  border-[#404040] rounded-xl dark:bg-[#282929]'>
       {data.slice(0, 3).map((item, index) => (
         <div className=' mr-5 ml-5 border  border-[#404040] mt-12 rounded-xl p-4 group-hover:o mb-10 flex flex-row items-center space-x-2 ' key={index}>
           <div className='font-bold w-[20%]'>{index+1}</div>

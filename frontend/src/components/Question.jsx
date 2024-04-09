@@ -4,7 +4,7 @@ export const Question = ({data}) => {
   return (
     <div className="container mx-auto py-8">
     {data.map((item, index) => (
-        <div className="bg-gray-800 text-white p-6 rounded-lg mb-8 flex items-center" key={index}>
+        <div className="dark:bg-gray-800 bg-slate-200 border border-[#404040] p-6 rounded-lg mb-8 flex items-center" key={index}>
             <div className="flex-shrink-0 mr-4">
                 {item.profilePicture && (
                     <img src={item.profilePicture} alt="Profile" className="w-12 h-12 rounded-full" />
@@ -15,7 +15,7 @@ export const Question = ({data}) => {
                 <p className="text-gray-400 mb-2">Asked by: {item.nameOfOwner}</p>
                 <Link
                     to={`/getQuestion/${item._id}`}
-                    className="text-blue-500 hover:underline text-sm inline-block border border-blue-500 rounded-full px-4 py-2 transition duration-300 ease-in-out"                        >
+                    className="text-blue-500 hover:bg-blue-200 text-sm inline-block border border-blue-500 rounded-full px-4 py-2 transition duration-300 ease-in-out"                        >
                     Answer
                 </Link>
             </div>
