@@ -79,7 +79,7 @@ const showQuestions = asyncHandler(async (req, res,next) => {
             break;
     }
 
-    const response = await Question.aggregate([
+    const questions = await Question.aggregate([
         {
             $match: { question: { $regex: search, $options: "i" } }
         },
@@ -110,6 +110,17 @@ const showQuestions = asyncHandler(async (req, res,next) => {
             }
         }
     ]);
+
+    const total = await Question.countDocuments({
+        question: { $regex: search, $options: "i" },
+    });
+    const response = {
+        error: false,
+        total,
+        page: page + 1,
+        limit,
+        questions,
+    };
     return res.status(200).json(new ApiResponse(200, response, "Questions fetched successfully"));
 });
 
