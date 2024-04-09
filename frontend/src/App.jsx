@@ -24,6 +24,7 @@ import GetUserDetails from './pages/GetUserDetails';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
 import ContactUs from './pages/Contacts';
+import About from './pages/About';
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
                 
                 <Route path="/" element={<Home />} />
                 <Route path="contact" element={<ContactUs/>} />
+                <Route path="about" element={<About/>} />
                 <Route path="logout" element={<Logout />} />
               </Routes>
               <FooterCom />

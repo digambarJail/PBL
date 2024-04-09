@@ -1,0 +1,34 @@
+.about-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.1); /* Faint black background color */
+  }
+  
+  .title {
+    color: #fff; /* White text color */
+  }
+  
+  .subtitle {
+    color: #ccc; /* Light gray text color */
+  }
+  
+  .description {
+    color: #ddd; /* Light gray text color */
+    margin-bottom: 20px;
+  }
+  
+  .features {
+    margin-bottom: 20px;
+  }
+  
+  .feature-list {
+    list-style-type: disc; /* Bullet points */
+    color: #bbb; /* Light gray text color */
+  }
+  
+  .join-us {
+    font-style: italic;
+    color: #bbb; /* Light gray text color */
+  }
+  
