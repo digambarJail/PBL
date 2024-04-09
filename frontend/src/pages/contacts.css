@@ -1,20 +1,62 @@
-.user-container {
+.background-wrapper {
+    background-color: #121212; /* Black background */
+    padding-top: 100px; /* Adjust the padding to control the space above your cards */
+    padding-bottom: 80px; /* Optional: if you want consistent padding around your container */
+  }
+  
+  .user-container {
     display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-}
-
-.user-info {
-    text-align: center;
-}
-
-.user-img {
-    width: 100px;
-    height: 100px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    /* Removed the margin-top and margin-bottom properties */
+    padding-bottom: 20px;
+  }
+  
+  .user-info {
+    background-color: #1a1a1a; /* Dark card background */
+    color: #fff; /* Light text for readability */
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* More pronounced shadow for depth */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 300px;
+    position: relative;
+  }
+  
+  .user-img {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-}
-
-.user-name {
+    object-fit: cover;
+    border: 3px solid #333; /* Darker border for the image */
+    margin-bottom: 20px;
+  }
+  
+  .user-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff; /* Ensure the name stands out */
+  }
+  
+  .user-info p {
+    font-size: 16px;
+    color: #ccc; /* Lighter text color for other texts */
+    margin: 5px 0;
+  }
+  
+  /* .linkedin-icon, .gmail-icon {
+    width: 35px;
+    height: 35px;
     margin-top: 10px;
-    font-weight: bold;
-}
+  } */
+  
+  /*
+  .icon-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+   */
