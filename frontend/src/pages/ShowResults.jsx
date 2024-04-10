@@ -1,49 +1,74 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector , useDispatch } from "react-redux";
 import Post from "./Post";
 import Pagination from "../components/Pagination";
-import { useNavigate } from "react-router-dom";
-import { Dropdown } from "flowbite-react";
+import { useNavigate , useParams } from "react-router-dom";
+import { Dropdown ,TextInput } from "flowbite-react";
 import { Question } from "../components/Question";
+import { AiOutlineSearch } from 'react-icons/ai';
+import { setSearchQuery } from '../app/Search/SearchSlice';
 
 export default function ShowBlogs() {
   const [obj, setObj] = useState({});
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState("");
-  const [activeTab, setActiveTab] = useState("Blogs");
+   const [activeTab, setActiveTab] = useState("Blogs");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const search = useSelector((state) => state.search.searchQuery);
 
-  useEffect(() => {
-    const getAllResults = async () => {
-      try {
-        let url = `/api/show${activeTab}?page=${page}&sort=${sort}`;
-        if (search) {
-          url += `&search=${search}`;
-        }
-        const res = await fetch(url);
-        const { data } = await res.json();
-        console.log("show", data);
-        if (!res.ok) {
-          console.log(data.message);
-        }
-        setObj(data || {});
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  // useEffect(() =>{
+  //   setActiveTab(activetb);
+  // })
+  const handleSearchChange = (event) => {
+    const inputValue = event.target.value;
+    dispatch(setSearchQuery(inputValue));
+    console.log('search',search);
 
-    getAllResults();
+  };
+  const getAllResults = async () => {
+    try {
+      let url = `/api/show${activeTab}?page=${page}&sort=${sort}`;
+      if (search) {
+        url += `&search=${search}`;
+      }
+      const res = await fetch(url);
+      const { data } = await res.json();
+      console.log("show", data);
+      if (!res.ok) {
+        console.log(data.message);
+      }
+      setObj(data || {});
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+  
+      getAllResults(); // Fetch data again with updated search query
+    window.scrollTo(0, 0);
   }, [activeTab, page, search, sort]);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     setPage(1); // Reset page number when tab changes
   };
+  
 
   return (
     <>
-      <div className="w-screen flex items-center mt-10">
+    <div className="w-[60%] my-10 mx-4 ">
+          <TextInput
+      type="text"
+      placeholder="Search.."
+      rightIcon={AiOutlineSearch}
+      className="lg:flex w-[60%] lg:w-[120%] md:w-[100%] sm:w-[60%]"
+      value={search}
+      onChange={handleSearchChange}
+    />
+    </div>
+      <div className="w-full flex items-center mt-10">
         <button
           type="button"
           className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700 mx-4"
@@ -68,7 +93,8 @@ export default function ShowBlogs() {
           <span>Go back</span>
         </button>
         <div className="flex justify-center mx-4 my-auto">
-          {search ? (
+          {console.log("srch change" , search)}
+          { obj && search ? (
             <span className="font-bold text-3xl">Results for "{search}"</span>
           ) : (
             <span className="font-bold text-3xl">All Blogs</span>
@@ -76,6 +102,7 @@ export default function ShowBlogs() {
         </div>
       </div>
       <div className="flex w-full md:max-w-xl mx-4 rounded shadow my-10 gap-4">
+        
         <button
           onClick={() => handleTabChange("Blogs")}
           className={`w-full flex justify-center font-medium px-5 py-2 rounded-full border ${
@@ -101,7 +128,16 @@ export default function ShowBlogs() {
 
       <div className="flex flex-row">
         <div className="w-[150%] mx-8">
-          {activeTab === "Questions" ? (
+        {obj === null ? (
+          <>
+                        <div className="my-10 ml-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Loading
+                </h5>
+                </div>
+          </>
+        ) : (
+          activeTab === "Questions" ? (
             obj.questions && obj.questions.length > 0 ? (
               <>
                 <Question data={obj.questions} />
@@ -147,7 +183,9 @@ export default function ShowBlogs() {
                 </p>
               </div>
             )
-          )}
+          )
+        )}
+          
         </div>
         <div className="w-1/2 mt-10 mx-10">
           <Dropdown label="Sort By" placement="bottom" color="gray">

@@ -78,7 +78,7 @@ const Home = () => {
                   <div class="mt-10 sm:mt-10 sm:ml-3">
                   <button
                     class="w-full flex items-center justify-center px-8 py-3 text-base leading-6 font-medium rounded-md text-green-700 dark:text-green-700 bg-green-100 hover:bg-green-50 hover:text-green-600 focus:ring ring-offset-2 ring-purple-100 focus:outline-none transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
-                    onClick={() => navigate("/showBlogs")}
+                    onClick={() => navigate("/showBlogs/Blogs")}
                   >
                     Show More
                   </button>
@@ -129,12 +129,19 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="mt-40 mb-40">
+        <div className="mt-40 mb-40 w-full px-10">
           <h1 className="ml-20 text-4xl font-semibold">
             Recently asked Question!{" "}
           </h1>
           <ShowQuestions />
+          <button
+                    class="w-full flex items-center justify-center px-8 py-3 text-base leading-6 font-medium rounded-md text-green-700 dark:text-green-700 bg-green-100 hover:bg-green-50 hover:text-green-600 focus:ring ring-offset-2 ring-purple-100 focus:outline-none transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
+                    onClick={() => navigate("/showBlogs/Questions")}
+                  >
+                    Show More
+                  </button>
         </div>
+
       </div>
     </>
   );
