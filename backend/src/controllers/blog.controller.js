@@ -7,7 +7,7 @@ import { User } from "../models/user.models.js";
 import mongoose, { mongo } from "mongoose";
 import { deleteFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js";
 import checkForProfanity from "../utils/profanityChecker.js";
-
+import { Comment } from "../models/comment.model.js";
 
 
 const postBlog = asyncHandler(async (req,res)=>
@@ -199,7 +199,7 @@ const getBlog = asyncHandler(async (req,res) => {
 
 const deleteBlog = asyncHandler(async (req,res) => {
 
-    const {blogId} = req.params 
+    const {blogId} = req.params
     await Comment.deleteMany({blogId:blogId})
     const blog = await Blog.findByIdAndDelete(blogId)
 

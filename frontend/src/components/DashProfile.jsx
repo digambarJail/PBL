@@ -1,7 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState,useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Alert, Button, TextInput, Spinner } from "flowbite-react";
 import { signoutSuccess, updateSuccess } from "../app/user/userSlice";
+import deleteicon from "../images/icons8-delete.svg";
 
 export default function DashProfile() {
   const { currentUser } = useSelector((state) => state.user);
@@ -16,6 +17,8 @@ export default function DashProfile() {
   const [newPassword, setNewPassword] = useState("");
   const [passwordChangeError, setPasswordChangeError] = useState(null);
   const [passwordChangeSuccess, setPasswordChangeSuccess] = useState(null);
+  const [userBlogs, setUserBlogs] = useState([]);
+  const [deleteSuccessMessage, setDeleteSuccessMessage] = useState(""); // State for delete success message
   const filePickerRef = useRef();
 
   const handleImageChange = (e) => {
@@ -123,6 +126,50 @@ export default function DashProfile() {
     }
   };
 
+  useEffect(() => {
+    const getDetails = async () => {
+        try {
+            // console.log("Inside fetch user blogs")
+            // console.log(currentUser.data.user._id)
+            let userId = currentUser.data.user._id
+            let url = `/api/user/${userId}`;
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (!res.ok) {
+                console.log(data.message);
+            }
+            // setUser(data.data[0]);
+            setUserBlogs(data.data[0].userBlogs);
+            // console.log(userBlogs);
+            // console.log(userBlogs._id)
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    getDetails();
+}, []);
+
+const deleteBlog = async (blogId) => {
+  try {
+    const res = await fetch(`/api/deleteBlog/${blogId}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to delete blog");
+    }
+
+    const data = await res.json();
+    setDeleteSuccessMessage("Blog deleted successfully"); // Set success message
+    // console.log("Blog deleted successfully", data);
+    // Optionally, you can perform additional actions after successfully deleting the blog, such as updating the UI.
+  } catch (error) {
+    console.error("Error deleting blog:", error.message);
+  }
+};
+
   return (
     <div className="max-w-lg mx-auto p-3 w-full mb-10">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -221,6 +268,20 @@ export default function DashProfile() {
             "Change Password"
           )}
         </Button>
+      </div>
+      <div className="my-10">
+        <h2 className="text-lg font-semibold mb-3">Your Blogs</h2>
+        {userBlogs.length > 0 ? (
+          userBlogs.map((blog) => (
+            <div key={blog._id} className="blog-container">
+<img src={deleteicon} alt="delete" onClick={() => deleteBlog(blog._id)} className="delete-icon ml-96 w-8 h-8" />              <h3 className="text-xl font-semibold">{blog.title}</h3>
+              <p className="text-gray-600">{blog.content}</p>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-500">You have no blogs yet.</p>
+        )}
+        {deleteSuccessMessage && <Alert color="success">{deleteSuccessMessage}</Alert>}
       </div>
       <div className="text-red-500 flex justify-between mt-5">
         <span className="cursor-pointer">Delete Account</span>

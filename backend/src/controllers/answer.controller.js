@@ -18,7 +18,7 @@ const postAnswer = asyncHandler(async (req,res) => {
 
       if ( isContentProfane) {
          throw new ApiError(400,"Contains explicit content and cannot be submitted")
-     }
+      }
 
       if(!answer)
       {
@@ -128,6 +128,7 @@ const postAnswer = asyncHandler(async (req,res) => {
            $match:{
               _id:new mongoose.Types.ObjectId(questionId)
            }
+           
      },
      {
         $lookup:{
@@ -144,11 +145,11 @@ const postAnswer = asyncHandler(async (req,res) => {
                     as:"userDetails" ,
                     pipeline:[
                        {
-                          $project:{
+                           $project:{
                              name:1,
                              profilePicture:1,
                              _id:1
-                          }
+                           }
                        }
                     ]
 
@@ -190,15 +191,15 @@ const postAnswer = asyncHandler(async (req,res) => {
   ])
   
 
-  if(!answers?.length)
-  {
-     throw new ApiError(401,"ANSWERS")
-  }
+   if(!answers?.length)
+   {
+      throw new ApiError(401,"ANSWERS")
+   }
 
   //console.log(comment[0].blogComments);
-
-  return res.status(200).
-  json(new ApiResponse(200,
+//   console.log(JSON.stringify(answers, null, 2));
+   return res.status(200).
+   json(new ApiResponse(200,
      answers,
      "answers fetched successfully"))
 })

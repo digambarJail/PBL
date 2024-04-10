@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import {verifyJWT} from "../middlewares/auth.middleware.js"
-import { getBlog, postBlog, showBlogs } from "../controllers/blog.controller.js";
+import { deleteBlog, getBlog, postBlog, showBlogs } from "../controllers/blog.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { showQuestions } from "../controllers/question.controller.js";
 
@@ -25,5 +25,6 @@ blogRouter.route("/showBlogs").get(
 
 blogRouter.route("/b/:blogId").get(getBlog)
 
+blogRouter.route("/deleteBlog/:blogId").delete(deleteBlog);
 
 export default blogRouter
