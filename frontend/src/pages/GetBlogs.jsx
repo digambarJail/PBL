@@ -6,6 +6,7 @@ import { AiFillLike } from "react-icons/ai";
 import { FaComment } from "react-icons/fa6";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import Comments from "../components/Comments";
+import { BlogPlaceholder } from "../components/BlogPlaceholder";
 
 const GetBlogs = () => {
   const { blogId } = useParams();
@@ -99,7 +100,7 @@ const GetBlogs = () => {
 
   // Render JSX only when blog and likes are not null
   if (!blog || !likes) {
-    return <p>Loading...</p>;
+    return <BlogPlaceholder/>;
   }
 
   return (

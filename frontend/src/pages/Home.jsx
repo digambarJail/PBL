@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ShowQuestions from "./showQuestions";
 import { setSearchQuery } from "../app/Search/SearchSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { CardPlaceholder } from "../components/CardPlaceholder";
 
 const Home = () => {
   // let blogs = [];
@@ -46,7 +47,6 @@ const Home = () => {
     getAllBlogs();
   }, [sort, filterGenre, page, search]);
 
-  
   return (
     <>
       <div className=" flex flex-col">
@@ -74,46 +74,20 @@ const Home = () => {
                 {/* {console.log("w", obj)} */}
                 {obj.blog && obj.blog.length !== 0 ? (
                   <>
-                  <Post blogs={obj.blog ? obj.blog : []} />
-                  <div class="mt-10 sm:mt-10 sm:ml-3">
-                  <button
-                    class="w-full flex items-center justify-center px-8 py-3 text-base leading-6 font-medium rounded-md text-green-700 dark:text-green-700 bg-green-100 hover:bg-green-50 hover:text-green-600 focus:ring ring-offset-2 ring-purple-100 focus:outline-none transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
-                    onClick={() => navigate("/showBlogs/Blogs")}
-                  >
-                    Show More
-                  </button>
-                </div>
-                </>
+                    <Post blogs={obj.blog ? obj.blog : []} />
+                    <div class="mt-10 sm:mt-10 sm:ml-3">
+                      <button
+                        class="w-full flex items-center justify-center px-8 py-3 text-base leading-6 font-medium rounded-md text-green-700 dark:text-green-700 bg-green-100 hover:bg-green-50 hover:text-green-600 focus:ring ring-offset-2 ring-purple-100 focus:outline-none transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
+                        onClick={() => navigate("/showBlogs/Blogs")}
+                      >
+                        Show More
+                      </button>
+                    </div>
+                  </>
                 ) : (
                   <>
-                    <div class="py-4 rounded shadow-md w-60 sm:w-full animate-pulse bg-gray-800">
-                      <div class="flex p-4 space-x-4 sm:px-8">
-                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-gray-300"></div>
-                        <div class="flex-1 py-2 space-y-4">
-                          <div class="w-full h-3 rounded bg-gray-300"></div>
-                          <div class="w-5/6 h-3 rounded bg-gray-300"></div>
-                        </div>
-                      </div>
-                      <div class="p-4 space-y-4 sm:px-8">
-                        <div class="w-full h-4 rounded bg-gray-300"></div>
-                        <div class="w-full h-4 rounded bg-gray-300"></div>
-                        <div class="w-3/4 h-4 rounded bg-gray-300"></div>
-                      </div>
-                    </div>
-                    <div class="py-4 rounded shadow-md w-60 sm:w-full animate-pulse bg-gray-800 my-10">
-                      <div class="flex p-4 space-x-4 sm:px-8">
-                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-gray-300"></div>
-                        <div class="flex-1 py-2 space-y-4">
-                          <div class="w-full h-3 rounded bg-gray-300"></div>
-                          <div class="w-5/6 h-3 rounded bg-gray-300"></div>
-                        </div>
-                      </div>
-                      <div class="p-4 space-y-4 sm:px-8">
-                        <div class="w-full h-4 rounded bg-gray-300"></div>
-                        <div class="w-full h-4 rounded bg-gray-300"></div>
-                        <div class="w-3/4 h-4 rounded bg-gray-300"></div>
-                      </div>
-                    </div>
+             <CardPlaceholder/>
+             <CardPlaceholder/>
 
                   </>
                 )}
@@ -135,13 +109,12 @@ const Home = () => {
           </h1>
           <ShowQuestions />
           <button
-                    class="w-full flex items-center justify-center px-8 py-3 text-base leading-6 font-medium rounded-md text-green-700 dark:text-green-700 bg-green-100 hover:bg-green-50 hover:text-green-600 focus:ring ring-offset-2 ring-purple-100 focus:outline-none transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
-                    onClick={() => navigate("/showBlogs/Questions")}
-                  >
-                    Show More
-                  </button>
+            class="w-full flex items-center justify-center px-8 py-3 text-base leading-6 font-medium rounded-md text-green-700 dark:text-green-700 bg-green-100 hover:bg-green-50 hover:text-green-600 focus:ring ring-offset-2 ring-purple-100 focus:outline-none transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
+            onClick={() => navigate("/showBlogs")}
+          >
+            Show More
+          </button>
         </div>
-
       </div>
     </>
   );
