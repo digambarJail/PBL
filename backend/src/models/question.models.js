@@ -12,6 +12,9 @@ const questionSchema = new Schema({
     owner :{
         type : Schema.Types.ObjectId,
         ref : "User"
+    },
+    isAnonymous: {
+        type: Boolean,
     }
     
 },{timestamps:true})

@@ -9,8 +9,7 @@ import checkForProfanity from "../utils/profanityChecker.js";
 const postQuestion = asyncHandler(async (req,res)=>
 {
     try {
-        const {question} =  req.body;
-
+        const {question, isAnonymous} =  req.body;
         const isContentProfane = await checkForProfanity(question   )
 
       if ( isContentProfane) {
@@ -34,7 +33,7 @@ const postQuestion = asyncHandler(async (req,res)=>
             throw new ApiError(400, "The Above Field are Compulsory");
         }
 
-        const response = await Question.create({question,owner,nameOfOwner})
+        const response = await Question.create({question,owner,isAnonymous,nameOfOwner})
                    
         return res.status(200).
         json(new ApiResponse(200,{response},"Question Posted Successfully"))
@@ -103,6 +102,7 @@ const showQuestions = asyncHandler(async (req, res,next) => {
         {
             $project: {
                 question: 1,
+                isAnonymous:1,
                 nameOfOwner: { $arrayElemAt: ["$ownerDetails.name", 0] },
                 createdAt: 1,
                 profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] },
@@ -146,6 +146,7 @@ const getQuestion = asyncHandler(async (req,res) => {
             $project:{
                 // title:1,
                 question:1,
+                isAnonymous:1,
                 nameOfOwner: { $arrayElemAt: ["$ownerDetails.name", 0] },
                 createdAt:1,
                 profilePicture: { $arrayElemAt: ["$ownerDetails.profilePicture", 0] },

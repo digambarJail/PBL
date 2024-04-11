@@ -10,6 +10,7 @@ const Blog = () => {
   const [blogSubmit, setBlogSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAnonymous, setIsAnonymous] = useState(false);
 
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
@@ -35,7 +36,7 @@ const Blog = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ question }),
+        body: JSON.stringify({ question,isAnonymous }),
       });
 
       console.log("Content:", question);
@@ -149,6 +150,17 @@ const Blog = () => {
             placeholder="Type Your Question ..."
             onChange={handleQuestionChange}
           />
+          <div className="flex items-center gap-2 mt-4">
+            <input
+              type="checkbox"
+              id="anonymous"
+              checked={isAnonymous}
+              onChange={(e) => setIsAnonymous(e.target.checked)}
+            />
+            <label htmlFor="anonymous" className="text-md text-gray-700">
+              Do you want to ask this question anonymously?
+            </label>
+          </div>
           <button
             onClick={handleSubmitQuestion}
             className="bg-green-500 rounded-xl mt-6 px-5 py-2.5 text-white text-xl"
