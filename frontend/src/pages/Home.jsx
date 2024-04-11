@@ -23,6 +23,10 @@ const Home = () => {
     navigate("/addEvent");
   };
 
+  const handleSeeMore = () => {
+    navigate("/allEvents");
+  }
+
   useEffect(() => {
     const getAllBlogs = async () => {
       try {
@@ -56,11 +60,17 @@ const Home = () => {
           <div className="w-2/6 items-center mt-12">
             <Events />
             <button
-              onClick={handleAddEvent}
-              className="mt-10 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full"
-            >
-              Add Your Event
-            </button>
+          onClick={handleAddEvent}
+          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full mr-4"
+        >
+          Add Your Event
+        </button>
+        <button
+          onClick={handleSeeMore}
+          className="bg-green-500 mt-5 mr-4 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full"
+        >
+          See More Events
+        </button>
           </div>
           <div className="w-4/6 mt-12">
             <h1 className=" text-2xl font-semibold">Blogs</h1>

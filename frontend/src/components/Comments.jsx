@@ -20,7 +20,6 @@ export default function Comments({ comments }) {
                  </h3>
                </div>
                <p className="ml-14 mt-2 my-2">{comment.content}</p>
-               <button className="text-right text-blue-500">Reply</button>
              </div>
    
              <div className="flex flex-col items-end gap-3 pr-3 py-3">

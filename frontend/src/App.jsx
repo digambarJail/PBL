@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import GetBlogs from "./pages/GetBlogs"; // Correct import statement
 import AddEvent from './pages/addEvent';
+import AllEvents from './pages/AllEvents';
 import "./index.css";
 import { Auth0Provider } from "@auth0/auth0-react";
 import Logout from "./pages/Logout";
@@ -54,6 +55,7 @@ function App() {
                   <Route path="blog" element={<Blog />} />
                   
                   <Route path="addEvent" element={<AddEvent />} />
+                  <Route path="allEvents" element={<AllEvents />} />
                   <Route path="getBlogs/:blogId" element={<GetBlogs />} />
                   <Route path="getQuestion/:quesId" element={<GetQuestion />} />
                   <Route path="getUserDetails/:userId" element={<GetUserDetails />} />

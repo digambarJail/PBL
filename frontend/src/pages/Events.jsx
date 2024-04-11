@@ -5,22 +5,14 @@ const Events = () => {
 
   useEffect(() => {
     const getEvents = async () => {
-      console.log("Inside get all events ")
-      const res = await fetch ('/api/showEvents')
+      const res = await fetch('/api/showEvents');
       const data = await res.json();
-
-      console.log("Fetched events successfully")
-      console.log(data)
-
-      console.log("Data of events")
-      console.log(data.data)
       setData(data.data);
     };
 
     getEvents();
   }, []);
 
-  // Function to format the date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -32,55 +24,45 @@ const Events = () => {
   };
 
   return (
-    <div className='rounded-lg mx-2'>
-      <div>
-        <h1 className='text-2xl font-semibold'>Events</h1>
-        {data.length !== 0 ? (
-          <div className=''>
-            {data.map((item, index) => (
-              <div className='bg-slate-200 dark:bg-[#282929] mr-5 ml-5 border border-[#404040] mt-12 rounded-xl p-10' key={index}>
-                <h1 className='font-bold'>{item.name}</h1>
-                {item.description}
-                <p>Organized by: {item.organizer}</p>
-                <p>Date: {formatDate(item.date)}</p> {/* Display formatted date */}
-                <p>Venue: {item.location}</p>
-                <a className='text-blue-500' href={item.url}>Click Here to know more!</a>          
+    <div className='container mx-auto px-4 py-8'>
+      <h1 className='text-3xl font-semibold mb-8'>Upcoming Events</h1>
+      {data.length !== 0 ? (
+        <div>
+          {data.slice(0, 5).map((item, index) => (
+            <div key={index} className='mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-lg shadow-md'>
+              <div className='p-6'>
+                <h2 className='text-xl font-semibold mb-2'>{item.name}</h2>
+                <p className='text-gray-600 dark:text-gray-400'>{item.description}</p>
               </div>
-            ))}
-          </div>
-        ) : (
-          <>
-            <div className="py-4 rounded shadow-md w-60 sm:w-80 animate-pulse mx-10 my-10">
-              <div className="flex p-4 space-x-4 sm:px-8">
-                <div className="flex-shrink-0 w-16 h-16 rounded-full dark:bg-gray-700 bg-gray-400"></div>
-                <div className="flex-1 py-2 space-y-4">
-                  <div className="w-full h-3 rounded dark:bg-gray-700 bg-gray-400"></div>
-                  <div className="w-5/6 h-3 rounded dark:bg-gray-700 bg-gray-400"></div>
-                </div>
-              </div>
-              <div className="p-4 space-y-4 sm:px-8">
-                <div className="w-full h-4 rounded dark:bg-gray-700 bg-gray-200"></div>
-                <div className="w-full h-4 rounded dark:bg-gray-700 bg-gray-200"></div>
-                <div className="w-3/4 h-4 rounded dark:bg-gray-700 bg-gray-200"></div>
+              <div className='p-6 border-t border-gray-200 dark:border-gray-700'>
+                <p className='text-gray-700 dark:text-gray-300'>
+                  <span className="font-semibold">Organized by:</span> {item.organizer}
+                </p>
+                <p className='text-gray-700 dark:text-gray-300'>
+                  <span className="font-semibold">Date:</span> {formatDate(item.date)}
+                </p>
+                <p className='text-gray-700 dark:text-gray-300'>
+                  <span className="font-semibold">Venue:</span> {item.location}
+                </p>
+                <a href={item.url} className='text-blue-500 hover:underline'>Click Here to know more!</a>
               </div>
             </div>
-            <div className="py-4 rounded shadow-md w-60 sm:w-80 animate-pulse  my-10 mx-10">
-              <div className="flex p-4 space-x-4 sm:px-8">
-                <div className="flex-shrink-0 w-16 h-16 rounded-full dark:bg-gray-700 bg-gray-400"></div>
-                <div className="flex-1 py-2 space-y-4">
-                  <div className="w-full h-3 rounded dark:bg-gray-700 bg-gray-400"></div>
-                  <div className="w-5/6 h-3 rounded dark:bg-gray-700 bg-gray-400"></div>
-                </div>
-              </div>
-              <div className="p-4 space-y-4 sm:px-8">
-                <div className="w-full h-4 rounded dark:bg-gray-700 bg-gray-200"></div>
-                <div className="w-full h-4 rounded dark:bg-gray-700 bg-gray-200"></div>
-                <div className="w-3/4 h-4 rounded dark:bg-gray-700 bg-gray-200"></div>
+          ))}
+        </div>
+      ) : (
+        <div>
+          {[...Array(5)].map((_, index) => (
+            <div key={index} className='mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-lg shadow-md animate-pulse'>
+              <div className='p-6'>
+                <div className='w-2/3 h-4 mb-4 bg-gray-200 dark:bg-gray-600 rounded-lg'></div>
+                <div className='w-full h-6 mb-4 bg-gray-200 dark:bg-gray-600 rounded-lg'></div>
+                <div className='w-1/2 h-4 mb-4 bg-gray-200 dark:bg-gray-600 rounded-lg'></div>
+                <div className='w-full h-6 bg-gray-200 dark:bg-gray-600 rounded-lg'></div>
               </div>
             </div>
-          </>
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
