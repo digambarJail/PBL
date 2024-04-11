@@ -1,11 +1,14 @@
 import React, { useState,useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { reset } from '../app/user/userSlice';
 import { Alert, Button, TextInput, Spinner } from "flowbite-react";
 import { signoutSuccess, updateSuccess } from "../app/user/userSlice";
 import deleteicon from "../images/icons8-delete.svg";
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function DashProfile() {
   const { currentUser } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -17,6 +20,8 @@ export default function DashProfile() {
   const [newPassword, setNewPassword] = useState("");
   const [passwordChangeError, setPasswordChangeError] = useState(null);
   const [passwordChangeSuccess, setPasswordChangeSuccess] = useState(null);
+  const [deleteAccountSuccess, setDeleteAccountSuccess] = useState(null);
+  const [deleteAccountError, setDeleteAccountError] = useState(null);
   const [userBlogs, setUserBlogs] = useState([]);
   const [deleteSuccessMessage, setDeleteSuccessMessage] = useState(""); // State for delete success message
   const [deleteConfirmation, setDeleteConfirmation] = useState(false); // State for delete confirmation
@@ -127,6 +132,32 @@ export default function DashProfile() {
       console.log(error.message);
     }
   };
+  
+  const userId = currentUser.data.user._id;
+
+  const handleDeleteAccount = async () => {
+    try {
+      const res = await fetch(`/api/deleteAccount/${userId}` , {
+        method: "POST",
+
+      });
+      const data = await res.json();
+      if(!res.ok){
+        setDeleteAccountError(data.message);
+        console.log('err',data.message);
+        alert(data.message);
+      }
+      if(res.ok){
+        setDeleteAccountSuccess(data.message);
+        console.log('succ',data.message);
+        alert(data.message);
+        dispatch(reset());
+        
+      }
+    } catch (error) {
+      setDeleteAccountError(error);
+    }
+  }
 
   useEffect(() => {
     const getDetails = async () => {
@@ -219,12 +250,14 @@ export default function DashProfile() {
           id="username"
           placeholder="Username"
           defaultValue={currentUser.data.user.name}
+          readOnly
         />
         <TextInput
           type="email"
           id="email"
           placeholder="Email"
           defaultValue={currentUser.data.user.email}
+          readOnly
         />
         <Button
           type="submit"
@@ -295,11 +328,21 @@ export default function DashProfile() {
         {deleteSuccessMessage && <Alert color="success">{deleteSuccessMessage}</Alert>}
       </div>
       <div className="text-red-500 flex justify-between mt-5">
-        <span className="cursor-pointer">Delete Account</span>
+        <span className="cursor-pointer" onClick={handleDeleteAccount}>Delete Account</span>
         <span className="cursor-pointer" onClick={handleSignout}>
           Sign Out
         </span>
       </div>
+      {deleteAccountError && (
+        <>
+          <Alert color="failure">{deleteAccountError}</Alert>
+          </>
+        )}
+        {deleteAccountSuccess && (
+          <>
+          <Alert color="success">{deleteAccountSuccess}</Alert>
+          </>
+        )}
   
       {/* Confirmation dialog */}
       {deleteConfirmation && (
