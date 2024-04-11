@@ -233,7 +233,7 @@ const Blog = () => {
                   <span className="pl-3">Loading...</span>
                 </>
               ) : (
-                "Sumbit"
+                "Submit"
               )}
           </button>
           {errorMessage && (

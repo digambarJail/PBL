@@ -128,7 +128,7 @@ const ContactUs = () => {
                 <a href="https://www.linkedin.com/in/aarya-joshi-4912b2293/" target="_blank" rel="noopener noreferrer">
                     <img src={linkedinLogo} alt="LinkedIn" className="linkedin-icon absolute mt-4 ml-5" style={{ width: '35px', height: '35px' }} />
                 </a>
-                <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=dethridrr@gmail.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=ajoshi652004@gmail.com" target="_blank" rel="noopener noreferrer">
                     <img src={gmaillogo} alt="LinkedIn" className="linkedin-icon mr-16 mt-4" style={{ width: '35px', height: '35px' }} />
                 </a>
             </div>
