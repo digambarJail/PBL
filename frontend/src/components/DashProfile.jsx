@@ -136,6 +136,13 @@ export default function DashProfile() {
   const userId = currentUser.data.user._id;
 
   const handleDeleteAccount = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
+
+    if (confirmDelete) {
+      deleteAccount();
+    }
+  };
+  const deleteAccount = async () => {
     try {
       const res = await fetch(`/api/deleteAccount/${userId}` , {
         method: "POST",

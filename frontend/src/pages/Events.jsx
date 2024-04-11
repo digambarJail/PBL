@@ -29,7 +29,7 @@ const Events = () => {
       {data.length !== 0 ? (
         <div>
           {data.slice(0, 5).map((item, index) => (
-            <div key={index} className='mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-lg shadow-md'>
+            <div key={index} className='mb-6 bg-gradient-to-r from-slate-100 via-slate-200 to-slate-300 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-lg shadow-md'>
               <div className='p-6'>
                 <h2 className='text-xl font-semibold mb-2'>{item.name}</h2>
                 <p className='text-gray-600 dark:text-gray-400'>{item.description}</p>
@@ -52,7 +52,7 @@ const Events = () => {
       ) : (
         <div>
           {[...Array(5)].map((_, index) => (
-            <div key={index} className='mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-lg shadow-md animate-pulse'>
+            <div key={index} className='mb-6 bg-gradient-to-r from-slate-400 via-slate-500 to-slate-600 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-lg shadow-md animate-pulse'>
               <div className='p-6'>
                 <div className='w-2/3 h-4 mb-4 bg-gray-200 dark:bg-gray-600 rounded-lg'></div>
                 <div className='w-full h-6 mb-4 bg-gray-200 dark:bg-gray-600 rounded-lg'></div>
