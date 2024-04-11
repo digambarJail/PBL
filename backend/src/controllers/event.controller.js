@@ -26,10 +26,15 @@ const addEvent = asyncHandler(async (req,res) => {
 })
 
 const showEvents = asyncHandler(async (req,res) => {
+    const currentDateIST = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
     
+    const currentDate = new Date(currentDateIST);
+    currentDate.setHours(5, 30, 0, 0);
     const search = "";  
-    const event = await Event.find({name :{$regex:search,$options:"i"}})
-    .sort({ createdAt: -1 })
+    const event = await Event.find({
+        name: { $regex: search, $options: "i" },
+        date: { $gte: currentDate.toISOString().slice(0,10) }
+    }).sort({ date: 1 });
 
     return res.status(200)
     .json(new ApiResponse(200,
