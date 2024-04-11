@@ -19,6 +19,8 @@ export default function DashProfile() {
   const [passwordChangeSuccess, setPasswordChangeSuccess] = useState(null);
   const [userBlogs, setUserBlogs] = useState([]);
   const [deleteSuccessMessage, setDeleteSuccessMessage] = useState(""); // State for delete success message
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false); // State for delete confirmation
+  const [blogToDelete, setBlogToDelete] = useState(null); // State to store blog to delete
   const filePickerRef = useRef();
 
   const handleImageChange = (e) => {
@@ -151,25 +153,33 @@ export default function DashProfile() {
     getDetails();
 }, []);
 
-const deleteBlog = async (blogId) => {
-  try {
-    const res = await fetch(`/api/deleteBlog/${blogId}`, {
-      method: "DELETE",
-    });
+  const confirmDeleteBlog = (blogId) => {
+    setBlogToDelete(blogId);
+    setDeleteConfirmation(true);
+  };
 
-    if (!res.ok) {
-      throw new Error("Failed to delete blog");
+  const deleteBlog = async () => {
+    try {
+      const res = await fetch(`/api/deleteBlog/${blogToDelete}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to delete blog");
+      }
+
+      const data = await res.json();
+      setDeleteSuccessMessage("Blog deleted successfully");
+      // Update UI or perform any additional actions
+    } catch (error) {
+      console.error("Error deleting blog:", error.message);
     }
 
-    const data = await res.json();
-    setDeleteSuccessMessage("Blog deleted successfully"); // Set success message
-    // console.log("Blog deleted successfully", data);
-    // Optionally, you can perform additional actions after successfully deleting the blog, such as updating the UI.
-  } catch (error) {
-    console.error("Error deleting blog:", error.message);
-  }
-};
-
+    // Reset states
+    setDeleteConfirmation(false);
+    setBlogToDelete(null);
+  };
+  
   return (
     <div className="max-w-lg mx-auto p-3 w-full mb-10">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -274,7 +284,8 @@ const deleteBlog = async (blogId) => {
         {userBlogs.length > 0 ? (
           userBlogs.map((blog) => (
             <div key={blog._id} className="blog-container">
-<img src={deleteicon} alt="delete" onClick={() => deleteBlog(blog._id)} className="delete-icon ml-96 w-8 h-8" />              <h3 className="text-xl font-semibold">{blog.title}</h3>
+              <img src={deleteicon} alt="delete" onClick={() => confirmDeleteBlog(blog._id)} className="delete-icon ml-96 w-8 h-8" />
+              <h3 className="text-xl font-semibold">{blog.title}</h3>
               <p className="text-gray-600">{blog.content}</p>
             </div>
           ))
@@ -289,6 +300,25 @@ const deleteBlog = async (blogId) => {
           Sign Out
         </span>
       </div>
+  
+      {/* Confirmation dialog */}
+      {deleteConfirmation && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black bg-opacity-75"></div>
+          <div className=" p-6 rounded-lg shadow-lg z-50 relative">
+            <p className="text-xl mb-4">Are you sure you want to delete this blog?</p>
+            <div className="flex justify-end">
+              <Button onClick={deleteBlog} gradientDuoTone="purpleToBlue" className="mr-4">
+                Yes
+              </Button>
+              <Button onClick={() => setDeleteConfirmation(false)} gradientDuoTone="redToOrange">
+                No
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
+  
 }
