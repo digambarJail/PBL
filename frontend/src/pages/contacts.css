@@ -46,6 +46,16 @@
     color: #ccc; /* Lighter text color for other texts */
     margin: 5px 0;
   }
+
+  .team-heading {
+    font-family: sans-serif; /* Change the font to your preferred one */
+    font-size: 48px; /* Keep or adjust the font size */
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.7); /* Keep or adjust the color */
+    text-align: center;
+    margin-bottom: 30px; /* Keep or adjust the margin */
+  }
+  
   
   /* .linkedin-icon, .gmail-icon {
     width: 35px;
