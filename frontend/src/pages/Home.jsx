@@ -73,7 +73,7 @@ const Home = () => {
         </button>
           </div>
           <div className="w-full md:w-4/6 mt-12">
-            <h1 className=" text-2xl font-semibold">Blogs</h1>
+            <h1 className=" text-3xl font-semibold mt-6">Blogs</h1>
             <div className={` font-[sans-serif] p-4 mt-10 rounded-md `}>
               <div className="max-w-6xl max-md:max-w-lg mx-auto">
                 <div>

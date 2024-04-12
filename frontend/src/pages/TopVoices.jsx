@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { Link, useParams } from "react-router-dom";
+
 
 const TopVoices = () => {
 
@@ -30,7 +32,14 @@ const TopVoices = () => {
         <div className=' mr-5 ml-5 border  border-[#404040] mt-12 rounded-xl p-4 group-hover:o mb-10 flex flex-row items-center space-x-2 ' key={index}>
           <div className='font-bold w-[20%]'>{index+1}</div>
           <div className='font-bold w-[20%]'><img src={data[index].profilePicture} alt=""  className='rounded-avatar shrink-0 h-[3.5rem] w-[3.5rem] object-cover object-center rounded-md'/></div>
-          <div className='font-bold '>{item.name}</div>
+
+          <Link 
+            to={`/getUserDetails/${item._id}`} 
+            className="text-xl font-bold text-gray-900 dark:text-white"
+          >
+            {item.name}
+          </Link>
+          
         </div>
       ))}
       </div>
