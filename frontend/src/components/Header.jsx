@@ -123,7 +123,12 @@ function Header() {
                 <div className="relative">
                   {searchResults.map((result, index) => (
                     <li className="border p-4" onClick={() => navigate(`/getQuestion/${result._id}`)} key={index}>
-                      <SearchResult title={result.question} content={result.nameOfOwner} />
+                                              {!result.isAnonymous ? (
+                            <SearchResult question={result.question} asked={result.nameOfOwner} />
+                        ) : (
+                          <SearchResult question={result.question} asked='Anonymous' />
+                        )}
+                      
                     </li>
                   ))}
                 </div>

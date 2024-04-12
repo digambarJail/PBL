@@ -3,10 +3,13 @@ import './About.css'; // Importing CSS file for styling
 
 const About = () => {
   return (
-    <div className="about-container">
-      <h1 className="title">Welcome to PICT Connect!</h1>
-      <h3 className="subtitle">The Heartbeat of PICT's Student Community!</h3>
-      <p className="description">
+    <>
+    <section class="bg-white dark:bg-gray-900">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      <div class="max-w-screen-lg text-gray-500 sm:text-lg dark:text-gray-400">
+          <h2 class="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white">Welcome to  <span class="font-extrabold">PICT Connect!</span> The Heartbeat of PICT's Student Community!</h2>
+
+          <p class="mb-4 font-medium"> <p className="description">
         At PICT Connect, we believe every student at Pune Institute of Computer Technology (PICT) carries a universe of knowledge, experiences, and insights waiting to be shared. Our platform stands as a vibrant community hub, designed exclusively for PICT students to connect, learn, and grow together.
       </p>
       <p className="description">
@@ -33,8 +36,15 @@ const About = () => {
       </div>
       <p className="join-us">
         Join Us: Whether you're a first-year student just starting your journey at PICT, a seasoned senior with a wealth of knowledge, or an alumnus looking to give back, PICT Connect is your go-to destination. Here, every student's voice is heard, and every story matters. Together, let's build a thriving community that inspires, educates, and empowers. Welcome to PICT Connect – where every PICT student's journey is celebrated.
-      </p>
-    </div>
+      </p></p>
+          <a href="/contact" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-800 dark:text-primary-500 dark:hover:text-blue-700 text-blue-400 ">
+              Learn more
+              <svg class="ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+          </a>
+      </div>
+  </div>
+</section>
+    </>
   );
 }
 
