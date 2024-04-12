@@ -8,6 +8,7 @@ import { toggleTheme } from '../app/theme/themeSlice';
 import { signoutSuccess } from '../app/user/userSlice';
 import { setSearchQuery } from '../app/Search/SearchSlice';
 import { SearchResult } from './SearchResult';
+import { reset } from '../app/user/userSlice';
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -41,6 +42,8 @@ function Header() {
       const data = await res.json();
       if (!res.ok) {
         console.log(data.message);
+        navigate('/login');
+        dispatch(reset());
       } else {
         dispatch(signoutSuccess());
         console.log(data);

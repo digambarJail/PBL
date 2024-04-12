@@ -7,15 +7,19 @@ import { Dropdown ,TextInput } from "flowbite-react";
 import { Question } from "../components/Question";
 import { AiOutlineSearch } from 'react-icons/ai';
 import { setSearchQuery } from '../app/Search/SearchSlice';
+import { setPage , setSort , setActiveTab } from "../app/Sort/SortSlice";
 
 export default function ShowBlogs() {
   const [obj, setObj] = useState({});
-  const [page, setPage] = useState(1);
-  const [sort, setSort] = useState("");
-   const [activeTab, setActiveTab] = useState("Blogs");
+  // const [page, setPage] = useState(1);
+  // const [sort, setSort] = useState("");
+  //  const [activeTab, setActiveTab] = useState("Blogs");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const search = useSelector((state) => state.search.searchQuery);
+  const sort = useSelector((state) => state.sort.sort);
+  const page = useSelector((state) => state.sort.page);
+  const activeTab = useSelector((state) => state.sort.activeTab);
 
   // useEffect(() =>{
   //   setActiveTab(activetb);
@@ -51,8 +55,9 @@ export default function ShowBlogs() {
   }, [activeTab, page, search, sort]);
 
   const handleTabChange = (tab) => {
-    setActiveTab(tab);
-    setPage(1); // Reset page number when tab changes
+    dispatch(setActiveTab(tab));
+    console.log("working?" , activeTab);
+    dispatch(setPage(1)); // Reset page number when tab changes
   };
   
 
@@ -97,7 +102,12 @@ export default function ShowBlogs() {
           { obj && search ? (
             <span className="font-bold text-3xl">Results for "{search}"</span>
           ) : (
-            <span className="font-bold text-3xl">All Blogs</span>
+            activeTab === "Questions" ? (
+              <span className="font-bold text-3xl">All Questions</span>
+            ) : (
+              <span className="font-bold text-3xl">All Blogs</span>
+            )
+            
           )}
         </div>
       </div>
@@ -129,11 +139,11 @@ export default function ShowBlogs() {
         </button>
         <div className="mx-10">
           <Dropdown label="Sort By" placement="bottom" color="gray">
-            <Dropdown.Item onClick={() => setSort("")}>Recent</Dropdown.Item>
-            <Dropdown.Item onClick={() => setSort("oldest")}>
+            <Dropdown.Item onClick={() => dispatch(setSort(""))}>Recent</Dropdown.Item>
+            <Dropdown.Item onClick={() => dispatch(setSort("oldest"))}>
               Oldest
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => setSort("most_liked")}>
+            <Dropdown.Item onClick={() => dispatch(setSort("most_liked"))}>
               Most Liked
             </Dropdown.Item>
           </Dropdown>
@@ -157,7 +167,7 @@ export default function ShowBlogs() {
                   page={page}
                   limit={obj.limit || 0}
                   total={obj.total || 0}
-                  setPage={(page) => setPage(page)}
+                  setPage={(page) => dispatch(setPage(page))}
                 />
               </>
             ) : (
@@ -180,7 +190,7 @@ export default function ShowBlogs() {
                   page={page}
                   limit={obj.limit || 0}
                   total={obj.total || 0}
-                  setPage={(page) => setPage(page)}
+                  setPage={(page) => dispatch(setPage(page))}
                 />
               </>
             ) : (

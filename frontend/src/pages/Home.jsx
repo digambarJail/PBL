@@ -8,12 +8,13 @@ import ShowQuestions from "./showQuestions";
 import { setSearchQuery } from "../app/Search/SearchSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { CardPlaceholder } from "../components/CardPlaceholder";
+import { setSort } from "../app/Sort/SortSlice";
 
 const Home = () => {
   // let blogs = [];
   const navigate = useNavigate();
   const [obj, setObj] = useState({});
-  const [sort, setSort] = useState({ sort: "rating", order: "desc" });
+  // const [sort, setSort] = useState({ sort: "rating", order: "desc" });
   const [filterGenre, setFilterGenre] = useState([]);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -28,11 +29,10 @@ const Home = () => {
   }
 
   useEffect(() => {
+    setSort("");
     const getAllBlogs = async () => {
       try {
-        const url = `/api/showBlogs?page=${page}&sort=${sort.sort},${
-          sort.order
-        }&genre=${filterGenre.toString()}&search=${search}`;
+        const url = `/api/showBlogs?page=${page}&search=${search}`;
         const res = await fetch(url, {
           method: "GET",
         });
@@ -49,7 +49,7 @@ const Home = () => {
     };
 
     getAllBlogs();
-  }, [sort, filterGenre, page, search]);
+  }, [ page, search]);
 
   return (
     <>
@@ -120,7 +120,7 @@ const Home = () => {
           <ShowQuestions />
           <button
             class="w-full flex items-center justify-center px-8 py-3 text-base leading-6 font-medium rounded-md text-green-700 dark:text-green-700 bg-green-100 hover:bg-green-50 hover:text-green-600 focus:ring ring-offset-2 ring-purple-100 focus:outline-none transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
-            onClick={() => navigate("/showBlogs")}
+            onClick={() =>{ navigate("/showBlogs") }}
           >
             Show More
           </button>

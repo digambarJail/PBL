@@ -2,12 +2,14 @@ import { configureStore,combineReducers } from '@reduxjs/toolkit'
 import  userReducer from './user/userSlice'
 import themeReducer from './theme/themeSlice'
 import searchReducer from './Search/SearchSlice';
+import sortReducer from './Sort/SortSlice'
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 const rootReducer = combineReducers({
   user: userReducer,
   theme: themeReducer,
   search: searchReducer,
+  sort: sortReducer,
 })
 
 const persistConfig = {
