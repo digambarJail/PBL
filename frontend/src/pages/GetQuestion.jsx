@@ -71,7 +71,7 @@ const GetQuestion = () => {
         },
         body: JSON.stringify({ answer }),
       });
-
+  
       if (!response.ok) {
         let errorMsg = 'Failed to submit answer';
         try {
@@ -82,20 +82,21 @@ const GetQuestion = () => {
         }
         throw new Error(`${errorMsg} (Status: ${response.status})`);
       }
-
+  
       const data = await response.json();
       setSuccessMessage('Your answer has been submitted successfully!');
       setAnswer('');
-
+  
       setTimeout(() => {
         setSuccessMessage('');
-      }, 3000); // Clear success message after 3 seconds
-
+        window.location.reload(); // Reload the page
+      }, 1000); // Clear success message after 3 seconds
+  
     } catch (error) {
       console.error("Error in submitAnswer:", error.message);
     }
   };
-
+  
   const handleLikeAnswer = async (answerId) => {
     try {
       const isLiked = likedAnswers[answerId];
