@@ -1,4 +1,4 @@
-import React, { useDebugValue, useEffect, useState } from "react";
+import React, { useDebugValue, useEffect, useState , useRef } from "react";
 import {Alert , Spinner} from "flowbite-react";
 
 const Blog = () => {
@@ -41,12 +41,18 @@ const Blog = () => {
 
       console.log("Content:", question);
 
-      if (!response.ok) {
-        throw new Error("Failed to submit question");
-      }
-
       const data = await response.json();
-      console.log(data);
+      console.log('data',data);
+      if(!response.ok){
+        console.log('err' ,data);
+        setErrorMessage(data.message);
+        setIsLoading(false);
+        window.scrollTo(0, document.body.scrollHeight);
+      }
+      else{
+        setQuestion("");
+        setQuesSubmit(true);
+      }
 
       const token = data.token;
 
@@ -54,8 +60,7 @@ const Blog = () => {
 
       console.log("Question response ", response);
 
-      setQuestion("");
-      setQuesSubmit(true);
+
 
       setTimeout(() => {
         setQuesSubmit(false);
@@ -89,13 +94,22 @@ const Blog = () => {
         method: "POST",
         body: formData,
       });
+      const data = await response.json();
+      if(!response.ok){
+        console.log('err' ,data);
+        setErrorMessage(data.message);
+        setIsLoading(false);
+      }
+      else{
+        setIsLoading(false);
+        setBlogSubmit(true);
+      }
   
       // Handle response...
     } catch (error) {
       console.log("Error in handleSubmitBlog", error);
     }
-      setIsLoading(false);
-      setBlogSubmit(true);
+
   };
   
   const [isDragOver, setIsDragOver] = useState(false);
@@ -136,6 +150,7 @@ const Blog = () => {
       setPreviewSrc(reader.result);
     };
   };
+
   return (
     <>
       <div className="mb-36">
@@ -183,7 +198,7 @@ const Blog = () => {
         <div className="flex flex-col mt-10 text-center justify-center items-center">
           <h1 className="text-3xl pb-10">Write a Blog</h1>
           <div
-      className={`w-[600px] h-[200px] relative border-2 border-gray-300 border-dashed rounded-lg p-6 my-10 ${
+      className={`w-fit h-fit md:w-[600px] md:h-[200px] relative border-2 border-gray-300 border-dashed rounded-lg p-6 my-10 ${
         isDragOver ? 'border-indigo-600' : ''
       }`}
       id="dropzone"
@@ -254,7 +269,7 @@ const Blog = () => {
             </Alert>
           )}
           {blogSubmit && (
-            <div className="text-green-600 mt-3">
+            <div className="text-green-600 mt-3" >
               <h1 className="text-3xl">
                 Your blog has been submitted successfully!
               </h1>

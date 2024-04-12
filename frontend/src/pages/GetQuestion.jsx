@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
+import {Alert , Spinner} from "flowbite-react";
 
 const GetQuestion = () => {
   const { quesId } = useParams();
@@ -9,6 +10,7 @@ const GetQuestion = () => {
   const [answers, setAnswers] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
   const [likedAnswers, setLikedAnswers] = useState({});
+  const [answerError , setAnswerError] = useState(null);
 
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -33,7 +35,7 @@ const GetQuestion = () => {
       try {
         const res = await fetch(`/api/answer/${quesId}`);
         const data = await res.json();
-        setAnswers(data.data[0].Qanswers || []);
+        setAnswers(data.data[0].Qanswers.reverse() || []);
 
         // Initialize liked status for each answer
         const initialLikedStatus = {};
@@ -71,26 +73,26 @@ const GetQuestion = () => {
         },
         body: JSON.stringify({ answer }),
       });
-  
-      if (!response.ok) {
-        let errorMsg = 'Failed to submit answer';
-        try {
-          const errorData = await response.json();
-          errorMsg += `: ${errorData.message}`;
-        } catch (parseError) {
-          // Failed to parse error data, use default message
-        }
-        throw new Error(`${errorMsg} (Status: ${response.status})`);
-      }
+
   
       const data = await response.json();
-      setSuccessMessage('Your answer has been submitted successfully!');
-      setAnswer('');
+      if(!response.ok){
+        console.log('err',data);
+        setAnswerError(data.message);
+      }
+      else{
+        setSuccessMessage('Your answer has been submitted successfully!');
+        setAnswer('');
+      }
+
+      const res1 = await fetch(`/api/answer/${quesId}`);
+      const adata = await res1.json();
+      setAnswers(adata.data[0].Qanswers.reverse() || []);
   
-      setTimeout(() => {
-        setSuccessMessage('');
-        window.location.reload(); // Reload the page
-      }, 1000); // Clear success message after 3 seconds
+      // setTimeout(() => {
+      //   setSuccessMessage('');
+      //   window.location.reload(); // Reload the page
+      // }, 1000); // Clear success message after 3 seconds
   
     } catch (error) {
       console.error("Error in submitAnswer:", error.message);
@@ -141,6 +143,11 @@ const GetQuestion = () => {
               <textarea value={answer} onChange={handleAnswerChange} className="w-full h-32 px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-green-500" placeholder="Type your answer here..."></textarea>
               <button onClick={submitAnswer} className="bg-green-500 text-white px-4 py-2 mt-2 rounded-lg hover:bg-green-600 focus:outline-none focus:bg-green-600">Answer</button>
               {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+              {answerError && (
+            <Alert className="mt-5 mx-auto" color="failure">
+              {answerError}
+            </Alert>
+          )}
             </div>
           </div>
         ) : (

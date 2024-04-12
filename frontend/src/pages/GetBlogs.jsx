@@ -7,12 +7,14 @@ import { FaComment } from "react-icons/fa6";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import Comments from "../components/Comments";
 import { BlogPlaceholder } from "../components/BlogPlaceholder";
+import {Alert , Spinner} from "flowbite-react";
 
 const GetBlogs = () => {
   const { blogId } = useParams();
   const [blog, setBlog] = useState(null);
   const [likes, setLikes] = useState(null);
   const [comments, setComments] = useState([]);
+  const [commentError, setCommentError] = useState(null);
   const [comment, setComment] = useState("");
   const [liked, isLiked] = useState(false);
   const [nolikes, setnoLikes] = useState(0);
@@ -50,7 +52,7 @@ const GetBlogs = () => {
         const res = await fetch(`/api/c/${blogId}`);
         const cdata = await res.json();
         // console.log("Fetched Comments:", cdata);
-        setComments(cdata.data[0].blogComments); // Update comments state with fetched comments
+        setComments(cdata.data[0].blogComments.reverse()); // Update comments state with fetched comments
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -86,11 +88,16 @@ const GetBlogs = () => {
         body: JSON.stringify({ content: comment }),
       });
       const data = await res.json();
+      if(!res.ok){
+        console.log('err',data);
+        setCommentError(data.message);
+      }
       // console.log("posts", data);
       const res1 = await fetch(`/api/c/${blogId}`);
       const cdata = await res1.json();
+
       // console.log("Fetched Comments up:", cdata);
-      setComments(cdata.data[0].blogComments);
+      setComments(cdata.data[0].blogComments.reverse());
       // Update comments state with the new comment
 
       // Clear the comment input field
@@ -221,15 +228,10 @@ const GetBlogs = () => {
             {showComments && (
               <div className=" rounded-lg border  border-[#404040] p-1 md:p-3 w-full bg-[#282828]">
                 <h3 className="font-semibold p-1 text-2xl">Comments</h3>
-                {comments.length > 0 ? (
-                  <Comments comments={comments} />
-                ) : (
-                  <p>No comments yet.</p>
-                )}
                 <form onSubmit={postComment}>
                   <div className="w-full px-3 mb-2 mt-6">
                     <textarea
-                      className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium text-slate-600 focus:outline-none focus:bg-white"
+                      className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-40 py-2 px-3 font-medium text-slate-600 focus:outline-none focus:bg-white"
                       name="body"
                       placeholder="Comment"
                       value={comment}
@@ -237,7 +239,7 @@ const GetBlogs = () => {
                     ></textarea>
                   </div>
 
-                  <div className="w-full flex justify-end px-3 my-3">
+                  <div className="w-full flex justify-end px-3 my-10">
                     <input
                       type="submit"
                       className="px-2.5 py-1.5 rounded-md text-white  bg-indigo-500 text-lg"
@@ -245,6 +247,17 @@ const GetBlogs = () => {
                     />
                   </div>
                 </form>
+                {commentError && (
+            <Alert className="mt-5 mx-auto" color="failure">
+              {commentError}
+            </Alert>
+          )}
+                {comments.length > 0 ? (
+                  <Comments comments={comments} />
+                ) : (
+                  <p>No comments yet.</p>
+                )}
+
               </div>
             )}
           </article>
