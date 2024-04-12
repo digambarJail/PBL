@@ -6,8 +6,8 @@ const Pagination = ({ page, total, limit, setPage }) => {
     };
 
     return (
-        <div className="dark:bg-gray-800 bg-slate-200  rounded-full px-4 py-2 my-10 w-fit">
-        <div className="flex text-gray-600 gap-4 font-medium py-2">
+        <div className="dark:bg-gray-800 bg-slate-200  rounded-full px-4 py-2 my-10 w-auto  flex items-center justify-center ">
+        <div className="flex text-gray-600 md:gap-4 text-sm md:font-medium py-2 justify-center">
             {totalPages > 0 &&
                 [...Array(totalPages)].map((val, index) => (
                     <button

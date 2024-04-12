@@ -101,11 +101,14 @@ export default function ShowBlogs() {
           )}
         </div>
       </div>
-      <div className="flex w-full md:max-w-xl mx-4 rounded shadow my-10 gap-4">
-        
+
+
+
+      <div className="flex flex-col">
+      <div className="flex w-full mx-4 rounded shadow my-10 gap-4 h-10">
         <button
           onClick={() => handleTabChange("Blogs")}
-          className={`w-full flex justify-center font-medium px-5 py-2 rounded-full border ${
+          className={`w-fit flex justify-center font-medium px-5 py-2 rounded-full border ${
             activeTab === "Blogs"
               ? "bg-slate-600 text-white"
               : "bg-white text-gray-800 border-gray-200 hover:bg-gray-200"
@@ -116,7 +119,7 @@ export default function ShowBlogs() {
 
         <button
           onClick={() => handleTabChange("Questions")}
-          className={`w-full flex justify-center rounded-full font-medium px-5 py-2 border ${
+          className={`w-fit flex justify-center rounded-full font-medium px-5 py-2 border ${
             activeTab === "Questions"
               ? "bg-slate-600 text-white"
               : "bg-white text-gray-800 border-gray-200 hover:bg-gray-200"
@@ -124,10 +127,19 @@ export default function ShowBlogs() {
         >
           Questions
         </button>
+        <div className="mx-10">
+          <Dropdown label="Sort By" placement="bottom" color="gray">
+            <Dropdown.Item onClick={() => setSort("")}>Recent</Dropdown.Item>
+            <Dropdown.Item onClick={() => setSort("oldest")}>
+              Oldest
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => setSort("most_liked")}>
+              Most Liked
+            </Dropdown.Item>
+          </Dropdown>
+        </div>
       </div>
-
-      <div className="flex flex-row">
-        <div className="w-[150%] mx-8">
+        <div className="w-auto mx-8">
         {obj === null ? (
           <>
                         <div className="my-10 ml-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -186,17 +198,6 @@ export default function ShowBlogs() {
           )
         )}
           
-        </div>
-        <div className="w-1/2 mt-10 mx-10">
-          <Dropdown label="Sort By" placement="bottom" color="gray">
-            <Dropdown.Item onClick={() => setSort("")}>Recent</Dropdown.Item>
-            <Dropdown.Item onClick={() => setSort("oldest")}>
-              Oldest
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => setSort("most_liked")}>
-              Most Liked
-            </Dropdown.Item>
-          </Dropdown>
         </div>
       </div>
     </>

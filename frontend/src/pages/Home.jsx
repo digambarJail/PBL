@@ -54,10 +54,10 @@ const Home = () => {
   return (
     <>
       <div className=" flex flex-col">
-        <div className="scroll-smooth flex h-full flex-row text-center ">
+        <div className="scroll-smooth flex h-full flex-col md:flex-row text-center ">
           {" "}
           {/* Adjust mt-[60px] to match your navbar's height */}
-          <div className="w-2/6 items-center mt-12">
+          <div className="w-full md:w-2/6 items-center mt-12">
             <Events />
             <button
           onClick={handleAddEvent}
@@ -72,7 +72,7 @@ const Home = () => {
           See More Events
         </button>
           </div>
-          <div className="w-4/6 mt-12">
+          <div className="w-full md:w-4/6 mt-12">
             <h1 className=" text-2xl font-semibold">Blogs</h1>
             <div className={` font-[sans-serif] p-4 mt-10 rounded-md `}>
               <div className="max-w-6xl max-md:max-w-lg mx-auto">
@@ -104,7 +104,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="w-2/6 scroll-smooth">
+          <div className="w-full md:w-2/6 scroll-smooth">
             <h1 className="text-2xl mt-12 ml-20 mr-20 font-semibold text-center">
               Top Voices On PICT Connect
             </h1>
