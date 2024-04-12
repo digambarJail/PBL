@@ -34,11 +34,20 @@ const GetQuestion = () => {
         const res = await fetch(`/api/answer/${quesId}`);
         const data = await res.json();
         setAnswers(data.data[0].Qanswers || []);
+
         // Initialize liked status for each answer
         const initialLikedStatus = {};
-        data.data[0].Qanswers.forEach(answer => {
-          initialLikedStatus[answer._id] = false;
+        const fetchPromises = data.data[0].Qanswers.map(async (answer) => {
+          try {
+            const res = await fetch(`/api/likeAnswer/${answer._id}`);
+            const likedData = await res.json();
+            initialLikedStatus[answer._id] = likedData.data.isLiked;
+          } catch (error) {
+            console.error('Error fetching answer:', error);
+          }
         });
+
+        await Promise.all(fetchPromises);
         setLikedAnswers(initialLikedStatus);
       } catch (error) {
         console.error('Error fetching answers:', error);
@@ -89,30 +98,26 @@ const GetQuestion = () => {
 
   const handleLikeAnswer = async (answerId) => {
     try {
-      console.log("inside like")
       const isLiked = likedAnswers[answerId];
       const newLikedAnswers = { ...likedAnswers, [answerId]: !isLiked };
       setLikedAnswers(newLikedAnswers);
-      
-      console.log("before fetching before res")
+
       const res = await fetch(`/api/likeAnswer/${answerId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ isLiked: !isLiked }),
       });
       
-      console.log("after fetching before res")
       if (!res.ok) {
         throw new Error('Failed to toggle like status for answer');
       }
-      console.log("after fetching after res")
-  
-      // Handle response accordingly, if needed
+
+      // If needed, you can handle the response here
+
     } catch (error) {
       console.error('Error toggling like status for answer:', error);
     }
   };
-  
 
   return (
     <div>
@@ -166,11 +171,12 @@ const GetQuestion = () => {
                       </svg>
                     ) : (
                       <svg className="w-4 h-4 fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15h2.25m8.024-9.75c.011.05.028.1.052.148.591 1.2.924 2.55.924 3.977a8.96 8.96 0 01-.999 4.125m.023-8.25c-.076-.365.183-.75.575-.75h.908c.889 0 1.713.518 1.972 1.368.339 1.11.521 2.287.521 3.507 0 1.553-.295 3.036-.831 4.398C20.613 14.547 19.833 15 19 15h-1.053c-.472 0-.745-.556-.5-.96a8.95 8.95 0 00.303-.54m.023-8.25H16.48a4.5 4.5 0 01-1.423-.23l-3.114-1.04a4.5 4.5 0 00-1.423-.23H6.504c-.618 0-1.217.247-1.605.729A11.95 11.95 0 002.25 12c0 .434.023.863.068 1.285C2.427 14.306 3.346 15 4.372 15h3.126c.618 0 .991.724.725 1.282A7.471 7.471 0 007.5 19.5a2.25 2.25 0 002.25 2.25.75.75 0 00.75-.75v-.633c0-.573.11-1.14.322-1.672.304-.76.93-1.33 1.653-1.715a9.04 9.04 0 002.86-2.4c.498-.634 1.226-1.08 2.032-1.08h.384"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.356 10.667c.589-.859 1.376-1.451 2.269-1.813.637-.274 1.302-.405 1.949-.405.649 0 1.313.131 1.949.405.893.362 1.68.954 2.269 1.813.674.985 1.097 2.416.097 3.541-1.125 1.386-2.57 2.305-4.365 3.472a.748.748 0 01-.728 0c-1.795-1.167-3.24-2.086-4.365-3.472-1-1.125-.577-2.556.097-3.541zM3.956 12c-.667 1.276-1.056 2.734-.056 3.959 1.167 1.5 2.775 2.459 4.594 3.742 1.829-1.283 3.438-2.242 4.594-3.742 1-1.225.611-2.683-.056-3.959-1.39-2.1-3.876-3.5-6.531-3.5s-5.141 1.4-6.531 3.5z"></path>
                       </svg>
                     )}
                     <span>{likedAnswers[answer._id] ? 'Liked' : 'Like'}</span>
                   </button>
+                  <span>{answer.likes}</span>
                 </div>
               </div>
             ))}
@@ -182,4 +188,3 @@ const GetQuestion = () => {
 };
 
 export default GetQuestion;
-

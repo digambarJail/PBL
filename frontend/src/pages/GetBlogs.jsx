@@ -26,19 +26,21 @@ const GetBlogs = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
+        console.log("Before fetching ",liked)
         const res = await fetch(`/api/b/${blogId}`);
         const data = await res.json();
-        console.log("Fetched blog:", data);
+        // console.log("Fetched blog:", data);
         setBlog(data);
         if (!likes) {
           const res1 = await fetch(`/api/l/${blogId}`);
           const ldata = await res1.json();
-          console.log("Fetched Likes:", ldata);
+          // console.log("Fetched Likes:", ldata);
           setLikes(ldata);
           setnoLikes(ldata.data.likesCount);
           isLiked(ldata.data.isLiked);
+          console.log("After fetching in not likes ",liked)
         }
-        console.log(blog.data.ownerId)
+        console.log("After fetching ",liked)
       } catch (error) {
         console.error("Error fetching likes:", error);
       }
@@ -47,7 +49,7 @@ const GetBlogs = () => {
       try {
         const res = await fetch(`/api/c/${blogId}`);
         const cdata = await res.json();
-        console.log("Fetched Comments:", cdata);
+        // console.log("Fetched Comments:", cdata);
         setComments(cdata.data[0].blogComments); // Update comments state with fetched comments
       } catch (error) {
         console.error("Error fetching comments:", error);
@@ -69,7 +71,7 @@ const GetBlogs = () => {
         body: JSON.stringify({ data: { isLiked: liked, likeCount: newLikes } }),
       });
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -84,10 +86,10 @@ const GetBlogs = () => {
         body: JSON.stringify({ content: comment }),
       });
       const data = await res.json();
-      console.log("posts", data);
+      // console.log("posts", data);
       const res1 = await fetch(`/api/c/${blogId}`);
       const cdata = await res1.json();
-      console.log("Fetched Comments up:", cdata);
+      // console.log("Fetched Comments up:", cdata);
       setComments(cdata.data[0].blogComments);
       // Update comments state with the new comment
 
