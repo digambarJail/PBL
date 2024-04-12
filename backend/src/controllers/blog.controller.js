@@ -25,7 +25,7 @@ const postBlog = asyncHandler(async (req,res)=>
         const isContentProfane = await checkForProfanity(content);
 
         if (isTitleProfane || isContentProfane) {
-            await deleteFromCloudinary(blogPicture.public_id)
+            await deleteFromCloudinary(blogPicture?.public_id)
             throw new ApiError(400, "Contains explicit content and cannot be submitted");
         }
 
