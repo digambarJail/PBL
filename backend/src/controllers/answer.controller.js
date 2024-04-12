@@ -6,37 +6,38 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import checkForProfanity from "../utils/profanityChecker.js";
 
-const postAnswer = asyncHandler(async (req,res) => {
-
+const postAnswer = asyncHandler(async (req, res) => {
    try {
-      const {questionId} = req.params 
-      const {answer} = req.body
-      const answerBy = req.user._id 
-      const ownerName = req.user.name
-   
-      const isContentProfane = await checkForProfanity(answer)
+       const { questionId } = req.params;
+       const { answer } = req.body;
+       const answerBy = req.user._id;
+       const ownerName = req.user.name;
 
-      if ( isContentProfane) {
-         throw new ApiError(400,"Contains explicit content and cannot be submitted")
-      }
+       const isContentProfane = await checkForProfanity(answer);
 
-      if(!answer)
-      {
-         throw new ApiError(401,"Cant post empty field")
-      }
-      const answerVar = await Answer.create({answer,answerBy,questionId,ownerName})
-      
-      return res.status(200).
-      json(new ApiResponse(200,{},
-         "Answer posted successfully"))}
-      
-      catch (error) {         
-        const statusCode = error.statusCode || 500; 
-        const message = error.message || "Something went wrong";
-        return res.status(statusCode).json({ success: false, message })
-      }
+       if (isContentProfane) {
+           throw new ApiError(400, "Contains explicit content and cannot be submitted");
+       }
 
-})
+       if (!answer) {
+           throw new ApiError(401, "Can't post empty field");
+       }
+
+       const answerVar = await Answer.create({ answer, answerBy, questionId, ownerName });
+
+       // Include the ID of the newly created answer in the response
+       return res.status(200).json({
+           success: true,
+           message: "Answer posted successfully",
+           data: { answerId: answerVar._id } // Include the ID here
+       });
+   } catch (error) {
+       const statusCode = error.statusCode || 500;
+       const message = error.message || "Something went wrong";
+       return res.status(statusCode).json({ success: false, message });
+   }
+});
+
 
 // const getAnswers = asyncHandler(async (req,res) => {
 
