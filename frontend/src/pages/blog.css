@@ -1,4 +1,16 @@
-.customTextInput {
-    height: 50px; /* Increase the input box height as needed */
-  }
-  
+.toggle-button {
+  background-color: transparent;
+  border: none;
+  color: #000; /* Default text color */
+  font-size: 16px;
+  cursor: pointer;
+  margin: 50px 10px 0; /* Added top margin */
+  padding: 10px 35px;
+  border-radius: 25px;
+  outline: none;
+}
+
+.toggle-button.active {
+  background-color: #4caf50;
+  color: #fff; /* Text color for active button */
+}
