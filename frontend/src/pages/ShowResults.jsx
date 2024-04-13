@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useSelector , useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Post from "./Post";
 import Pagination from "../components/Pagination";
-import { useNavigate , useParams } from "react-router-dom";
-import { Dropdown ,TextInput } from "flowbite-react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Dropdown, TextInput } from "flowbite-react";
 import { Question } from "../components/Question";
-import { AiOutlineSearch } from 'react-icons/ai';
-import { setSearchQuery } from '../app/Search/SearchSlice';
-import { setPage , setSort , setActiveTab } from "../app/Sort/SortSlice";
+import { AiOutlineSearch } from "react-icons/ai";
+import { setSearchQuery } from "../app/Search/SearchSlice";
+import { setPage, setSort, setActiveTab } from "../app/Sort/SortSlice";
 
 export default function ShowBlogs() {
   const [obj, setObj] = useState({});
@@ -27,8 +27,7 @@ export default function ShowBlogs() {
   const handleSearchChange = (event) => {
     const inputValue = event.target.value;
     dispatch(setSearchQuery(inputValue));
-    console.log('search',search);
-
+    console.log("search", search);
   };
   const getAllResults = async () => {
     try {
@@ -49,30 +48,28 @@ export default function ShowBlogs() {
   };
 
   useEffect(() => {
-  
-      getAllResults(); // Fetch data again with updated search query
+    getAllResults(); // Fetch data again with updated search query
     window.scrollTo(0, 0);
   }, [activeTab, page, search, sort]);
 
   const handleTabChange = (tab) => {
     dispatch(setActiveTab(tab));
-    console.log("working?" , activeTab);
+    console.log("working?", activeTab);
     dispatch(setPage(1)); // Reset page number when tab changes
   };
-  
 
   return (
     <>
-    <div className="w-[60%] my-10 mx-4 ">
-          <TextInput
-      type="text"
-      placeholder="Search.."
-      rightIcon={AiOutlineSearch}
-      className="lg:flex w-[60%] lg:w-[120%] md:w-[100%] sm:w-[60%]"
-      value={search}
-      onChange={handleSearchChange}
-    />
-    </div>
+      <div className="w-[60%] my-10 mx-4 ">
+        <TextInput
+          type="text"
+          placeholder="Search.."
+          rightIcon={AiOutlineSearch}
+          className="lg:flex w-[60%] lg:w-[120%] md:w-[100%] sm:w-[60%]"
+          value={search}
+          onChange={handleSearchChange}
+        />
+      </div>
       <div className="w-full flex items-center mt-10">
         <button
           type="button"
@@ -98,68 +95,64 @@ export default function ShowBlogs() {
           <span>Go back</span>
         </button>
         <div className="flex justify-center mx-4 my-auto">
-          {console.log("srch change" , search)}
-          { obj && search ? (
+          {console.log("srch change", search)}
+          {obj && search ? (
             <span className="font-bold text-3xl">Results for "{search}"</span>
+          ) : activeTab === "Questions" ? (
+            <span className="font-bold text-3xl">All Questions</span>
           ) : (
-            activeTab === "Questions" ? (
-              <span className="font-bold text-3xl">All Questions</span>
-            ) : (
-              <span className="font-bold text-3xl">All Blogs</span>
-            )
-            
+            <span className="font-bold text-3xl">All Blogs</span>
           )}
         </div>
       </div>
 
-
-
       <div className="flex flex-col">
-      <div className="flex w-full mx-4 rounded shadow my-10 gap-4 h-10">
-        <button
-          onClick={() => handleTabChange("Blogs")}
-          className={`w-fit flex justify-center font-medium px-5 py-2 rounded-full border ${
-            activeTab === "Blogs"
-              ? "bg-slate-600 text-white"
-              : "bg-white text-gray-800 border-gray-200 hover:bg-gray-200"
-          }`}
-        >
-          Blogs
-        </button>
+        <div className="flex flex-wrap mx-4 rounded shadow my-10 gap-4 h-20 sm:h-10">
+          <button
+            onClick={() => handleTabChange("Blogs")}
+            className={`w-fit h-fit flex justify-center font-medium px-5 py-2 rounded-full border ${
+              activeTab === "Blogs"
+                ? "bg-slate-600 text-white"
+                : "bg-white text-gray-800 border-gray-200 hover:bg-gray-200"
+            }`}
+          >
+            Blogs
+          </button>
 
-        <button
-          onClick={() => handleTabChange("Questions")}
-          className={`w-fit flex justify-center rounded-full font-medium px-5 py-2 border ${
-            activeTab === "Questions"
-              ? "bg-slate-600 text-white"
-              : "bg-white text-gray-800 border-gray-200 hover:bg-gray-200"
-          }`}
-        >
-          Questions
-        </button>
-        <div className="mx-10">
-          <Dropdown label="Sort By" placement="bottom" color="gray">
-            <Dropdown.Item onClick={() => dispatch(setSort(""))}>Recent</Dropdown.Item>
-            <Dropdown.Item onClick={() => dispatch(setSort("oldest"))}>
-              Oldest
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => dispatch(setSort("most_liked"))}>
-              Most Liked
-            </Dropdown.Item>
-          </Dropdown>
+          <button
+            onClick={() => handleTabChange("Questions")}
+            className={`w-fit h-fit flex justify-center rounded-full font-medium px-5 py-2 border ${
+              activeTab === "Questions"
+                ? "bg-slate-600 text-white"
+                : "bg-white text-gray-800 border-gray-200 hover:bg-gray-200"
+            }`}
+          >
+            Questions
+          </button>
+          <div className=" flex md:mx-10 w-fit h-fit">
+            <Dropdown className="flex" label="Sort By" placement="bottom" color="gray">
+              <Dropdown.Item onClick={() => dispatch(setSort(""))}>
+                Recent
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => dispatch(setSort("oldest"))}>
+                Oldest
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => dispatch(setSort("most_liked"))}>
+                Most Liked
+              </Dropdown.Item>
+            </Dropdown>
+          </div>
         </div>
-      </div>
         <div className="w-auto mx-8">
-        {obj === null ? (
-          <>
-                        <div className="my-10 ml-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          {obj === null ? (
+            <>
+              <div className="my-10 ml-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   Loading
                 </h5>
-                </div>
-          </>
-        ) : (
-          activeTab === "Questions" ? (
+              </div>
+            </>
+          ) : activeTab === "Questions" ? (
             obj.questions && obj.questions.length > 0 ? (
               <>
                 <Question data={obj.questions} />
@@ -182,32 +175,28 @@ export default function ShowBlogs() {
                 </p>
               </div>
             )
+          ) : obj.blog && obj.blog.length > 0 ? (
+            <>
+              <Post blogs={obj.blog} />
+              <Pagination
+                page={page}
+                limit={obj.limit || 0}
+                total={obj.total || 0}
+                setPage={(page) => dispatch(setPage(page))}
+              />
+            </>
           ) : (
-            obj.blog && obj.blog.length > 0 ? (
-              <>
-                <Post blogs={obj.blog} />
-                <Pagination
-                  page={page}
-                  limit={obj.limit || 0}
-                  total={obj.total || 0}
-                  setPage={(page) => dispatch(setPage(page))}
-                />
-              </>
-            ) : (
-              <div className="my-10 ml-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  No Result Found!
-                </h5>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                  {search
-                    ? "No results found. Try another search term."
-                    : "No blogs available."}
-                </p>
-              </div>
-            )
-          )
-        )}
-          
+            <div className="my-10 ml-4 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                No Result Found!
+              </h5>
+              <p className="font-normal text-gray-700 dark:text-gray-400">
+                {search
+                  ? "No results found. Try another search term."
+                  : "No blogs available."}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -51,6 +51,8 @@ function Header() {
       }
     } catch (error) {
       console.log(error.message);
+      navigate('/login');
+      dispatch(reset());
     }
   };
   useEffect(() => {
