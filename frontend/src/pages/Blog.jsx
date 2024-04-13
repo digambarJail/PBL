@@ -418,7 +418,7 @@ const Blog = () => {
     <div className="mb-36">
       <div className="flex flex-row justify-center">
         <button
-          className={`toggle-button ${questionVisible ? 'active' : ''}`}
+          className={`bg-transparent  text-base cursor-pointer mt-[50px] mb-0 mx-2.5 px-[35px] py-2.5 rounded-[25px] border-[none] ${questionVisible ? 'bg-[#4caf50] text-white' : ''}`}
           onClick={() => {
             setQuestionVisible(true);
             setBlogVisible(false);
@@ -427,7 +427,7 @@ const Blog = () => {
           Ask a Question
         </button>
         <button
-          className={`dark normal toggle-button ${blogVisible ? 'active' : ''}`}
+          className={` bg-transparent text-base cursor-pointer mt-[50px] mb-0 mx-2.5 px-[35px] py-2.5 rounded-[25px] border-[none] ${blogVisible ? 'bg-[#4caf50] text-white' : ''}`}
           onClick={() => {
             setQuestionVisible(false);
             setBlogVisible(true);
@@ -443,7 +443,7 @@ const Blog = () => {
             <div className="text-center mt-10">
               <h1 className="text-3xl py-10">Ask a Question</h1>
               <textarea
-                className="bg-transparent w-full pb-12"
+                className="bg-transparent w-full pb-12 rounded-lg"
                 value={question}
                 name="question"
                 id="question"
@@ -479,7 +479,7 @@ const Blog = () => {
           )}
 
           {blogVisible && (
-            <div className="text-center mt-10">
+            <div className="text-center mt-10 flex flex-col items-center ">
               <h1 className="text-3xl pb-10">Write a Blog</h1>
               <div className={`w-fit h-fit md:w-[600px] md:h-[200px] relative border-2 border-gray-300 border-dashed rounded-lg p-6 my-10 ${isDragOver ? 'border-indigo-600' : ''}`}
                 id="dropzone"
@@ -510,10 +510,10 @@ const Blog = () => {
                 </div>
               </div>
               {previewSrc && (
-                <img src={previewSrc} className=" mx-auto max-h-[800px] max-w-[800px] mt-10 p-4" id="preview" alt="Preview" />
+                <img src={previewSrc} className=" mx-auto max-h-[800px] max-w-[800px] mt-10 p-4 justify-center" id="preview" alt="Preview" />
               )}
               <textarea
-                className="bg-transparent w-full pb-0 mb-10"
+                className="bg-transparent w-full pb-0 mb-10 rounded-lg"
                 id="title"
                 value={title}
                 type="text"
@@ -522,7 +522,7 @@ const Blog = () => {
                 onChange={handleTitleChange}
               />
               <textarea
-                className="bg-transparent w-full pb-36"
+                className="bg-transparent w-full pb-36 rounded-lg"
                 id="content"
                 value={content}
                 type="text"

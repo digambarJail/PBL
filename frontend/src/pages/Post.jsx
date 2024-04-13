@@ -9,7 +9,7 @@ const Post = ({ blogs }) => {
       {blogs.map((blog) => (
         <div
           key={blog._id}
-          className="flex flex-col overflow-hidden rounded-lg shadow-lg min-h-[60vh] max-h-fit border border-[#404040]"
+          className="flex flex-col overflow-hidden rounded-lg  min-h-[60vh] max-h-fit border border-[#404040]  shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:scale-[102%] transition-all duration-300"
         >
           <div className="flex-shrink-0">
             <img
@@ -21,7 +21,7 @@ const Post = ({ blogs }) => {
           </div>
           <div className="flex flex-1 flex-col justify-between p-6 dark:bg-[#282929]" onClick={() => navigate(`/getBlogs/${blog._id}`)}>
             <div className="flex-1">
-              <a href="#" className="mt-2 block">
+              <a href="" className="mt-2 block">
                 <p className="text-xl font-semibold">
                 {blog.title}
                 </p>
@@ -32,7 +32,7 @@ const Post = ({ blogs }) => {
             </div>
             <div className="mt-6 flex items-center">
               <div className="flex-shrink-0">
-                <a href="#">
+                <a href="">
                   <span className="sr-only">Roel Aufderehar</span>
                   <img
                     className="h-10 w-10 rounded-full"
@@ -43,7 +43,7 @@ const Post = ({ blogs }) => {
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium text-slate-100">
-                  <a href="#" className="hover:underline">
+                  <a href="" className="hover:underline">
                   {blog.ownerName}
                   </a>
                 </p>
