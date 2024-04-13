@@ -303,15 +303,15 @@ const Blog = () => {
   const [isAnonymous, setIsAnonymous] = useState(false);
 
   const handleQuestionChange = (e) => {
-    setQuestion(e.target.value.trim());
+    setQuestion(e.target.value);
   };
 
   const handleTitleChange = (e) => {
-    setTitle(e.target.value.trim());
+    setTitle(e.target.value);
   };
 
   const handleContentChange = (e) => {
-    setContent(e.target.value.trim());
+    setContent(e.target.value);
   };
 
   const handleSubmitQuestion = async (e) => {
@@ -427,7 +427,7 @@ const Blog = () => {
           Ask a Question
         </button>
         <button
-          className={`toggle-button ${blogVisible ? 'active' : ''}`}
+          className={`dark normal toggle-button ${blogVisible ? 'active' : ''}`}
           onClick={() => {
             setQuestionVisible(false);
             setBlogVisible(true);
