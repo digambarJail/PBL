@@ -136,7 +136,7 @@ const GetBlogs = () => {
                       SE IT
                     </p>
                     <p className="text-base text-gray-500 dark:text-gray-400">
-                      {moment(blog.createdAt).format("ll")}
+                      {moment(blog.data.createdAt).format("ll")}
                     </p>
                   </div>
                 </div>
