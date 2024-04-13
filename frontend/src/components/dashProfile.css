@@ -1,0 +1,42 @@
+/* Add this to your global styles or directly in your component's CSS/module.css file */
+.container {
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .blog-container {
+    background: #f5f5f5; /* Light gray background */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+    padding: 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .blog-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .delete-icon {
+    float: right;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .delete-icon:hover {
+    transform: scale(1.1);
+  }
+  
+  h3 {
+    color: #333333;
+    margin-bottom: 8px;
+  }
+  
+  p {
+    color: #666666;
+  }
+  
+  .alert {
+    margin-top: 16px;
+  }
+  

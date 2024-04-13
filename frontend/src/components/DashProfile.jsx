@@ -5,6 +5,7 @@ import { Alert, Button, TextInput, Spinner } from "flowbite-react";
 import { signoutSuccess, updateSuccess } from "../app/user/userSlice";
 import deleteicon from "../images/icons8-delete.svg";
 import { Link, useNavigate } from 'react-router-dom';
+import './dashProfile.css'
 
 export default function DashProfile() {
   const { currentUser } = useSelector((state) => state.user);
@@ -320,20 +321,20 @@ export default function DashProfile() {
         </Button>
       </div>
       <div className="my-10">
-        <h2 className="text-lg font-semibold mb-3">Your Blogs</h2>
-        {userBlogs.length > 0 ? (
-          userBlogs.map((blog) => (
-            <div key={blog._id} className="blog-container">
-              <img src={deleteicon} alt="delete" onClick={() => confirmDeleteBlog(blog._id)} className="delete-icon ml-96 w-8 h-8" />
-              <h3 className="text-xl font-semibold">{blog.title}</h3>
-              <p className="text-gray-600">{blog.content}</p>
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-500">You have no blogs yet.</p>
-        )}
-        {deleteSuccessMessage && <Alert color="success">{deleteSuccessMessage}</Alert>}
-      </div>
+      <h2 className="text-lg font-semibold mb-3">Your Blogs</h2>
+      {userBlogs.length > 0 ? (
+        userBlogs.map((blog) => (
+          <div key={blog._id} className="blog-container">
+            <img src={deleteicon} alt="delete" onClick={() => confirmDeleteBlog(blog._id)} className="delete-icon w-8 h-8" />
+            <h3 className="text-xl font-semibold">{blog.title}</h3>
+            <p className="text-gray-600">{blog.content}</p>
+          </div>
+        ))
+      ) : (
+        <p className="text-gray-500">You have no blogs yet.</p>
+      )}
+      {deleteSuccessMessage && <Alert color="success" className="alert">{deleteSuccessMessage}</Alert>}
+    </div>
       <div className="text-red-500 flex justify-between mt-5">
         <span className="cursor-pointer" onClick={handleDeleteAccount}>Delete Account</span>
         <span className="cursor-pointer" onClick={handleSignout}>

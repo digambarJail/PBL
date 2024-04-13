@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import './getUserDetails.css';
 
 const GetUserDetails = () => {
     const { userId } = useParams();
@@ -39,24 +40,23 @@ const GetUserDetails = () => {
                     </div>
                     <h2 className="text-center text-3xl font-semibold text-white mt-4">{user.name}</h2>
                     <div className="mt-6">
-                        <h3 className="text-xl font-semibold text-purple-400 mb-2">User Blogs:</h3>
-                        {userBlogs.length > 0 ? (
-                            userBlogs.map((blog, index) => (
-                                <div key={index} className="bg-gray-700 p-4 rounded-lg mb-4">
-                                    <Link to={`/getBlogs/${blog._id}`} className="text-lg font-semibold text-white">{blog.title}
-                                    <p className="text-gray-300">
-                                        {blog.content.length > 200 ? `${blog.content.substring(0, 200)}...` : blog.content}
-                                        {blog.content.length > 200 && (
-                                            <button className="text-purple-500 hover:underline focus:outline-none" onClick={() => alert(blog.content)}>Read More</button>
-                                        )}
-                                    </p>
-                                    </Link>
-                                </div>
-                            ))
-                        ) : (
-                            <p className="text-gray-500">No blogs found for this user.</p>
-                        )}
-                    </div>
+    <h3 className="text-xl font-semibold text-purple-400 mb-2">User Blogs:</h3>
+    {userBlogs.length > 0 ? (
+        userBlogs.map((blog, index) => (
+            <div key={index} className="blog-card">
+                <Link to={`/getBlogs/${blog._id}`} className="blog-title">{blog.title}</Link>
+                <p className="blog-content">
+                    {blog.content.length > 200 ? `${blog.content.substring(0, 200)}...` : blog.content}
+                    {blog.content.length > 200 && (
+                        <button className="read-more-button" onClick={() => alert(blog.content)}>Read ore</button>
+                    )}
+                </p>
+            </div>
+        ))
+    ) : (
+        <p className="text-gray-500">No blogs found for this user.</p>
+    )}
+</div>
                 </div>
             </div>
         </div>

@@ -1,0 +1,42 @@
+/* General blog card styling */
+.blog-card {
+    background-color: #2e3031; /* Slightly lighter than the main bg for contrast */
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.blog-title {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px; /* Provides spacing between title and content */
+    display: block; /* Ensures the link fills the card title area */
+}
+
+.blog-content {
+    color: #b0b0b0; /* Lighter gray for readability */
+    font-size: 16px;
+    line-height: 1.5; /* Improved line spacing for better readability */
+    overflow: hidden; /* Keeps the text contained in the div */
+}
+
+.read-more-button {
+    color: #957dad; /* Matching the purple theme but lighter for visibility */
+    cursor: pointer;
+    padding: 4px;
+    font-size: 14px;
+    display: inline; /* Keep inline with the text */
+    margin-left: 5px; /* Space from the text */
+}
+
+.read-more-button:hover {
+    text-decoration: underline;
+}
