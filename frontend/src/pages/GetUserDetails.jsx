@@ -31,7 +31,7 @@ const GetUserDetails = () => {
     }
 
     return (
-        <div className="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-3xl shadow-lg my-10 p-5 bg-gray-800">
+        <div className="mx-auto rounded-lg overflow-hidden md:max-w-3xl shadow-lg my-10 p-5 bg-[#282929]">
             <div className="md:flex">
                 <div className="w-full">
                     <div className="flex justify-center">

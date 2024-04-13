@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Post = ({ blogs }) => {
   const navigate = useNavigate();
+
+  console.log("blogs" , blogs);
   return (
     <div className="grid grid-cols-1 gap-8 " >
       {blogs.map((blog) => (
         <div
           key={blog._id}
-          className="flex flex-col overflow-hidden rounded-lg  min-h-[60vh] max-h-fit border border-[#404040]  shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:scale-[102%] transition-all duration-300"
+          className="flex flex-col overflow-hidden rounded-lg  min-h-[20vh] max-h-fit border border-[#404040]  shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] hover:scale-[102%] transition-all duration-300"
         >
           <div className="flex-shrink-0">
             <img
@@ -30,10 +32,11 @@ const Post = ({ blogs }) => {
                 </p>
               </a>
             </div>
-            <div className="mt-6 flex items-center">
+            
+            <div className="flex items-center mt-10">
               <div className="flex-shrink-0">
-                <a href="">
-                  <span className="sr-only">Roel Aufderehar</span>
+              <a href={`/getUserDetails/${blog.ownerId}`}>
+                  <span className="sr-only"></span>
                   <img
                     className="h-10 w-10 rounded-full"
                     src={blog.profilePicture ||'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}
@@ -43,7 +46,7 @@ const Post = ({ blogs }) => {
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium text-slate-100">
-                  <a href="" className="hover:underline">
+                  <a href={`/getUserDetails/${blog.ownerId}`} className="hover:underline">
                   {blog.ownerName}
                   </a>
                 </p>

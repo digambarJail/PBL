@@ -11,10 +11,10 @@ export const Question = ({ data }) => {
                             <img src={item.profilePicture} alt="Profile" className="w-12 h-12 rounded-full" />
                         </div>
                     )}
-                    <div>
-                        <h1 className="text-xl font-semibold mb-2">{item.question}</h1>
+                    <div className='text-wrap w-fit overflow-clip'>
+                        <h1 className="text-xl font-semibold mb-2 text-wrap h-auto ">{item.question}</h1>
                         {!item.isAnonymous ? (
-                            <p className="text-gray-400 mb-2">Asked by: {item.nameOfOwner}</p>
+                            <p className="text-gray-400 mb-2 h-auto">Asked by: {item.nameOfOwner}</p>
                         ) : (
                             <p className="text-gray-400 mb-2">Asked by: Anonymous</p>
                         )}

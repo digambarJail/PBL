@@ -418,7 +418,7 @@ const Blog = () => {
     <div className="mb-36">
       <div className="flex flex-row justify-center">
         <button
-          className={`bg-transparent  text-base cursor-pointer mt-[50px] mb-0 mx-2.5 px-[35px] py-2.5 rounded-[25px] border-[none] ${questionVisible ? 'bg-[#4caf50] text-white' : ''}`}
+          className={` cursor-pointer mt-[50px] mb-0 mx-2.5 px-[35px] py-2.5 rounded-[25px] border-[none] ${questionVisible ? 'bg-[#4caf50] text-white' : ''}`}
           onClick={() => {
             setQuestionVisible(true);
             setBlogVisible(false);
@@ -427,7 +427,7 @@ const Blog = () => {
           Ask a Question
         </button>
         <button
-          className={` bg-transparent text-base cursor-pointer mt-[50px] mb-0 mx-2.5 px-[35px] py-2.5 rounded-[25px] border-[none] ${blogVisible ? 'bg-[#4caf50] text-white' : ''}`}
+          className={`cursor-pointer mt-[50px] mb-0 mx-2.5 px-[35px] py-2.5 rounded-[25px] border-[none] ${blogVisible ? 'bg-[#4caf50] text-white' : ''}`}
           onClick={() => {
             setQuestionVisible(false);
             setBlogVisible(true);

@@ -87,7 +87,7 @@ const Home = () => {
                     <Post blogs={obj.blog ? obj.blog : []} />
                     <div class="mt-10 sm:mt-10 sm:ml-3">
                       <button
-                        class="w-full flex items-center justify-center px-8 py-3 text-base leading-6 font-medium rounded-md text-green-700 dark:text-green-700 bg-green-100 hover:bg-green-50 hover:text-green-600 focus:ring ring-offset-2 ring-purple-100 focus:outline-none transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
+                        class="w-full mx-auto flex items-center justify-center px-8 py-3 text-base leading-6 font-medium rounded-md text-green-700 dark:text-green-700 bg-green-200 hover:bg-green-300 hover:text-green-600 focus:ring ring-offset-2 ring-purple-100 focus:outline-none transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
                         onClick={() => navigate("/showBlogs")}
                       >
                         Show More
@@ -119,7 +119,7 @@ const Home = () => {
           </h1>
           <ShowQuestions />
           <button
-            class="w-full flex items-center justify-center px-8 py-3 text-base leading-6 font-medium rounded-md text-green-700 dark:text-green-700 bg-green-100 hover:bg-green-50 hover:text-green-600 focus:ring ring-offset-2 ring-purple-100 focus:outline-none transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
+            class="w-full flex items-center justify-center px-8 py-3 text-base leading-6 font-medium rounded-md text-green-700 dark:text-green-700 bg-green-200 hover:bg-green-300 hover:text-green-600 focus:ring ring-offset-2 ring-purple-100"
             onClick={() =>{ navigate("/showBlogs") }}
           >
             Show More
