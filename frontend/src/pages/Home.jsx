@@ -51,6 +51,13 @@ const Home = () => {
     getAllBlogs();
   }, [ page, search]);
 
+  const handleGoToQuestions = () => {
+    const recentQuestionsSection = document.getElementById("recentQuestions");
+    if (recentQuestionsSection) {
+      recentQuestionsSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <>
       <div className=" flex flex-col">
@@ -73,17 +80,23 @@ const Home = () => {
         </button>
           </div>
           <div className="w-full md:w-4/6 mt-12">
-            <h1 className=" text-3xl font-semibold mt-6">Blogs</h1>
+          <div className="flex flex-row w-full justify-center h-10 items-center">
+            <div className=" text-3xl font-semibold">Blogs</div>
+        </div>
             <div className={` font-[sans-serif] p-4 mt-10 rounded-md `}>
               <div className="max-w-6xl max-md:max-w-lg mx-auto">
-                <div>
-                  {/* <h2 className="text-3xl font-extrabold text-[#333] dark:text-slate-100 inline-block">
-                    LATEST BLOGS
-                    </h2> */}
+                <div className="flex my-2">
+                <button
+          className="bg-slate-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg mx-4"
+          onClick={handleGoToQuestions}
+        >
+          Go to Questions
+        </button>
                 </div>
-                {/* {console.log("w", obj)} */}
+
                 {obj.blog && obj.blog.length !== 0 ? (
                   <>
+                  
                     <Post blogs={obj.blog ? obj.blog : []} />
                     <div class="mt-10 sm:mt-10 sm:ml-3">
                       <button
@@ -113,7 +126,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="mt-40 mb-40 w-full px-10">
+        <div className="mt-10 mb-40 w-full px-10" id="recentQuestions">
           <h1 className="ml-20 text-4xl font-semibold">
             Recently asked Question!{" "}
           </h1>

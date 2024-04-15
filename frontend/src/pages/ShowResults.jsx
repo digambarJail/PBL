@@ -130,14 +130,30 @@ export default function ShowBlogs() {
             Questions
           </button>
           <div className=" flex md:mx-10 w-fit h-fit">
-            <Dropdown className="flex" label="Sort By" placement="bottom" color="gray">
-              <Dropdown.Item onClick={() => dispatch(setSort(""))}>
+            <Dropdown
+              className="flex"
+              label="Sort By"
+              placement="bottom"
+              color="gray"
+            >
+              <Dropdown.Item
+                onClick={() => dispatch(setSort(""))}
+                className={sort === "" ? "bg-blue-500 text-white" : ""}
+              >
                 Recent
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => dispatch(setSort("oldest"))}>
+              <Dropdown.Item
+                onClick={() => dispatch(setSort("oldest"))}
+                className={sort === "oldest" ? "bg-blue-500 text-white" : ""}
+              >
                 Oldest
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => dispatch(setSort("most_liked"))}>
+              <Dropdown.Item
+                onClick={() => dispatch(setSort("most_liked"))}
+                className={
+                  sort === "most_liked" ? "bg-blue-500 text-white" : ""
+                }
+              >
                 Most Liked
               </Dropdown.Item>
             </Dropdown>

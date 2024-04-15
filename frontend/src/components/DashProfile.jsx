@@ -1,16 +1,17 @@
-import React, { useState,useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { reset } from '../app/user/userSlice';
+import { reset } from "../app/user/userSlice";
 import { Alert, Button, TextInput, Spinner } from "flowbite-react";
 import { signoutSuccess, updateSuccess } from "../app/user/userSlice";
 import deleteicon from "../images/icons8-delete.svg";
-import { Link, useNavigate } from 'react-router-dom';
-import './dashProfile.css'
+import { Link, useNavigate, useLocation , useParams } from "react-router-dom";
+import "./dashProfile.css";
 
 export default function DashProfile() {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const location = useLocation();
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
@@ -28,6 +29,7 @@ export default function DashProfile() {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false); // State for delete confirmation
   const [blogToDelete, setBlogToDelete] = useState(null); // State to store blog to delete
   const filePickerRef = useRef();
+  const {tab} = useParams();
 
   const handleImageChange = (e) => {
     const selectedfile = e.target.files[0];
@@ -49,7 +51,7 @@ export default function DashProfile() {
         body: formData,
       });
       const data = await res.json();
-      if(res.ok){
+      if (res.ok) {
         setImageFileUploadSuccess("Image Changed SuccessFully!");
       }
       dispatch(updateSuccess(data.data));
@@ -91,21 +93,18 @@ export default function DashProfile() {
 
         // Handle success response
         const responseData = await response.json();
-        if(response.ok){
+        if (response.ok) {
           console.log("Password change successful:", responseData);
           setPasswordChangeSuccess("Password Changed Successfully!");
         }
         setoldPassword("");
-       setNewPassword("");
-        
+        setNewPassword("");
       } catch (error) {
         console.log("Inside inner catch block");
         console.error("Password change failed:", error.message);
         setPasswordChangeError("Failed to change password. Please try again");
         console.log(passwordChangeError);
       }
-
-
     } catch (error) {
       console.log("Inside outer catch block");
       console.error("Password change failed:", error.message);
@@ -133,11 +132,13 @@ export default function DashProfile() {
       console.log(error.message);
     }
   };
-  
+
   const userId = currentUser.data.user._id;
 
   const handleDeleteAccount = async () => {
-    const confirmDelete = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete your account? This action cannot be undone."
+    );
 
     if (confirmDelete) {
       deleteAccount();
@@ -145,52 +146,50 @@ export default function DashProfile() {
   };
   const deleteAccount = async () => {
     try {
-      const res = await fetch(`/api/deleteAccount/${userId}` , {
+      const res = await fetch(`/api/deleteAccount/${userId}`, {
         method: "POST",
-
       });
       const data = await res.json();
-      if(!res.ok){
+      if (!res.ok) {
         setDeleteAccountError(data.message);
-        console.log('err',data.message);
+        console.log("err", data.message);
         alert(data.message);
       }
-      if(res.ok){
+      if (res.ok) {
         setDeleteAccountSuccess(data.message);
-        console.log('succ',data.message);
+        console.log("succ", data.message);
         alert(data.message);
         dispatch(reset());
-        
       }
     } catch (error) {
       setDeleteAccountError(error);
     }
-  }
+  };
 
   useEffect(() => {
     const getDetails = async () => {
-        try {
-            // console.log("Inside fetch user blogs")
-            // console.log(currentUser.data.user._id)
-            let userId = currentUser.data.user._id
-            let url = `/api/user/${userId}`;
-            const res = await fetch(url);
-            const data = await res.json();
+      try {
+        // console.log("Inside fetch user blogs")
+        // console.log(currentUser.data.user._id)
+        let userId = currentUser.data.user._id;
+        let url = `/api/user/${userId}`;
+        const res = await fetch(url);
+        const data = await res.json();
 
-            if (!res.ok) {
-                console.log(data.message);
-            }
-            // setUser(data.data[0]);
-            setUserBlogs(data.data[0].userBlogs);
-            // console.log(userBlogs);
-            // console.log(userBlogs._id)
-        } catch (err) {
-            console.log(err);
+        if (!res.ok) {
+          console.log(data.message);
         }
+        // setUser(data.data[0]);
+        setUserBlogs(data.data[0].userBlogs);
+        // console.log(userBlogs);
+        // console.log(userBlogs._id)
+      } catch (err) {
+        console.log(err);
+      }
     };
-
+    console.log("working");
     getDetails();
-}, []);
+  }, [currentUser]);
 
   const confirmDeleteBlog = (blogId) => {
     setBlogToDelete(blogId);
@@ -218,10 +217,12 @@ export default function DashProfile() {
     setDeleteConfirmation(false);
     setBlogToDelete(null);
   };
-  
+
   return (
+    <>
     <div className="max-w-lg mx-auto p-3 w-full mb-10">
-      <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
+      <>
+      <h1 className="my-7 text-center font-semibold text-3xl mx-auto">Profile</h1>
       <form
         className="flex flex-col gap-4 my-10"
         encType="multipart/form-data"
@@ -320,23 +321,12 @@ export default function DashProfile() {
           )}
         </Button>
       </div>
-      <div className="my-10">
-      <h2 className="text-lg font-semibold mb-3">Your Blogs</h2>
-      {userBlogs.length > 0 ? (
-        userBlogs.map((blog) => (
-          <div key={blog._id} className="blog-container">
-            <img src={deleteicon} alt="delete" onClick={() => confirmDeleteBlog(blog._id)} className="delete-icon w-8 h-8" />
-            <h3 className="text-xl font-semibold">{blog.title}</h3>
-            <p className="text-gray-600">{blog.content}</p>
-          </div>
-        ))
-      ) : (
-        <p className="text-gray-500">You have no blogs yet.</p>
-      )}
-      {deleteSuccessMessage && <Alert color="success" className="alert">{deleteSuccessMessage}</Alert>}
-    </div>
+      {console.log('lcnsrch',location.search.includes("tab=blogs"))}
+
       <div className="text-red-500 flex justify-between mt-5">
-        <span className="cursor-pointer" onClick={handleDeleteAccount}>Delete Account</span>
+        <span className="cursor-pointer" onClick={handleDeleteAccount}>
+          Delete Account
+        </span>
         <span className="cursor-pointer" onClick={handleSignout}>
           Sign Out
         </span>
@@ -344,32 +334,67 @@ export default function DashProfile() {
       {deleteAccountError && (
         <>
           <Alert color="failure">{deleteAccountError}</Alert>
-          </>
-        )}
-        {deleteAccountSuccess && (
-          <>
+        </>
+      )}
+      {deleteAccountSuccess && (
+        <>
           <Alert color="success">{deleteAccountSuccess}</Alert>
-          </>
-        )}
-  
+        </>
+      )}
+
       {/* Confirmation dialog */}
       {deleteConfirmation && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="fixed inset-0 bg-black bg-opacity-75"></div>
           <div className=" p-6 rounded-lg shadow-lg z-50 relative">
-            <p className="text-xl mb-4">Are you sure you want to delete this blog?</p>
+            <p className="text-xl mb-4">
+              Are you sure you want to delete this blog?
+            </p>
             <div className="flex justify-end">
-              <Button onClick={deleteBlog} gradientDuoTone="purpleToBlue" className="mr-4">
+              <Button
+                onClick={deleteBlog}
+                gradientDuoTone="purpleToBlue"
+                className="mr-4"
+              >
                 Yes
               </Button>
-              <Button onClick={() => setDeleteConfirmation(false)} gradientDuoTone="redToOrange">
+              <Button
+                onClick={() => setDeleteConfirmation(false)}
+                gradientDuoTone="redToOrange"
+              >
                 No
               </Button>
             </div>
           </div>
         </div>
       )}
+      </>
     </div>
+    {/* <div className="max-w-lg mx-auto p-3 w-full mb-10">
+          {location.search.includes("tab=blogs") && (
+            
+            <div className="my-10">
+              <h2 className="text-lg font-semibold mb-3">Your Blogs</h2>
+              {userBlogs.length > 0 ? (
+                userBlogs.map((blog) => (
+                  <div key={blog._id} className="blog-container">
+                    <img
+                      src={deleteicon}
+                      alt="delete"
+                      onClick={() => confirmDeleteBlog(blog._id)}
+                      className="delete-icon w-8 h-8"
+                    />
+                    <h3 className="text-xl font-semibold">{blog.title}</h3>
+                    <p className="text-gray-600">{blog.content}</p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500">You have no blogs yet.</p>
+              )}
+            </div>
+            
+          )}
+          </div> */}
+          </>
   );
-  
 }

@@ -35,8 +35,9 @@ const Events = () => {
               <div class="relative p-6 space-y-6 leading-none rounded-lg dark:bg-[#282929] bg-white ring-1 ring-gray-900/5">
                 <div className="p-6">
                   <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-gray-600 dark:text-gray-400 text-justify ">
                     {item.description}
+                    Credenz, organized by the PICT IEEE Student Branch, is an annual technical festival that began in 2004. It has become one of Pune's premier technical events, aiming to inspire participants to bring out their best. Credenz offers a diverse range of seminars and workshops that help expand participants' knowledge in the ever-evolving field of technology, while also instilling a competitive spirit among them.
                   </p>
                 </div>
                 <div className="p-6 border-t border-gray-200 dark:border-gray-700">

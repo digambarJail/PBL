@@ -76,7 +76,7 @@ export default function SignUp() {
         <div className="flex-1">
           <form className="flex flex-col gap-4" onSubmit={handleSubmit} enctype="multipart/form-data">
             <div>
-              <Label value="Your username" />
+              <Label value="Your Name" />
               <TextInput
                 type="text"
                 placeholder="name"

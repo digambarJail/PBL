@@ -32,13 +32,13 @@ const GetUserDetails = () => {
     }
 
     return (
-        <div className="mx-auto rounded-lg overflow-hidden md:max-w-3xl shadow-lg my-10 p-5 bg-[#282929]">
+        <div className="mx-auto rounded-lg overflow-hidden md:max-w-3xl shadow-lg my-10 p-5 bg-white dark:bg-[#282929]">
             <div className="md:flex">
                 <div className="w-full">
                     <div className="flex justify-center">
                         <img src={user.profilePicture} alt={`${user.name}'s profile`} className="rounded-full border-2 border-purple-500 h-32 w-32 object-cover" />
                     </div>
-                    <h2 className="text-center text-3xl font-semibold text-white mt-4">{user.name}</h2>
+                    <h2 className="text-center text-3xl font-semibold mt-4">{user.name}</h2>
                     <div className="mt-6">
     <h3 className="text-xl font-semibold text-purple-400 mb-2">User Blogs:</h3>
     {userBlogs.length > 0 ? (

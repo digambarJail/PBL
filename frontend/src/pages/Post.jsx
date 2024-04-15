@@ -21,13 +21,13 @@ const Post = ({ blogs }) => {
               alt='pic'
             />
           </div>
-          <div className="flex flex-1 flex-col justify-between p-6 dark:bg-[#282929]" onClick={() => navigate(`/getBlogs/${blog._id}`)}>
+          <div className="flex flex-1 flex-col dark: justify-between p-6 dark:bg-[#282929]" onClick={() => navigate(`/getBlogs/${blog._id}`)}>
             <div className="flex-1">
               <a href="" className="mt-2 block">
-                <p className="text-xl font-semibold">
+                <p className="text-xl font-semibold dark:text-white text-black">
                 {blog.title}
                 </p>
-                <p className="mt-3 text-base">
+                <p className="mt-3 text-base dark:text-white text-black">
                 {blog.content.length > 150 ? blog.content.substring(0, 150) + ' ...' : blog.content}
                 </p>
               </a>
@@ -45,12 +45,13 @@ const Post = ({ blogs }) => {
                 </a>
               </div>
               <div className="ml-3">
-                <p className="text-sm font-medium text-slate-100">
+                <p className="text-sm font-medium dark:text-slate-100 text-slate-700">
                   <a href={`/getUserDetails/${blog.ownerId}`} className="hover:underline">
                   {blog.ownerName}
                   </a>
                 </p>
-                <div className="flex space-x-1 text-sm text-gray-400">
+
+                <div className="flex space-x-1 text-sm text-gray-500">
                   <time dateTime="2020-03-16">{moment(blog.createdAt).format("Do MMM YY")} </time>
                   <span aria-hidden="true">·</span>
                   {/* <span>6 min read</span> */}

@@ -1,22 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import { Sidebar } from 'flowbite-react';
 import { HiUser, HiArrowSmRight } from 'react-icons/hi';
-import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { signoutSuccess } from '../app/user/userSlice';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { signoutSuccess } from '../app/user/userSlice';
 
 export default function DashSidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [tab, setTab] = useState('');
   const dispatch = useDispatch();
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const tabFromUrl = urlParams.get('tab');
-    if (tabFromUrl) {
-      setTab(tabFromUrl);
-    }
+    setTab(tabFromUrl || 'profile'); // Default to 'profile' if no tab is specified
   }, [location.search]);
+
   const handleSignout = async () => {
     try {
       const res = await fetch('/api/logout', {
@@ -34,6 +34,7 @@ export default function DashSidebar() {
       console.log(error.message);
     }
   };
+
   return (
     <Sidebar className='w-full md:w-56'>
       <Sidebar.Items>
@@ -46,6 +47,30 @@ export default function DashSidebar() {
               labelColor='dark'
             >
               Profile
+            </Sidebar.Item>
+          </Link>
+          <Link to='/dashboard?tab=blogs'>
+            <Sidebar.Item
+              active={tab === 'blogs'}
+              className='cursor-pointer'
+            >
+              My Blogs
+            </Sidebar.Item>
+          </Link>
+          <Link to='/dashboard?tab=questions'>
+            <Sidebar.Item
+              active={tab === 'questions'}
+              className='cursor-pointer'
+            >
+              My Questions
+            </Sidebar.Item>
+          </Link>
+          <Link to='/dashboard?tab=answers'>
+            <Sidebar.Item
+              active={tab === 'answers'}
+              className='cursor-pointer'
+            >
+              My Answers
             </Sidebar.Item>
           </Link>
           <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
