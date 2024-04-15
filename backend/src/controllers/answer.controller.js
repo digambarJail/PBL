@@ -4,6 +4,7 @@ import { Answer } from "../models/answer.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { Like } from "../models/likes.models.js";
 import checkForProfanity from "../utils/profanityChecker.js";
 
 const postAnswer = asyncHandler(async (req, res) => {
@@ -205,4 +206,20 @@ const postAnswer = asyncHandler(async (req, res) => {
      "answers fetched successfully"))
 })
 
-export {postAnswer, getAnswers}
+const deleteAnswer = asyncHandler(async (req,res) => {
+
+   const {answerId} = req.params
+   await Like.deleteMany({answer:answerId})
+   const answer = await Answer.findByIdAndDelete(answerId)
+
+   if(!answer)
+   {
+       throw new ApiError(401,"Blog not found")
+   }
+
+   return res.status(200)
+   .json(new ApiResponse(200,
+       answer,"Answer deleted successfully"))
+})
+
+export {postAnswer, getAnswers, deleteAnswer}

@@ -66,7 +66,7 @@ const showBlogs = asyncHandler(async (req,res) => {
     
     const search = req.query.search || "";
     const page =  parseInt(req.query.page)-1 || 0 
-    const limit = 5 
+    const limit = 7; 
     let sort ;
     
     switch (req.query.sort) {

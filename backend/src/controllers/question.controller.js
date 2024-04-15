@@ -66,7 +66,7 @@ const postQuestion = asyncHandler(async (req,res)=>
 const showQuestions = asyncHandler(async (req, res,next) => {
     const search = req.query.search || "";
     const page = parseInt(req.query.page) - 1 || 0;
-    const limit = 5;
+    const limit = 10;
     let sort ;
     
     switch (req.query.sort) {
