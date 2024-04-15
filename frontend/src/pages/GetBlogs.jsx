@@ -28,7 +28,7 @@ const GetBlogs = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        console.log("Before fetching ",liked)
+        // console.log("Before fetching ",liked)
         const res = await fetch(`/api/b/${blogId}`);
         const data = await res.json();
         // console.log("Fetched blog:", data);
@@ -40,9 +40,9 @@ const GetBlogs = () => {
           setLikes(ldata);
           setnoLikes(ldata.data.likesCount);
           isLiked(ldata.data.isLiked);
-          console.log("After fetching in not likes ",liked)
+          // console.log("After fetching in not likes ",liked)
         }
-        console.log("After fetching ",liked)
+        // console.log("After fetching ",liked)
       } catch (error) {
         console.error("Error fetching likes:", error);
       }
@@ -120,6 +120,7 @@ const GetBlogs = () => {
             <header className="mb-4 lg:mb-6 not-format">
               <address className="flex items-center mb-6 not-italic">
                 <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+                  {/* {console.log(blog.data)} */}
                   <img
                     src={blog.data.profilePicture}
                     alt=""
@@ -133,7 +134,7 @@ const GetBlogs = () => {
                       {blog.data.nameOfOwner}
                     </Link>
                     <p className="text-base text-gray-500 dark:text-gray-400">
-                      SE IT
+                      
                     </p>
                     <p className="text-base text-gray-500 dark:text-gray-400">
                       {moment(blog.data.createdAt).format("ll")}

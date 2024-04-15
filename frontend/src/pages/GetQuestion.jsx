@@ -306,6 +306,7 @@ const GetQuestion = () => {
   
 const handleLikeAnswer = async (answerId) => {
   try {
+    console.log("ehhllo")
     const isLiked = likedAnswers[answerId];
     const newLikedAnswers = { ...likedAnswers, [answerId]: !isLiked };
     setLikedAnswers(newLikedAnswers);
